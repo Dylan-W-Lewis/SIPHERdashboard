@@ -1,0 +1,68 @@
+---
+title: "Shiny dashboard development notebook"
+author: "Dylan Lewis"
+output:
+  html_document: 
+    toc: true
+    toc-location: left
+---
+
+# Development notebook
+
+I will use this .rmd doc to develop (mostly back-end) functions for the app. Finished functions will live in the /r/ folder.
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set("echo" = TRUE)
+library(tidyverse)
+```
+
+## Data Prep
+
+### Aggregated data
+
+Data is currently aggregated at three resolutions: country, local authority, LSOA
+
+```{r load aggregated data}
+dataPath <- "C:/Users/2808003l/Documents/Sipher"
+#read country data
+ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_code_export.csv"),
+                    show_col_types = FALSE)
+glimpse(ctrDat)
+#read local autority data
+laDat <- read_csv(paste0(dataPath, "/ROutput/lad_export.csv"),
+                    show_col_types = FALSE)
+glimpse(laDat)
+# read LSOA (2011) data
+lsoaDat <- read_csv(paste0(dataPath, "/ROutput/lsoa11_export.csv"),
+                    show_col_types = FALSE)
+glimpse(lsoaDat)
+```
+
+### Geo lookup
+
+```{r load geo link}
+#lookupFiles <- map(list.files(paste0(dataPath, "/geo_lookup/"), full.names = T), read.csv)
+#names(lookupFiles) <- map_chr(list.files(paste0(dataPath, "/geo_lookup/")), ~str_remove_all(.x, "[() ]|(.csv)"))
+#names(lookupFiles)
+lookup <- read_csv(paste0(dataPath, "/geo_lookup/PCD_OA21_LSOA21_MSOA21_LAD_NOV23_UK_LU.csv"),
+                   show_col_types = FALSE)
+```
+
+Create a nested list to identify parent/child areas
+
+```{r lookup list}
+
+lookupCodes <- lookup %>%
+  select(ladcd, ladnm, lsoa21cd) %>%
+  mutate(ctr = str_sub(lsoa21cd, 1, 1),
+         ctrnm = case_match(ctr,
+                           "E" ~ "England",
+                           "W" ~ "Wales",
+                           "S" ~ "Scotland"),
+         .before = ladcd) %>%
+  filter(ctr %in% c("E", "W", "S"))
+
+lookupList <- lookupCodes %>% nest(.by = c(ctr:ladnm), .key="lsoa") %>% nest(.by=c(ctr, ctrnm), .key="lad")
+
+rm(lookup)
+```

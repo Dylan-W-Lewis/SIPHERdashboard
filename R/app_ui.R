@@ -10,7 +10,8 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("SIPHERdashboard")
+      h1("SIPHERdashboard"),
+      mod_pt_LASelector_ui("pt_LASelector_1")
     )
   )
 }
