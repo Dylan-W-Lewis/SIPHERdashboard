@@ -14,6 +14,7 @@ I will use this .rmd doc to develop (mostly back-end) functions for the app. Fin
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set("echo" = TRUE)
 library(tidyverse)
+dataPath <- "C:/Users/2808003l/Documents/Sipher"
 ```
 
 ## Data Prep
@@ -23,7 +24,6 @@ library(tidyverse)
 Data is currently aggregated at three resolutions: country, local authority, LSOA
 
 ```{r load aggregated data}
-dataPath <- "C:/Users/2808003l/Documents/Sipher"
 #read country data
 ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_code_export.csv"),
                     show_col_types = FALSE)
@@ -65,4 +65,16 @@ lookupCodes <- lookup %>%
 lookupList <- lookupCodes %>% nest(.by = c(ctr:ladnm), .key="lsoa") %>% nest(.by=c(ctr, ctrnm), .key="lad")
 
 rm(lookup)
+#lookupList.RData is added to /data/ folder
+```
+
+### Shapefiles
+Load in shapefiles, filter for LADs available in data
+```{r load in shapefiles}
+library(sf)
+ladSF <- sf::read_sf(paste0(dataPath, "/topo/Local_Authority_Districts/LAD_DEC_2023_UK_BSC.shp"))
+#remove NI LADs
+ladSF <- ladSF %>% filter(LAD23CD %in% unique(laDat$lad))
+ggplot(data=ladSF) +geom_sf()
+# problem!! these are not 2011 LADs, so some are missing
 ```

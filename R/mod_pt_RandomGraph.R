@@ -24,7 +24,10 @@ mod_pt_RandomGraph_ui <- function(id){
 mod_pt_RandomGraph_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-
+    #graph <- reactive(shinipsum::random_ggplot(type = input$type))
+    output$plot <- renderPlot({
+      shinipsum::random_ggplot(type = input$type)
+      })
   })
 }
 
