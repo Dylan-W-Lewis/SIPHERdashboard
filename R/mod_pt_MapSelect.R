@@ -10,7 +10,7 @@
 mod_pt_MapSelect_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotlyOutput(ns("map"))
+    plotly::plotlyOutput(ns("map"))
   )
 }
 
@@ -19,25 +19,47 @@ mod_pt_MapSelect_ui <- function(id){
 #' @noRd
 mod_pt_MapSelect_server <- function(id, r){
   moduleServer( id, function(input, output, session){
+
     ns <- session$ns
-    output$map <- renderPlotly({
-      ladSF %>%
-        highlight_key(~LAD23NM, group="Local Authority District") %>%
-        plot_ly(
-          split = ~LAD23NM,
-          color = I("gray90"),
-          showlegend = FALSE) %>%
-        highlight(
-          color="rgba(0,117,176,1)",
-          selectize = TRUE,
-          opacityDim = 0.6
-        )
+    ladShared <- crosstalk::SharedData$new(ladSF, ~LAD23NM, group="Local Authority District")
+
+    output$map <- plotly::renderPlotly({
+      ladShared %>%
+        plotly::plot_ly(
+         split = ~LAD23NM,
+         color = I("gray90"),
+         showlegend = FALSE) %>%
+       plotly::highlight(
+         color="rgba(0,117,176,1)",
+         selectize = TRUE,
+         persistent = TRUE,
+         opacityDim = 0.6
+          )
+     })
+
+    observeEvent(event_data("plotly_click"), {
+      message(paste("click!", event_data("plotly_click")$key[[1]]))
+      #selection <- event_data("plotly_click")$key[[1]]
+      #selection_all <- c(r$selected_area, selection)
+      #r$selected_area <- unique(selection_all)
     })
 
-    observeEvent( event_data("plotly_click") , {
-      r$selected_area <- event_data("plotly_click")$key[[1]]
-      #ensure global reactiveValues 'r' is initialised in app_server
+    observeEvent(ladShared$selection(),{
+      r$selected_area <- ladSF$LAD23NM[ladShared$selection()]
     })
+
+
+    # r$selected_area <- NULL
+    # observeEvent( plotly::event_data("plotly_click") , {
+    #   selection <- plotly::event_data("plotly_click")$key[[1]]
+    #   #selection <- plotly::event_data("plotly_click")$customdata
+    #   selection_all <- c(r$selected_area(), selection)
+    #   r$selected_area <- unique(selection)
+    # })
+    # observeEvent( plotly::event_data("plotly_doubleclick") , {
+    #   r$selected_area <- NULL
+    #   #ensure global reactiveValues 'r' is initialised in app_server
+    # })
   })
 }
 

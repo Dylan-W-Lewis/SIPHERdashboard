@@ -9,14 +9,23 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      titlePanel("SIPHERdashboard"),
-      fluidRow(
-        column(6,
-               mod_pt_RandomGraph_ui("pt_RandomGraph_1")),
-        column(6,
-               mod_pt_MapSelect_ui("pt_MapSelect_1"))
-      )
+    navbarPage(
+      id = "topBar",
+      "SIPHER Synthetic Population",
+      tabPanel("Map Explore",
+               value = "map_explore",
+               fluidRow(column(6,
+                               fluidRow(
+                                 mod_pt_AreaSelections_ui("pt_AreaSelections_1")),
+                               fluidRow(
+                                 mod_pt_RandomGraph_ui("pt_RandomGraph_1")),
+                               ),
+                        column(6,
+                               mod_pt_MapSelect_ui("pt_MapSelect_1")))
+      ),
+      tabPanel("Area profile",
+               value = "area_profile",
+               "...")
     )
   )
 }

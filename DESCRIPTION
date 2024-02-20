@@ -17,6 +17,7 @@ Imports:
     golem (>= 0.4.1),
     htmltools,
     plotly,
+    purrr,
     sf,
     shiny (>= 1.8.0)
 Encoding: UTF-8
