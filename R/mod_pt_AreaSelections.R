@@ -32,21 +32,16 @@ mod_pt_AreaSelections_server <- function(id, r){
     ns <- session$ns
 
     output$selections <- renderUI(
-      if(is.null(r$selected_area)) {
-        strong("Select an area to begin")
-      }
-      else {
         purrr::map(r$selected_area, function(.x){
           fluidRow(
             column(8,
-                   offset = 1,
-                   strong(.x)),
-            column(3,
+                   .x),
+            column(4,
                    #actionButton(ns(.x), label = .x)
                    mod_pt_AreaSelections_button_ui(ns(paste0("button", .x)))
                    )
-          )})
-      })
+          )
+      }))
 
     observeEvent(r$selected_area, {
       if(!is.null(r$selected_area)){

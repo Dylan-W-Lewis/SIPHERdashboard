@@ -20,40 +20,28 @@ app_ui <- function(request) {
       #navbar content
       bslib::nav_panel("Map Explore",
                value = "map_explore",
-               bslib::page_fillable(
-                 bslib::layout_columns(
-                   col_widths =  c(6,6),
-                   bslib::layout_columns(
-                     row_heights = c("auto",1),
-                     col_widths = 12,
-                     #row_heights = c(1, 3),
-                     bslib::card(
-                       bslib::card_header("Selected areas"),
-                       mod_pt_AreaSelections_ui("pt_AreaSelections_1")),
-                     bslib::card(
-                       mod_pt_RandomGraph_ui("pt_RandomGraph_1"))
-                   ),
-                   mod_pt_MapSelect2_ui("pt_MapSelect_1")
-                   #bslib::card(mod_pt_MapSelect2_ui("pt_MapSelect_1")),
-                   #            height = "600px", fill=F)
-                   )
-                 )
-      ),
+               mod_page_MapExplore_ui("page_MapExplore")),
+
       bslib::nav_panel("Area profile",
                value = "area_profile",
                h3("Area profile"),
                h2(textOutput("area_title")),
                bslib::page_fillable(
                  bslib::layout_columns(
-                 col_widths =  c(6,6),
-                 bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_2")),
-                 bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_3")),
-                 bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_4")),
-                 bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_5")),
-               ))
+                   col_widths =  c(6,6),
+                   bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_2")),
+                   bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_3")),
+                   bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_4")),
+                   bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_5")),
+                   )
+                 )
+               ),
+
+      bslib::nav_spacer(),
+
+      bslib::nav_panel("", value = "options", icon = shiny::icon("gear"))
       )
     )
-  )
 }
 
 #' Add external Resources to the Application

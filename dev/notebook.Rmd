@@ -29,7 +29,7 @@ ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_code_export.csv"),
                     show_col_types = FALSE)
 glimpse(ctrDat)
 #read local autority data
-laDat <- read_csv(paste0(dataPath, "/ROutput/lad_export.csv"),
+ladDat <- read_csv(paste0(dataPath, "/ROutput/lad_export.csv"),
                     show_col_types = FALSE)
 glimpse(laDat)
 # read LSOA (2011) data

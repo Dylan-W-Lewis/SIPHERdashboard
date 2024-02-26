@@ -16,6 +16,7 @@ mod_pt_MapSelect2_ui <- function(id){
                    choices=c("Choose an area" = "", set_names(ladSF$LAD23CD,ladSF$LAD23NM)),
                    multiple=TRUE,
                    width="100%"),
+    div(style = "margin-top:-15px"),
     plotly::plotlyOutput(ns("map"))
   )
 }
@@ -37,6 +38,7 @@ mod_pt_MapSelect2_server <- function(id, r){
           source = "map",
           showlegend = FALSE,
           text = ~LAD23NM,
+          hoveron = "fills",
           hoverinfo="text"
         ) %>%
         add_sf()

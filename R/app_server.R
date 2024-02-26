@@ -25,9 +25,7 @@ app_server <- function(input, output, session) {
   output$area_title <- renderText(r$profile)
 
   #server page 1
-  mod_pt_RandomGraph_server("pt_RandomGraph_1")
-  mod_pt_MapSelect2_server("pt_MapSelect_1", r = r)
-  mod_pt_AreaSelections_server("pt_AreaSelections_1", r = r)
+  mod_page_MapExplore_server("page_MapExplore", r=r, parent.session = session)
 
   #server page 2
   mod_pt_RandomGraph_server("pt_RandomGraph_2")
