@@ -1,8 +1,9 @@
 #' pt_MapSelect2 UI Function
 #'
-#' @description A shiny Module.
+#' @description Select areas by map or selectize input.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param r global reactives to store area ids
 #'
 #' @noRd
 #'

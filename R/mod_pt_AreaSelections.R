@@ -11,7 +11,7 @@
 mod_pt_AreaSelections_ui <- function(id){
   ns <- NS(id)
   tagList(
-    h1("Selected areas"),
+    #h1("Selected areas"),
     #  fluidRow(
     #    column(8,
     #           offset = 1,
@@ -33,7 +33,7 @@ mod_pt_AreaSelections_server <- function(id, r){
 
     output$selections <- renderUI(
       if(is.null(r$selected_area)) {
-        h3("Select an area to begin")
+        strong("Select an area to begin")
       }
       else {
         purrr::map(r$selected_area, function(.x){

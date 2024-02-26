@@ -6,6 +6,8 @@
 #' @noRd
 app_server <- function(input, output, session) {
   # Your application server logic
+  #bslib::bs_themer()
+
   r <- reactiveValues()
 
   observeEvent(input$topBar, {
@@ -13,15 +15,23 @@ app_server <- function(input, output, session) {
   })
 
   observeEvent(r$active_page, {
-    if(r$active_page != input$topBar){
-      updateNavbarPage(inputId = "topBar",
+     if(!identical(r$active_page, input$topBar)){
+       message(paste("change page to", r$active_page, "from", input$topBar))
+       bslib::nav_select(id = "topBar",
                        selected = r$active_page)
-    }
+     }
   })
 
   output$area_title <- renderText(r$profile)
 
+  #server page 1
   mod_pt_RandomGraph_server("pt_RandomGraph_1")
   mod_pt_MapSelect2_server("pt_MapSelect_1", r = r)
   mod_pt_AreaSelections_server("pt_AreaSelections_1", r = r)
+
+  #server page 2
+  mod_pt_RandomGraph_server("pt_RandomGraph_2")
+  mod_pt_RandomGraph_server("pt_RandomGraph_3")
+  mod_pt_RandomGraph_server("pt_RandomGraph_4")
+  mod_pt_RandomGraph_server("pt_RandomGraph_5")
 }

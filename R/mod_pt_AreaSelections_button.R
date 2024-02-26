@@ -12,7 +12,7 @@
 mod_pt_AreaSelections_button_ui <- function(id){
   ns <- NS(id)
   tagList(
-    actionButton(ns("button"), "View area profile")
+    actionLink(ns("link"), "View area profile")
   )
 }
 
@@ -22,7 +22,7 @@ mod_pt_AreaSelections_button_ui <- function(id){
 mod_pt_AreaSelections_button_server <- function(id, area, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    observeEvent(input$button,{
+    observeEvent(input$link,{
       message(paste("clicked", area))
       r$profile <- area
       r$active_page <- "area_profile"
