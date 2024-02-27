@@ -8,8 +8,10 @@ app_server <- function(input, output, session) {
   # Your application server logic
   #bslib::bs_themer()
 
+  # define global reactiveValues
   r <- reactiveValues()
 
+  # navigation logic
   observeEvent(input$topBar, {
     r$active_page <- input$topBar
   })
@@ -22,14 +24,9 @@ app_server <- function(input, output, session) {
      }
   })
 
-  output$area_title <- renderText(r$profile)
-
   #server page 1
   mod_page_MapExplore_server("page_MapExplore", r=r, parent.session = session)
 
   #server page 2
-  mod_pt_RandomGraph_server("pt_RandomGraph_2")
-  mod_pt_RandomGraph_server("pt_RandomGraph_3")
-  mod_pt_RandomGraph_server("pt_RandomGraph_4")
-  mod_pt_RandomGraph_server("pt_RandomGraph_5")
+  mod_page_AreaProfile_server("page_AreaProfile", r=r)
 }

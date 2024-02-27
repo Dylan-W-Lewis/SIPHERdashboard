@@ -3,7 +3,7 @@
 #' @description Select areas by map or selectize input.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
-#' @param r global reactives to store area ids
+#' @param r global reactiveValues object to store area ids
 #'
 #' @noRd
 #'
@@ -29,9 +29,9 @@ mod_pt_MapSelect2_server <- function(id, r){
     ns <- session$ns
 
     #render map
-    output$map <- renderPlotly({
+    output$map <- plotly::renderPlotly({
       ladSF %>%
-        plot_ly(
+        plotly::plot_ly(
           key = ~LAD23CD,
           split = ~LAD23CD,
           color = I("gray"),
@@ -41,12 +41,12 @@ mod_pt_MapSelect2_server <- function(id, r){
           hoveron = "fills",
           hoverinfo="text"
         ) %>%
-        add_sf()
+        plotly::add_sf()
     })
 
-    observeEvent(event_data("plotly_click", source = "map"), {
+    observeEvent(plotly::event_data("plotly_click", source = "map"), {
       #identify area code from map click
-      cd <- event_data("plotly_click", source = "map")$key[[1]]
+      cd <- plotly::event_data("plotly_click", source = "map")$key[[1]]
       #add to input
       updateSelectizeInput("selectize_inp", session = session, selected = unique(c(input$selectize_inp, cd)))
 
@@ -57,8 +57,8 @@ mod_pt_MapSelect2_server <- function(id, r){
       col = ifelse(ladSF$LAD23CD %in% input$selectize_inp, "#005CBA", "gray80")
 
       #restyle plot to assign new colours
-      plotlyProxy("map", session) %>%
-        plotlyProxyInvoke(
+      plotly:: plotlyProxy("map", session) %>%
+        plotly::plotlyProxyInvoke(
           "restyle",
           list(
             fillcolor = col

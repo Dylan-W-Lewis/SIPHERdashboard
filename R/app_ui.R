@@ -24,17 +24,7 @@ app_ui <- function(request) {
 
       bslib::nav_panel("Area profile",
                value = "area_profile",
-               h3("Area profile"),
-               h2(textOutput("area_title")),
-               bslib::page_fillable(
-                 bslib::layout_columns(
-                   col_widths =  c(6,6),
-                   bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_2")),
-                   bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_3")),
-                   bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_4")),
-                   bslib::card(mod_pt_RandomGraph_ui("pt_RandomGraph_5")),
-                   )
-                 )
+               mod_page_AreaProfile_ui("page_AreaProfile")
                ),
 
       bslib::nav_spacer(),
