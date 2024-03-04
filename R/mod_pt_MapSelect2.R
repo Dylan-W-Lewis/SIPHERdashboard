@@ -16,9 +16,9 @@ mod_pt_MapSelect2_ui <- function(id){
                    choices=c("Choose an area" = "", setNames(ladSF$lad,ladSF$lad_name)),
                    multiple=TRUE,
                    width="100%"),
-    div(style = "margin-top:-100px"),
+    div(style = "margin-top:-120px"),
     shinycssloaders::withSpinner(
-      plotly::plotlyOutput(ns("map"), height = "100vh"),
+      plotly::plotlyOutput(ns("map"), height = "85vh"),
       color = "#005CBA")
   )
 }

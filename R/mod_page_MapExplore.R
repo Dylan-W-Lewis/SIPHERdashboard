@@ -12,11 +12,15 @@ mod_page_MapExplore_ui <- function(id){
   ns <- NS(id)
   tagList(
     bslib::page_fillable(
-      bslib::layout_columns(
+      bslib::layout_sidebar(
         #row_heights = 1,
-        fill = T,
-        col_widths =  c(6,6),
-        mod_pt_MapSelect2_ui(ns("pt_MapSelect_1")),
+        #fill = T,
+        #col_widths =  c(6,6),
+        sidebar = bslib::sidebar(
+          width = "50%",
+          open = "always",
+          mod_pt_MapSelect2_ui(ns("pt_MapSelect_1"))
+          ),
         bslib::layout_columns(
           fill = T,
           #row_heights = c("auto", 6),
