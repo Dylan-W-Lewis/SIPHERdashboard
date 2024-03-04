@@ -18,8 +18,8 @@ mod_page_MapExplore_ui <- function(id){
         col_widths =  c(6,6),
         mod_pt_MapSelect2_ui(ns("pt_MapSelect_1")),
         bslib::layout_columns(
-          fill = F,
-          row_heights = c("auto", 6),
+          fill = T,
+          #row_heights = c("auto", 6),
           col_widths = 12,
           bslib::navset_hidden(
             id="graph_card",
@@ -41,7 +41,7 @@ mod_page_MapExplore_ui <- function(id){
                                     # comparison plot card
                                     bslib::navset_card_pill(
                                       #full_screen = T,
-                                      height = "65vh",
+                                      #height = "65vh",
                                       bslib::nav_panel(
                                         "Demographics",
                                         h5("Ethnicity"),

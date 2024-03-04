@@ -12,7 +12,7 @@
 mod_pt_AreaMap_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotly::plotlyOutput(ns("map"))
+    plotly::plotlyOutput(ns("map"), fill = T)
   )
 }
 
@@ -27,13 +27,13 @@ mod_pt_AreaMap_server <- function(id, r){
       wardDat %>%
         dplyr::filter(sex=="both",
                       age_dv=="all_ages",
-                      ward %in% lookup_wd_lad$WD23CD[lookup_wd_lad$LAD23CD==r$profile]) %>%
+                      ward %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) %>%
         tidyr::pivot_wider(names_from = c(obs, cat), values_from = value)
     })
 
     mapDat <- reactive({
       temp <- filteredDat() #%>% dplyr::filter(obs == r$var_selection[["var"]], cat == r$var_selection[["level"]])
-      output <- wardSF %>% dplyr::right_join(., temp, by=c("WD23CD"="ward"))
+      output <- wardSF %>% dplyr::right_join(., temp, by=c("ward"="ward"))
       return(output)
     })
 
@@ -51,7 +51,7 @@ mod_pt_AreaMap_server <- function(id, r){
         source= "map",
         dat,
         #type = 'scattermapbox',
-        split = ~WD23NM,
+        split = ~ward_name,
         color = I("gray"),
         #color = as.formula(paste0("~", selected_var)),
         #text = as.formula(paste0("~", selected_var)),
@@ -84,7 +84,7 @@ mod_pt_AreaMap_server <- function(id, r){
         colr <- as.data.frame(colorRamp(c("white", "#005CBA"))(varCol/100)) %>%
           purrr::pmap_chr(~paste0("rgba(", ..1, ",", ..2, ",", ..3, ",0.5)"))
 
-        labl <- paste0(mapDat()$WD23NM, ": ", round(varCol, 1), "%")
+        labl <- paste0(mapDat()$ward_name, ": ", round(varCol, 1), "%")
 
         message("restyle")
 

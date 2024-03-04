@@ -35,7 +35,7 @@ mod_pt_AreaSelections_server <- function(id, r){
         purrr::map(r$selected_area, function(.x){
           fluidRow(
             column(8,
-                   unique(lookup_wd_lad$LAD23NM[lookup_wd_lad$LAD23CD==.x])),
+                   unique(lookup_wd_lad$lad_name[lookup_wd_lad$lad==.x])),
             column(4,
                    #actionButton(ns(.x), label = .x)
                    mod_pt_AreaSelections_button_ui(ns(paste0("button", .x)))

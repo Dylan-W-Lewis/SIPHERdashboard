@@ -31,5 +31,5 @@ app_server <- function(input, output, session) {
   mod_page_MapExplore_server("page_MapExplore", r=r, parent.session = session)
 
   #server page 2
-  mod_page_AreaProfile_server("page_AreaProfile", r=r)
+  mod_page_AreaProfile2_server("page_AreaProfile", r=r)
 }

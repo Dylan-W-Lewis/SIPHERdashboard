@@ -28,15 +28,18 @@ Data is currently aggregated at three resolutions: country, local authority, LSO
 ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_code_export.csv"),
                     show_col_types = FALSE)
 glimpse(ctrDat)
+
 #read local autority data
 ladDat <- read_csv(paste0(dataPath, "/ROutput/lad_export.csv"),
                     show_col_types = FALSE)
 glimpse(ladDat)
+
 # read LSOA (2011) data
 #lsoaDat <- read_csv(paste0(dataPath, "/ROutput/lsoa11_export.csv"),
 #                    show_col_types = FALSE)
 #glimpse(lsoaDat)
 
+#read ward data
 wardDat <- read_csv(paste0(dataPath, "/ROutput/ward_export.csv"),
                     show_col_types = FALSE)
 glimpse(wardDat)
@@ -76,10 +79,10 @@ Also this lookup file is for LSOA->LAD->Country, we want Ward->LAD->Country
 
 ```{r lookup 2}
 # lookup file for wards
-lookup_wd_lad <- read_csv(paste0(dataPath, "/geo_lookup/Ward_to_Local_Authority_District_to_County_to_Region_to_Country_(May_2023)_Lookup_in_United_Kingdom.csv"),
+lookup_wd_lad <- read_csv(paste0(dataPath, "/geo_lookup/Ward_to_Local_Authority_District_(December_2022)_Lookup_in_the_United_Kingdom.csv"),
                    show_col_types = FALSE)
 
-lookup_wd_lad <- lookup_wd_lad %>% select(WD23CD, WD23NM, LAD23CD, LAD23NM, CTRY23CD, CTRY23NM)
+lookup_wd_lad <- lookup_wd_lad %>% select(ward = WD22CD, ward_name = WD22NM, lad = LAD22CD, lad_name = LAD22NM)
 ```
 
 
@@ -87,13 +90,22 @@ lookup_wd_lad <- lookup_wd_lad %>% select(WD23CD, WD23NM, LAD23CD, LAD23NM, CTRY
 Load in shapefiles, filter for LADs available in data
 ```{r load in shapefiles}
 library(sf)
-ladSF <- sf::read_sf(paste0(dataPath, "/topo/Local_Authority_Districts/LAD_DEC_2023_UK_BSC.shp"))
-wardSF <- sf::read_sf(paste0(dataPath, "/topo/Wards/WD_DEC_2023_UK_BSC.shp"))
-#remove NI LADs
-ladSF <- ladSF %>% filter(LAD23CD %in% unique(ladDat$lad))
-wardSF <- wardSF %>% filter(WD23CD %in% unique(wardDat$ward))
+ladSF_raw <- sf::read_sf(paste0(dataPath, "/topo/Local_Authority_Districts/LAD_DEC_2021_GB_BUC.shp"))
+wardSF_raw <- sf::read_sf(paste0(dataPath, "/topo/Wards/WD_DEC_22_GB_BSC.shp"))
+#remove areas not in dataset
+ladSF <- ladSF_raw %>%
+  filter(LAD21CD %in% unique(ladDat$lad)) %>%
+  rename(lad_name = LAD21NM,
+         lad = LAD21CD,
+         lad_welsh = LAD21NMW)
+wardSF <- wardSF_raw %>%
+  filter(WD22CD %in% unique(wardDat$ward)) %>%
+  rename(ward_name = WD22NM,
+         ward = WD22CD,
+         ward_welsh = WD22NMW)
 #ggplot(data=ladSF) +geom_sf()
-# problem!! these are not 2011 shapefiles, so some are missing
+# usethis::use_data(ladSF, overwrite = T)
+# usethis::use_data(wardSF, overwrite = T)
 ```
 
 

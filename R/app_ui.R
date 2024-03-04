@@ -27,7 +27,7 @@ app_ui <- function(request) {
 
       bslib::nav_panel("Area profile",
                value = "area_profile",
-               mod_page_AreaProfile_ui("page_AreaProfile")
+               mod_page_AreaProfile2_ui("page_AreaProfile")
                ),
 
       bslib::nav_spacer(),

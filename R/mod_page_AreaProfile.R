@@ -43,7 +43,7 @@ mod_page_AreaProfile_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
-    output$area_title <- renderText(unique(lookup_wd_lad$LAD23NM[lookup_wd_lad$LAD23CD==r$profile]))
+    output$area_title <- renderText(unique(lookup_wd_lad$lad_name[lookup_wd_lad$lad==r$profile]))
 
     mod_pt_RandomGraph_server("RandomGraph")
     mod_pt_RandomGraph_server("RandomGraph_2")

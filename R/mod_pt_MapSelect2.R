@@ -13,11 +13,13 @@ mod_pt_MapSelect2_ui <- function(id){
   tagList(
     selectizeInput(ns("selectize_inp"),
                    label = "",
-                   choices=c("Choose an area" = "", setNames(ladSF$LAD23CD,ladSF$LAD23NM)),
+                   choices=c("Choose an area" = "", setNames(ladSF$lad,ladSF$lad_name)),
                    multiple=TRUE,
                    width="100%"),
-    div(style = "margin-top:-15px"),
-    plotly::plotlyOutput(ns("map"))
+    div(style = "margin-top:-100px"),
+    shinycssloaders::withSpinner(
+      plotly::plotlyOutput(ns("map"), height = "100vh"),
+      color = "#005CBA")
   )
 }
 
@@ -32,12 +34,12 @@ mod_pt_MapSelect2_server <- function(id, r){
     output$map <- plotly::renderPlotly({
       ladSF %>%
         plotly::plot_ly(
-          key = ~LAD23CD,
-          split = ~LAD23CD,
+          key = ~lad,
+          split = ~lad,
           color = I("gray"),
           source = "map",
           showlegend = FALSE,
-          text = ~LAD23NM,
+          text = ~lad_name,
           hoveron = "fills",
           hoverinfo="text"
         ) %>%
@@ -54,7 +56,7 @@ mod_pt_MapSelect2_server <- function(id, r){
 
     observeEvent(input$selectize_inp, {
       #pick colour based on selection
-      col = ifelse(ladSF$LAD23CD %in% input$selectize_inp, "#005CBA", "gray80")
+      col = ifelse(ladSF$lad %in% input$selectize_inp, "#005CBA", "gray80")
 
       #restyle plot to assign new colours
       plotly:: plotlyProxy("map", session) %>%
