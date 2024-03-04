@@ -9,6 +9,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   r <- reactiveValues()
   r$profile <- "E06000001"
+  Sys.setenv(MAPBOX_TOKEN = 11122223333444)
 
   mod_pt_AreaMap_server("areamap", r=r)
 

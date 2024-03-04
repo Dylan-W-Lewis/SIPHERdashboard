@@ -13,7 +13,7 @@ mod_pt_MapSelect2_ui <- function(id){
   tagList(
     selectizeInput(ns("selectize_inp"),
                    label = "",
-                   choices=c("Choose an area" = "", set_names(ladSF$LAD23CD,ladSF$LAD23NM)),
+                   choices=c("Choose an area" = "", setNames(ladSF$LAD23CD,ladSF$LAD23NM)),
                    multiple=TRUE,
                    width="100%"),
     div(style = "margin-top:-15px"),

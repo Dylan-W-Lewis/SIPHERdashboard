@@ -16,8 +16,11 @@ mod_page_AreaProfile_ui <- function(id){
         bslib::layout_columns(
           col_widths = 12,
           row_heights = "auto",
-          h4("Area profile"),
+          em("Area profile"),
           h2(textOutput(ns("area_title"))),
+          #bslib::card(
+            mod_pt_VarLevelSelect_ui(ns("pt_VarLevelSelect_1")),
+          #),
           bslib::card(
             mod_pt_AreaMap_ui(ns("pt_AreaMap_1"))
           )
@@ -45,6 +48,7 @@ mod_page_AreaProfile_server <- function(id, r){
     mod_pt_RandomGraph_server("RandomGraph")
     mod_pt_RandomGraph_server("RandomGraph_2")
     mod_pt_AreaMap_server("pt_AreaMap_1", r=r)
+    mod_pt_VarLevelSelect_server("pt_VarLevelSelect_1", r=r)
 
   })
 }

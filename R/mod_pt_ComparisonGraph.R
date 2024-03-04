@@ -7,6 +7,8 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+#' @importFrom dplyr filter group_by
+#' @importFrom ggplot2 ggplot aes geom_col coord_flip theme
 mod_pt_ComparisonGraph_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -24,20 +26,20 @@ mod_pt_ComparisonGraph_server <- function(id, r, var){
     ns <- session$ns
     dat <- reactive({
       ladDat %>%
-        filter(sex=="both",
+        dplyr::filter(sex=="both",
              age_dv=="all_ages",
              lad %in% r$selected_area,
              obs==var) %>%
-        group_by(lad)
+        dplyr::group_by(lad)
     })
 
     output$graph <- renderPlot({
       if(!is.null(r$selected_area)) {
         dat() %>%
-          ggplot2::ggplot(aes(x=lad, y=value, fill=cat)) +
-          geom_col() +
-          coord_flip() +
-          theme(legend.position = "top")
+          ggplot2::ggplot(ggplot2::aes(x=lad, y=value, fill=cat)) +
+          ggplot2::geom_col() +
+          ggplot2::coord_flip() +
+          ggplot2::theme(legend.position = "top")
       }
 
     })

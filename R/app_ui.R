@@ -18,6 +18,9 @@ app_ui <- function(request) {
       #theme=bslib::bs_theme(version = 5, preset = "bootstrap", "navbar-bg" = "#005398"),
 
       #navbar content
+      bslib::nav_panel("Home",
+                       value = "home"),
+
       bslib::nav_panel("Map Explore",
                value = "map_explore",
                mod_page_MapExplore_ui("page_MapExplore")),

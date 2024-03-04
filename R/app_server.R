@@ -11,6 +11,9 @@ app_server <- function(input, output, session) {
   # define global reactiveValues
   r <- reactiveValues()
 
+  # set arbitrary mapbox token - this is not used but needs to be in env
+  Sys.setenv(MAPBOX_TOKEN = 11122223333444)
+
   # navigation logic
   observeEvent(input$topBar, {
     r$active_page <- input$topBar
