@@ -68,17 +68,25 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
       categR()
       fillDat()
       }, {
-      if(!is.null(varbl)&&!is.null(categ)){
+
+      #if(!is.null(varbl)&&!is.null(categ)){
         values <- fillDat() %>%
           dplyr::filter(obs == varblR(),
                         cat == categR()) %>%
           dplyr::pull(value)
 
+        print(paste0("expected n wards = ",
+                     nrow(mapDat()),
+                     ".  rows in fill data =",
+                     nrow(fillDat())))
+
+        print(paste0("vals length = ", length(values)))
+
 
         colr <- as.data.frame(colorRamp(c("white", "#005CBA"))(values/max(values))) %>%
           purrr::pmap_chr(~rgb(..1,..2,..3, maxColorValue = 255))
 
-        if(codebook$mean[codebook$obs==varbl]==T){
+        if(codebook$mean[codebook$obs==varbl()]==T){
           labl <- paste0(mapDat()$ward_name, ": ", round(values, 2))
         } else {
           labl <- paste0(mapDat()$ward_name, ": ", round(values, 1), "%")
@@ -87,7 +95,7 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
         leaflet::leafletProxy("map", data = mapDat()) %>%
           leaflet::clearShapes() %>%
           leaflet::addPolygons(fillColor = colr, fillOpacity=0.8, weight = 2, color= "#CCCCCC", label = labl)
-      }
+      #}
     })
 
   })

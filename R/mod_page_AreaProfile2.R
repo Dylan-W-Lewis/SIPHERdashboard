@@ -20,21 +20,23 @@ mod_page_AreaProfile2_ui <- function(id){
                              h2(textOutput(ns("area_title"))),
                              bslib::navset_bar(position = "fixed-bottom",
                                                bslib::nav_spacer(),
-                                               bslib::nav_panel("Poverty",
-                                                 mod_pt_VarLevelSelect_ui(ns("pt_VarLevelSelect_1")),
+                                               bslib::nav_panel("Income & Employment",
+                                                                mod_pt_profile_poverty_ui(ns("pt_profile_poverty"))),
+                                               bslib::nav_panel("Health",
                                                  p(textOutput(ns("intro_text"))),
                                                  bslib::card(
                                                    bslib::card_body(plotly::plotlyOutput(ns("plotly")),
                                                                     min_height = 150)),
                                                  bslib::value_box("Compared to other ares", "2nd"),
                                                  p(textOutput(ns("more_text"))),
+                                                 mod_pt_VarLevelSelect_ui(ns("pt_VarLevelSelect_1")),
                                                  bslib::card(
                                                    bslib::card_body(mod_pt_AreaMap2_ui(ns("pt_AreaMap_1")),
                                                                     min_height = 150)),
                                                  bslib::card(mod_pt_RandomGraph_ui(ns("RandomGraph"))),
 
                                                  ),
-                                               bslib::nav_panel("Loneliness"),
+                                               bslib::nav_panel("Housing"),
                                                bslib::nav_spacer()
                              )
                            )
@@ -52,6 +54,12 @@ mod_page_AreaProfile2_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
+    observeEvent(r$profile, ignoreNULL = F, {
+      if(is.null(r$profile)){
+        r$profile <- "S12000049"
+      }
+    })
+
     output$area_title <- renderText(unique(lookup_wd_lad$lad_name[lookup_wd_lad$lad==r$profile]))
 
     output$intro_text <- renderText(shinipsum::random_text(nwords = 50))
@@ -64,6 +72,8 @@ mod_page_AreaProfile2_server <- function(id, r){
     mod_pt_VarLevelSelect_server("pt_VarLevelSelect_1", r=r)
 
     mod_pt_RandomGraph_server("RandomGraph")
+
+    mod_pt_profile_poverty_server("pt_profile_poverty", r=r)
 
 
   })
