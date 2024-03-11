@@ -23,7 +23,7 @@ mod_pt_VarLevelSelect_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     observeEvent(input$var,{
-      updateSelectInput(inputId = "level", choices = dplyr::pull(codebook$cat[codebook$obs==input$var][[1]]))
+      updateSelectInput(inputId = "level", choices = get_cats(input$var))
     })
 
     observe({

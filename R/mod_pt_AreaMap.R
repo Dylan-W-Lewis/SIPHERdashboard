@@ -26,14 +26,14 @@ mod_pt_AreaMap_server <- function(id, r){
     filteredDat <- reactive({
       wardDat %>%
         dplyr::filter(sex=="both",
-                      age_dv=="all_ages",
-                      ward %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) %>%
+                      age=="all ages",
+                      area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) %>%
         tidyr::pivot_wider(names_from = c(obs, cat), values_from = value)
     })
 
     mapDat <- reactive({
       temp <- filteredDat() #%>% dplyr::filter(obs == r$var_selection[["var"]], cat == r$var_selection[["level"]])
-      output <- wardSF %>% dplyr::right_join(., temp, by=c("ward"="ward"))
+      output <- wardSF %>% dplyr::right_join(., temp, by=c("ward"="area"))
       return(output)
     })
 

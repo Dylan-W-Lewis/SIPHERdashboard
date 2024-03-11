@@ -1,6 +1,6 @@
 #' pt_AreaMap2 UI Function
 #'
-#' @description A shiny Module.
+#' @description Create a choropleth map of a local area. Allow user to provide fill variable.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
@@ -25,14 +25,14 @@ mod_pt_AreaMap2_server <- function(id, r){
     filteredDat <- reactive({
       wardDat %>%
         dplyr::filter(sex=="both",
-                      age_dv=="all_ages",
-                      ward %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) %>%
+                      age=="all ages",
+                      area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) %>%
         tidyr::pivot_wider(names_from = c(obs, cat), values_from = value)
     })
 
     mapDat <- reactive({
       temp <- filteredDat() #%>% dplyr::filter(obs == r$var_selection[["var"]], cat == r$var_selection[["level"]])
-      output <- wardSF %>% dplyr::right_join(., temp, by=c("ward"="ward")) %>% st_transform(crs = "WGS84")
+      output <- wardSF %>% dplyr::right_join(., temp, by=c("ward"="area")) %>% sf::st_transform(crs = "WGS84")
       return(output)
     })
 
@@ -40,6 +40,7 @@ mod_pt_AreaMap2_server <- function(id, r){
     output$map <- leaflet::renderLeaflet(
       leaflet::leaflet(mapDat()) %>%
         leaflet::addProviderTiles("CartoDB.Positron") %>%
+        leaflet::addPolylines(weight = 2, color= "#CCCCCC") %>%
         leaflet::fitBounds(min(mapDat()$LONG), min(mapDat()$LAT), max(mapDat()$LONG), max(mapDat()$LAT),
                            options = list(padding = c(50,50)))
     )

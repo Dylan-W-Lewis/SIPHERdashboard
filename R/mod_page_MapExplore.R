@@ -47,18 +47,28 @@ mod_page_MapExplore_ui <- function(id){
                                       #full_screen = T,
                                       #height = "65vh",
                                       bslib::nav_panel(
-                                        "Demographics",
+                                        "Constraints",
                                         h5("Ethnicity"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_1")),
                                         h5("Marital status"),
-                                        mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_2"))
+                                        mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_2")),
+                                        h5("General health"),
+                                        mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_3")),
+                                        h5("Employment status"),
+                                        mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_4")),
+                                        h5("Highest qualification"),
+                                        mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_5")),
+                                        h5("Household composition"),
+                                        mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_6")),
+                                        h5("Housing tenure"),
+                                        mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_7"))
                                       ),
                                       bslib::nav_panel(
-                                        "Health",
-                                        #mod_pt_ComparisonGraph_ui("pt_ComparisonGraph_1")
+                                        "Health & wellbeing"
+
                                       ),
                                       bslib::nav_panel(
-                                        "Employment",
+                                        "Income & employment",
                                         #mod_pt_ComparisonGraph_ui("pt_ComparisonGraph_1")
                                       )
                                     )
@@ -84,8 +94,13 @@ mod_page_MapExplore_server <- function(id, r, parent.session){
       }
     })
 
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_1", r=r, var="racel_dv")
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_2", r=r, var="marstat")
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_1", r=r, var="ethnicity")
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_2", r=r, var="marital status")
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_3", r=r, var="general health")
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_4", r=r, var="employment status")
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_5", r=r, var="highest qualification")
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_6", r=r, var="household composition / type")
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_7", r=r, var="household tenure")
 
     mod_pt_MapSelect2_server("pt_MapSelect_1", r = r)
     mod_pt_AreaSelections_server("pt_AreaSelections_1", r = r)

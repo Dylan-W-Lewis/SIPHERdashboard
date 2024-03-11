@@ -25,24 +25,32 @@ Data is currently aggregated at three resolutions: country, local authority, LSO
 
 ```{r load aggregated data}
 #read country data
-ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_code_export.csv"),
-                    show_col_types = FALSE)
-glimpse(ctrDat)
+ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_export_labels.csv"),
+                     show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
+# ctrRaw <- read_csv(paste0(dataPath, "/ROutput/ctr_code_export.csv"),
+#                     show_col_types = FALSE)
+# ctrDat <- ctrRaw %>% select(!c("ctr_code", "value")) %>% cbind(., ctrLabelled)
+ glimpse(ctrDat)
 
 #read local autority data
-ladDat <- read_csv(paste0(dataPath, "/ROutput/lad_export.csv"),
-                    show_col_types = FALSE)
+ladDat <- read_csv(paste0(dataPath, "/ROutput/lad_export_labels.csv"),
+                    show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
 glimpse(ladDat)
 
-# read LSOA (2011) data
-#lsoaDat <- read_csv(paste0(dataPath, "/ROutput/lsoa11_export.csv"),
-#                    show_col_types = FALSE)
+# read LSOA (2021) data
+#lsoaDat <- read_csv(paste0(dataPath, "/ROutput/lsoa21_export_labels.csv"),
+#                    show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
 #glimpse(lsoaDat)
 
 #read ward data
-wardDat <- read_csv(paste0(dataPath, "/ROutput/ward_export.csv"),
-                    show_col_types = FALSE)
+wardDat <- read_csv(paste0(dataPath, "/ROutput/ward_export_labels.csv"),
+                    show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
 glimpse(wardDat)
+
+#read GB data
+gbDat <- read_csv(paste0(dataPath, "/ROutput/gb_export_labels.csv"),
+                    show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
+glimpse(gbDat)
 ```
 
 ### Geo lookup
@@ -112,11 +120,18 @@ wardSF <- wardSF_raw %>%
 ### Code book
 create codebook to lookup variable names and levels
 ```{r codebook}
-codebook <- ctrDat %>%
-  select(obs, cat) %>%
-  unique() %>%
-  nest_by(obs, .key = "cat")
-#can add names later
+codebook <- read.csv(paste0(dataPath,
+                            "/codebook/codebook.csv"))
+codebook <- codebook %>% 
+  nest_by(obs, .key = "cat") %>%
+  mutate(mean = ifelse(nrow(cat)==1, T, F))#%>%
+#   mutate(section = case_match(obs,
+#                               c("employment status",
+#                                 "highest educational qualification",
+#                                 "marital status",
+#                                 "ethnicity",)
+#                               ))
+
 ```
 
 ### testing maps
