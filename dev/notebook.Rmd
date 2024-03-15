@@ -162,17 +162,25 @@ pivot_scale_label <- function(dat) {
   ungroup()
 } 
 
-ladDatScaled <- ladDat %>% pivot_scale_label()
-
-ladDatScaledLong <- ladDatScaled %>%
+pivot_back_long <- function(dat) {
+  dat %>%
  pivot_longer(cols = contains("_"), names_to = c("obs", "cat", ".value"), names_sep = "_")
+}
+
+ladDatScaled <- ladDat %>% pivot_scale_label()
+ladDatScaledLong <- ladDatScaled %>% pivot_back_long()
 
 wardDatScaled <- wardDat %>% pivot_scale_label()
+wardDatScaledLong <- wardDatScaled %>% pivot_back_long()
 
-wardDatScaledLong <- wardDatScaled %>%
- pivot_longer(cols = contains("_"), names_to = c("obs", "cat", ".value"), names_sep = "_")
+gbDatScaled <- gbDat %>% pivot_scale_label()
+gbDatScaledLong <- gbDatScaled %>% pivot_back_long() %>% mutate(scaled = 0)
 
+ladDat <- ladDatScaledLong
 wardDat <- wardDatScaledLong
+gbDat <- gbDatScaledLong
+
+
 ```
 
 

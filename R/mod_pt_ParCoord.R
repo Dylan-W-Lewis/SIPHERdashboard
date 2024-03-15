@@ -26,21 +26,21 @@ mod_pt_ParCoord_server <- function(id, dat){
     plotDat <- reactive({
       toPlot <- dat() %>%
         dplyr::mutate(
-          scaled = scale(value),
-          alpha = dplyr::if_else(geo=="Wards", 0.5, 1))
+          #scaled = scale(value),
+          alpha = dplyr::if_else(geo=="Wards", 0.7, 1))
 
-      means <- codebook$mean[match(toPlot$obs, codebook$obs)]
-
-      toPlot$label[means] <- paste0(round(toPlot$value[means], 2), " (avg.)")
-      toPlot$label[!means] <- paste0(round(toPlot$value[!means], 2), "%")
-
-      return(toPlot)
+      # means <- codebook$mean[match(toPlot$obs, codebook$obs)]
+      #
+      # toPlot$label[means] <- paste0(round(toPlot$value[means], 2), " (avg.)")
+      # toPlot$label[!means] <- paste0(round(toPlot$value[!means], 2), "%")
+      #
+       return(toPlot)
     })
 
     output$par_coords <- plotly::renderPlotly(
       plotly::ggplotly(
         ggplot2::ggplot(plotDat(),
-                        ggplot2::aes(obs, scaled, text = label, group=area, color=geo, alpha=alpha)) +
+                        ggplot2::aes(obs, scaled, text = labelled, group=area, color=geo, alpha=alpha, linetype = geo)) +
           ggplot2::geom_point() +
           ggplot2::geom_line() +
           ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 20)) +
@@ -51,6 +51,7 @@ mod_pt_ParCoord_server <- function(id, dat){
                          legend.position = "top") +
           ggplot2::labs(color = NULL,
                         alpha = NULL,
+                        linetype= NULL,
                         x = NULL),
         tooltip = c("text")
       )  %>%

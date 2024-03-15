@@ -72,18 +72,21 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
       #if(!is.null(varbl)&&!is.null(categ)){
         values <- fillDat() %>%
           dplyr::filter(obs == varblR(),
-                        cat == categR()) %>%
-          dplyr::pull(value)
+                        cat == categR()) #%>%
+          #dplyr::pull(scaled)
 
 
-        scaledValues <- (values-min(values))/(max(values)-min(values))
+
+        # "#52473B"
+        #scaledValues <- (values$scaled-min(values$scaled))/(max(values$scaled)-min(values$scaled))
+        scaledValues <- pmax(pmin((values$scaled/10)+0.5, 1), 0)
         colr <- as.data.frame(colorRamp(c("white", "#005CBA"))(scaledValues)) %>%
           purrr::pmap_chr(~rgb(..1,..2,..3, maxColorValue = 255))
 
         if(codebook$mean[codebook$obs==varbl()]==T){
-          labl <- paste0(mapDat()$ward_name, ": ", round(values, 2))
+          labl <- paste0(mapDat()$ward_name, ": ", values$labelled)
         } else {
-          labl <- paste0(mapDat()$ward_name, ": ", round(values, 1), "%")
+          labl <- paste0(mapDat()$ward_name, ": ", values$labelled)
         }
 
         leaflet::leafletProxy("map", data = mapDat()) %>%
