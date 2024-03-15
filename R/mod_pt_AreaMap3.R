@@ -75,15 +75,9 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
                         cat == categR()) %>%
           dplyr::pull(value)
 
-        print(paste0("expected n wards = ",
-                     nrow(mapDat()),
-                     ".  rows in fill data =",
-                     nrow(fillDat())))
 
-        print(paste0("vals length = ", length(values)))
-
-
-        colr <- as.data.frame(colorRamp(c("white", "#005CBA"))(values/max(values))) %>%
+        scaledValues <- (values-min(values))/(max(values)-min(values))
+        colr <- as.data.frame(colorRamp(c("white", "#005CBA"))(scaledValues)) %>%
           purrr::pmap_chr(~rgb(..1,..2,..3, maxColorValue = 255))
 
         if(codebook$mean[codebook$obs==varbl()]==T){

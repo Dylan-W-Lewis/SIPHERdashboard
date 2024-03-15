@@ -16,3 +16,10 @@ get_cats <- function(var) {
   }
   return(cats)
 }
+
+var_names <- function(vars){
+  quoted <- paste0("'", vars, "'")
+  commas <- paste0(quoted[1:length(quoted)-1], collapse = ", ")
+  full <- paste0(commas, ", and ", quoted[length(quoted)])
+  return(full)
+}

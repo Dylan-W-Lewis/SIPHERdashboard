@@ -20,9 +20,11 @@ mod_page_AreaProfile2_ui <- function(id){
                              h2(textOutput(ns("area_title"))),
                              bslib::navset_bar(position = "fixed-bottom",
                                                bslib::nav_spacer(),
+                                               bslib::nav_panel("Health & wellbeing",
+                                                                mod_pt_profile_health_ui(ns("health"))),
                                                bslib::nav_panel("Income & Employment",
-                                                                mod_pt_profile_poverty_ui(ns("pt_profile_poverty"))),
-                                               bslib::nav_panel("Health",
+                                                                mod_pt_profile_poverty_ui(ns("income"))),
+                                               bslib::nav_panel("Demo",
                                                  p(textOutput(ns("intro_text"))),
                                                  bslib::card(
                                                    bslib::card_body(plotly::plotlyOutput(ns("plotly")),
@@ -73,7 +75,8 @@ mod_page_AreaProfile2_server <- function(id, r){
 
     mod_pt_RandomGraph_server("RandomGraph")
 
-    mod_pt_profile_poverty_server("pt_profile_poverty", r=r)
+    mod_pt_profile_poverty_server("income", r=r)
+    mod_pt_profile_health_server("health", r=r)
 
 
   })
