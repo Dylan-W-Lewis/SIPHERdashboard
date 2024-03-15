@@ -53,6 +53,7 @@ gbDat <- read_csv(paste0(dataPath, "/ROutput/gb_export_labels.csv"),
 glimpse(gbDat)
 ```
 
+
 ### Geo lookup
 
 ```{r load geo link}
@@ -139,4 +140,39 @@ codebook <- codebook %>%
 testSF <- wardSF %>% filter(WD23CD %in% lookup_wd_lad$WD23CD[lookup_wd_lad$LAD23CD=="E06000001"])
 plot(testSF)
 ```
+
+### scaling and labelling for graphs
+
+```{r scaling labelling}
+pivot_scale_label <- function(dat) {
+  dat %>%
+  tidyr::pivot_wider(names_from = c(obs, cat), values_from = value) %>%
+  group_by(age, sex)  %>%
+  rename_with(.cols = contains("_"),  ~paste0(.x, "_value")) %>%
+  mutate(across(starts_with(codebook$obs[codebook$mean]),
+                            ~paste0(round(.x, 1), " (avg.)"),
+                            .names = "{.col}_labelled"),
+         across(starts_with(codebook$obs[!codebook$mean]),
+                            ~paste0(round(.x, 2), "%"),
+                            .names = "{.col}_labelled"),
+         across(where(is.numeric),
+                ~as.vector(scale(.x)),
+                .names = "{.col}_scaled")) %>%
+  rename_with(.cols = matches("(_labelled)|(_scaled)"), ~str_remove(.x, "_value")) %>%
+  ungroup()
+} 
+
+ladDatScaled <- ladDat %>% pivot_scale_label()
+
+ladDatScaledLong <- ladDatScaled %>%
+ pivot_longer(cols = contains("_"), names_to = c("obs", "cat", ".value"), names_sep = "_")
+
+wardDatScaled <- wardDat %>% pivot_scale_label()
+
+wardDatScaledLong <- wardDatScaled %>%
+ pivot_longer(cols = contains("_"), names_to = c("obs", "cat", ".value"), names_sep = "_")
+
+wardDat <- wardDatScaledLong
+```
+
 
