@@ -23,21 +23,8 @@ mod_page_AreaProfile2_ui <- function(id){
                                                bslib::nav_panel("Health & wellbeing",
                                                                 mod_pt_profile_health_ui(ns("health"))),
                                                bslib::nav_panel("Income & Employment",
-                                                                mod_pt_profile_poverty_ui(ns("income"))),
-                                               bslib::nav_panel("Demo",
-                                                 p(textOutput(ns("intro_text"))),
-                                                 bslib::card(
-                                                   bslib::card_body(plotly::plotlyOutput(ns("plotly")),
-                                                                    min_height = 150)),
-                                                 bslib::value_box("Compared to other ares", "2nd"),
-                                                 p(textOutput(ns("more_text"))),
-                                                 mod_pt_VarLevelSelect_ui(ns("pt_VarLevelSelect_1")),
-                                                 bslib::card(
-                                                   bslib::card_body(mod_pt_AreaMap2_ui(ns("pt_AreaMap_1")),
-                                                                    min_height = 150)),
-                                                 bslib::card(mod_pt_RandomGraph_ui(ns("RandomGraph"))),
-
-                                                 ),
+                                                                mod_pt_profile_poverty_ui(ns("income"))
+                                                                ),
                                                bslib::nav_panel("Housing"),
                                                bslib::nav_spacer()
                              )
@@ -70,10 +57,6 @@ mod_page_AreaProfile2_server <- function(id, r){
 
     output$plotly <- plotly::renderPlotly(shinipsum::random_ggplotly())
 
-    mod_pt_AreaMap2_server("pt_AreaMap_1", r=r)
-    mod_pt_VarLevelSelect_server("pt_VarLevelSelect_1", r=r)
-
-    mod_pt_RandomGraph_server("RandomGraph")
 
     mod_pt_profile_poverty_server("income", r=r)
     mod_pt_profile_health_server("health", r=r)

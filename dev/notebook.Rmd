@@ -164,7 +164,8 @@ pivot_scale_label <- function(dat) {
 
 pivot_back_long <- function(dat) {
   dat %>%
- pivot_longer(cols = contains("_"), names_to = c("obs", "cat", ".value"), names_sep = "_")
+    pivot_longer(cols = contains("_"), names_to = c("obs", "cat", ".value"), names_sep = "_") #%>%
+    #mutate(across(where(is.numeric), ~replace_na(.x, 0)))
 }
 
 ladDatScaled <- ladDat %>% pivot_scale_label()
@@ -176,9 +177,9 @@ wardDatScaledLong <- wardDatScaled %>% pivot_back_long()
 gbDatScaled <- gbDat %>% pivot_scale_label()
 gbDatScaledLong <- gbDatScaled %>% pivot_back_long() %>% mutate(scaled = 0)
 
-ladDat <- ladDatScaledLong
-wardDat <- wardDatScaledLong
-gbDat <- gbDatScaledLong
+#ladDat <- ladDatScaledLong
+#wardDat <- wardDatScaledLong
+#gbDat <- gbDatScaledLong
 
 
 ```

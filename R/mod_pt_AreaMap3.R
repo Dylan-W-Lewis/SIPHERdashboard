@@ -59,7 +59,7 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
       filtered <- wardDat %>%
         dplyr::filter(sex=="both",
                       age=="all ages")
-      output <- mapDat() %>% select(ward, ward_name) %>% left_join(., filtered, by=c("ward" = "area"))
+      output <- mapDat() %>% dplyr::select(ward, ward_name) %>% dplyr::left_join(., filtered, by=c("ward" = "area"))
       return(output) #[match(mapDat()$ward, filtered$area),])
     })
 
@@ -80,8 +80,8 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
         # "#52473B"
         #scaledValues <- (values$scaled-min(values$scaled))/(max(values$scaled)-min(values$scaled))
         scaledValues <- pmax(pmin((values$scaled/10)+0.5, 1), 0)
-        colr <- as.data.frame(colorRamp(c("white", "#005CBA"))(scaledValues)) %>%
-          purrr::pmap_chr(~rgb(..1,..2,..3, maxColorValue = 255))
+        colr <- as.data.frame(colorRamp(c("brown", "white", "#005CBA"))(scaledValues)) %>%
+          purrr::pmap_chr(~ifelse(is.na(..1), rgb(0.5,0.5,0.5), rgb(..1,..2,..3, maxColorValue = 255)))
 
         if(codebook$mean[codebook$obs==varbl()]==T){
           labl <- paste0(mapDat()$ward_name, ": ", values$labelled)
