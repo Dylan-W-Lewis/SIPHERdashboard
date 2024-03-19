@@ -42,8 +42,13 @@ mod_pt_DemographicsBar_server <- function(id, dat, varbl, categ){
     output$bar <- plotly::renderPlotly(
       plotly::ggplotly(
         plotDat() %>%
-          ggplot2::ggplot(ggplot2::aes(x=age, y=value, fill=sex, text=label)) +
-          ggplot2::geom_col(position = "dodge"),
+          ggplot2::ggplot(ggplot2::aes(x=age, y=value, fill=as.factor(sex), text=label)) +
+          ggplot2::geom_col(position = "dodge") +
+          scale_fill_sipher(palette_name = "full", type = "discrete") +
+          ggplot2::theme_bw()+
+          ggplot2::labs(fill = "Gender", #stringr::str_to_sentence(var),
+                        y= NULL,
+                        x= "Age"),
         tooltip = c("text")
       )
     )

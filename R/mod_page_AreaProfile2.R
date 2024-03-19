@@ -16,9 +16,19 @@ mod_page_AreaProfile2_ui <- function(id){
                            bslib::layout_columns(
                              col_widths = 12,
                              fill = F,
+                             gap=0,
                              em("Area profile"),
-                             h2(textOutput(ns("area_title"))),
+                             h2(textOutput(ns("area_title"), inline = T),
+                                     bslib::popover(
+                                       icon("caret-down"),
+                                       placement = "bottom",
+                                       title = "Change selected area",
+                                       "..."
+                                     ),
+                                ),
+                             #actionButton(ns("switch_area"), label = NULL, icon = icon("repeat"), width="16px"),
                              bslib::navset_bar(position = "fixed-bottom",
+                                               padding = c("0px","0px","70px"),
                                                bslib::nav_spacer(),
                                                bslib::nav_panel("Health & wellbeing",
                                                                 mod_pt_profile_health_ui(ns("health"))),
@@ -26,6 +36,8 @@ mod_page_AreaProfile2_ui <- function(id){
                                                                 mod_pt_profile_poverty_ui(ns("income"))
                                                                 ),
                                                bslib::nav_panel("Housing"),
+                                               bslib::nav_panel("Deprivation"),
+                                               bslib::nav_panel("Lifestyle, Diet & Nutrition"),
                                                bslib::nav_spacer()
                              )
                            )
@@ -49,7 +61,7 @@ mod_page_AreaProfile2_server <- function(id, r){
       }
     })
 
-    output$area_title <- renderText(unique(lookup_wd_lad$lad_name[lookup_wd_lad$lad==r$profile]))
+    output$area_title <- renderText(unique(ladSF$lad_name[ladSF$lad==r$profile]))
 
     output$intro_text <- renderText(shinipsum::random_text(nwords = 50))
 

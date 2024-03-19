@@ -12,12 +12,12 @@ mod_pt_profile_health_ui <- function(id){
   tagList(
     p(textOutput(ns("intro_text"))),
     bslib::card(
-      bslib::card_title("Overview"),
+      bslib::card_title("Overview", padding=c(16,16,0)),
       bslib::card_body(mod_pt_ParCoord_ui(ns("pt_ParCoord")),
                        min_height = 150),
     ),
     bslib::card(
-      bslib::card_title("Health by area"),
+      bslib::card_title("Health by area", padding=c(16,16,0)),
       bslib::card_body(radioButtons(ns("health_map_choices"),
                                     "",
                                     choiceValues=c(#"general health",
@@ -27,17 +27,17 @@ mod_pt_profile_health_ui <- function(id){
                                       "health limits moderate activities",
                                       "feeling lonely"),
                                     choiceNames = c(#"General health",
-                                      "physical health (SF-12)",
-                                      "mental health (SF-12)",
-                                      "subjective wellbeing (GHQ)",
-                                      "health limits moderate activities",
-                                      "feeling lonely"),
+                                      "Physical health (SF-12)",
+                                      "Mental health (SF-12)",
+                                      "Psychological distress (GHQ)",
+                                      "Health limits moderate activites: No (%)",
+                                      "Feeling lonely: Never/hardly ever (%)"),
                                     inline = T
       )),
       bslib::card_body(mod_pt_AreaMap3_ui(ns("pt_AreaMap3_1")),
                        min_height = 150)),
     bslib::card(
-      bslib::card_title("Health by age and gender"),
+      bslib::card_title("Health by age and gender", padding=c(16,16,0)),
       bslib::card_body(radioButtons(ns("bar_choices"),
                                     "",
                                     choiceValues=c(#"general health",
@@ -47,11 +47,11 @@ mod_pt_profile_health_ui <- function(id){
                                       "health limits moderate activities",
                                       "feeling lonely"),
                                     choiceNames = c(#"General health",
-                                      "physical health (SF-12)",
-                                      "mental health (SF-12)",
-                                      "subjective wellbeing (GHQ)",
-                                      "health limits moderate activities",
-                                      "feeling lonely"),
+                                      "Physical health (SF-12)",
+                                      "Mental health (SF-12)",
+                                      "Psychological distress (GHQ)",
+                                      "Health limits moderate activites: No (%)",
+                                      "Feeling lonely: Never/hardly ever (%)"),
                                     inline = T
       )),
       bslib::card_body(mod_pt_DemographicsBar_ui(ns("pt_DemographicsBar")),
@@ -77,7 +77,7 @@ mod_pt_profile_health_server <- function(id, r){
     niceVars <- c(#"General health",
                   "physical health (SF-12)",
                   "mental health (SF-12)",
-                  "subjective wellbeing (GHQ)",
+                  "psychological distress (GHQ)",
                   "health limits moderate activities",
                   "feeling lonely")
 
@@ -96,7 +96,7 @@ mod_pt_profile_health_server <- function(id, r){
     compareDat <- reactive({
 
       dat <- list(profileDatWard(),  profileDatLA(),  profileDatGB())
-      names(dat) <- c("Wards", area_name(), "National average")
+      names(dat) <- c("Wards", area_name(), "GB average")
 
       dat <- purrr::imap(dat,
                          ~dplyr::filter(.x, sex=="both", age=="all ages") %>%

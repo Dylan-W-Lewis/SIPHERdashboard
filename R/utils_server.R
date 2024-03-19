@@ -1,4 +1,6 @@
-#' Get category levels (in correct order) from variable name
+#' get_cats
+#'
+#' @description get category levels (in correct order) from variable name
 #'
 #' @param var variable name
 #'

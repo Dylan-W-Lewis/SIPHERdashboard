@@ -25,9 +25,14 @@ mod_pt_ParCoord_server <- function(id, dat){
 
     plotDat <- reactive({
       toPlot <- dat() %>%
+        dplyr::left_join(., sf::st_drop_geometry(wardSF[, c("ward", "ward_name")]), by=c("area" = "ward")) %>%
         dplyr::mutate(
-          #scaled = scale(value),
-          alpha = dplyr::if_else(geo=="Wards", 0.7, 1))
+          labelled_new = dplyr::if_else(is.na(ward_name),
+                                        stringr::str_c(geo, labelled, sep= ": "),
+                                        stringr::str_c(ward_name, labelled, sep= ": ")),
+          alpha = dplyr::if_else(geo=="Wards", 0.7, 1)
+        )
+
 
       # means <- codebook$mean[match(toPlot$obs, codebook$obs)]
       #
@@ -40,10 +45,17 @@ mod_pt_ParCoord_server <- function(id, dat){
     output$par_coords <- plotly::renderPlotly(
       plotly::ggplotly(
         ggplot2::ggplot(plotDat(),
-                        ggplot2::aes(obs, scaled, text = labelled, group=area, color=geo, alpha=alpha, linetype = geo)) +
+                        ggplot2::aes(obs, scaled, text = labelled_new, group=area, color=geo, alpha=alpha, linetype = geo)) +
           ggplot2::geom_point() +
           ggplot2::geom_line() +
-          ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 20)) +
+          ggplot2::scale_x_discrete(labels = stringr::str_wrap(c("Feeling lonely: Never/hardly ever (%)",
+                                                                 "Health limits moderate activites: No (%)",
+                                                                 "Mental health (SF-12) (mean)",
+                                                                 "Physical health (SF-12) (mean)",
+                                                                 "Psychological distress (GHQ) (mean)"), width = 20)
+                                                               #function(x) stringr::str_wrap(x, width = 20)
+                                    ) +
+          ggplot2::theme_bw() +
           ggplot2::theme(axis.title.y = ggplot2::element_blank(),
                          axis.text.y = ggplot2::element_blank(),
                          axis.ticks.y = ggplot2::element_blank(),
@@ -55,7 +67,7 @@ mod_pt_ParCoord_server <- function(id, dat){
                         x = NULL),
         tooltip = c("text")
       )  %>%
-        plotly::layout(legend = list(orientation = 'h', x = 0.45, y = 1.1))
+        plotly::layout(legend = list(orientation = 'h', x = 0.1, y = 1.12))
     )
 
   })

@@ -22,14 +22,12 @@ mod_pt_ComparisonGraph_ui <- function(id){
 #' pt_ComparisonGraph Server Functions
 #'
 #' @noRd
-mod_pt_ComparisonGraph_server <- function(id, r, var){
+mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    dat <- reactive({
-      ladDat %>%
-        dplyr::filter(sex=="both",
-             age=="all ages",
-             area %in% r$selected_area,
+    plotDat <- reactive({
+      dat() %>%
+        dplyr::filter(
              obs==var) %>%
         dplyr::mutate(cat = factor(cat, levels= get_cats(var))) %>%
         dplyr::group_by(area) #%>%
@@ -39,15 +37,19 @@ mod_pt_ComparisonGraph_server <- function(id, r, var){
 
     output$graph <- renderPlot({
       if(!is.null(r$selected_area)) {
-        dat() %>%
-          ggplot2::ggplot(ggplot2::aes(x=area, y=value, fill=cat)) +
+        plotDat() %>%
+          ggplot2::ggplot(ggplot2::aes(x=lad_name, y=value, fill=cat)) +
           ggplot2::geom_col() +
           ggplot2::coord_flip() +
-          ggplot2::scale_x_discrete(name = NULL,
-                                    labels = ladSF$lad_name[match(r$selected_area, ladSF$lad)]) +
+          # ggplot2::scale_x_discrete(name = NULL#,
+          #                           #labels = ladSF$lad_name[match(dat()$area, ladSF$lad)])
+          #                           )+
+          scale_fill_sipher(palette_name = "full", type = "discrete") +
+          ggplot2::theme_bw() +
           ggplot2::theme(legend.position = "top") +
           ggplot2::labs(fill = NULL, #stringr::str_to_sentence(var),
-                        y= NULL)
+                        y= NULL,
+                        x= NULL)
       }
 
     })

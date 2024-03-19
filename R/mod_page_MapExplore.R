@@ -48,6 +48,11 @@ mod_page_MapExplore_ui <- function(id){
                                       #height = "65vh",
                                       bslib::nav_panel(
                                         "Constraints",
+                                        icon = bslib::tooltip(
+                                                  icon("circle-question"),
+                                                  "Variables used to construct the Synthetic Population",
+                                                  placement = "left"
+                                                ),
                                         h5("Ethnicity"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_1")),
                                         h5("Marital status"),
@@ -94,13 +99,19 @@ mod_page_MapExplore_server <- function(id, r, parent.session){
       }
     })
 
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_1", r=r, var="ethnicity")
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_2", r=r, var="marital status")
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_3", r=r, var="general health")
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_4", r=r, var="employment status")
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_5", r=r, var="highest qualification")
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_6", r=r, var="household composition / type")
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_7", r=r, var="household tenure")
+    comparisonData <- reactive({
+      ladDat %>%
+        dplyr::filter(sex=="both", age=="all ages", area %in% r$selected_area) %>%
+        dplyr::left_join(., sf::st_drop_geometry(ladSF[, c("lad", "lad_name")]), by=c("area" = "lad"))
+      })
+
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_1", r=r, var="ethnicity", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_2", r=r, var="marital status", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_3", r=r, var="general health", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_4", r=r, var="employment status", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_5", r=r, var="highest qualification", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_6", r=r, var="household composition / type", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_7", r=r, var="household tenure", dat=comparisonData)
 
     mod_pt_MapSelect2_server("pt_MapSelect_1", r = r)
     mod_pt_AreaSelections_server("pt_AreaSelections_1", r = r)

@@ -12,14 +12,28 @@ app_ui <- function(request) {
     bslib::page_navbar(
       #page setup
       id = "topBar",
-      title="SIPHER Synthetic Population",
+      title= "SIPHER Synthetic Population",
+        # div(tags$img(
+        # src = "www/sipher_logo.png",
+        # style = "width: 135.7px; height: 55px"
+        # ),
+        # style= "padding: 0px 0px; line-height: 55px; vertical-align: middle;",
+        # "Synthetic Population Dashboard"),
       inverse=TRUE,
       bg= "#005398",
       #theme=bslib::bs_theme(version = 5, preset = "bootstrap", "navbar-bg" = "#005398"),
 
       #navbar content
       bslib::nav_panel("Home",
-                       value = "home"),
+                       value = "home",
+                       div(style = "margin: auto;",
+                           tags$img(
+                             src = "www/sipher_logo.png",
+                             height = 143,
+                             width = 353
+                             )
+                           ),
+                       p("Home page coming soon")),
 
       bslib::nav_panel("Map Explore",
                value = "map_explore",
@@ -29,6 +43,12 @@ app_ui <- function(request) {
                value = "area_profile",
                mod_page_AreaProfile2_ui("page_AreaProfile")
                ),
+
+      bslib::nav_panel("Graph builder",
+                       value = "graph_builder"),
+
+      bslib::nav_panel("Data download",
+                       value = "data_download"),
 
       bslib::nav_spacer(),
 
@@ -55,7 +75,7 @@ golem_add_external_resources <- function() {
     favicon(),
     bundle_resources(
       path = app_sys("app/www"),
-      app_title = "SIPHERdashboard"
+      app_title = "SIPHER Synthetic Population dashboard"
     )
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
