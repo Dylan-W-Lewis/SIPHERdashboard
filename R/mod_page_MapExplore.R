@@ -17,6 +17,7 @@ mod_page_MapExplore_ui <- function(id){
         #fill = T,
         #col_widths =  c(6,6),
         sidebar = bslib::sidebar(
+          padding=0,
           width = "50%",
           open = "always",
           mod_pt_MapSelect2_ui(ns("pt_MapSelect_1"))
