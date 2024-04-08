@@ -31,13 +31,53 @@ mod_page_AreaProfile2_ui <- function(id){
                                                padding = c("0px","0px","70px"),
                                                bslib::nav_spacer(),
                                                bslib::nav_panel("Health & wellbeing",
-                                                                mod_pt_profile_health_ui(ns("health"))),
-                                               bslib::nav_panel("Income & Employment",
-                                                                mod_pt_profile_poverty_ui(ns("income"))
+                                                                mod_pt_profile_ui(ns("health"),
+                                                                                  vars=c("SF-12 Physical Component Summary (mean)",
+                                                                                         "SF-12 Mental Component Summary (mean)",
+                                                                                         "Subjective wellbeing (GHQ): Likert (mean)",
+                                                                                         "health limits moderate activities",
+                                                                                         "feeling lonely"),
+                                                                                  varNames=c("physical health (SF-12)",
+                                                                                             "mental health (SF-12)",
+                                                                                             "psychological distress (GHQ)",
+                                                                                             "health limits moderate activities",
+                                                                                             "feeling lonely"),
+                                                                                  topic="health and wellbeing")
                                                                 ),
-                                               bslib::nav_panel("Housing"),
-                                               bslib::nav_panel("Deprivation"),
-                                               bslib::nav_panel("Lifestyle, Diet & Nutrition"),
+                                               bslib::nav_panel("Income & employment",
+                                                                mod_pt_profile_ui(ns("income"),
+                                                                                   vars=c("total household net income - no deductions (mean)",
+                                                                                          "basic pay hourly rate (mean)",
+                                                                                          "satisfaction with income",
+                                                                                          "universal credit"),
+                                                                                   varNames=c("average household income",
+                                                                                              "average hourly wage",
+                                                                                              "satisfaction with income",
+                                                                                              "universal credit"),
+                                                                                   topic="income and employment")
+                                                                ),
+                                               bslib::nav_panel("Housing & Households",
+                                                                mod_pt_profile_ui(ns("housing"),
+                                                                                  vars=c("monthly housing cost including mortgage principal payments (mean)",
+                                                                                         "keep accommodation warm enough",
+                                                                                         "household has central heating",
+                                                                                         "cares for sick/disabled/elderly in household"),
+                                                                                  varNames=c("average monthly housing cost",
+                                                                                             "able to keep accomodation warm enough",
+                                                                                             "household has central heating",
+                                                                                             "cares for sick/disabled/elderly in household"),
+                                                                                  topic="housing and households")
+                                                                ),
+                                               bslib::nav_panel("Lifestyle, Diet & Nutrition",
+                                                                mod_pt_profile_ui(ns("lifestyle"),
+                                                                                  vars=c("alcohol frequency past 12 months",
+                                                                                         "uses electronic cigarettes",
+                                                                                         "days each week eat vegetables"),
+                                                                                  varNames=c("alcohol consumption",
+                                                                                             "uses electronic cigarettes",
+                                                                                             "frequency of eating vegetables"),
+                                                                                  topic="lifestyle and diet")
+                                                                ),
                                                bslib::nav_spacer()
                              )
                            )
@@ -70,8 +110,46 @@ mod_page_AreaProfile2_server <- function(id, r){
     output$plotly <- plotly::renderPlotly(shinipsum::random_ggplotly())
 
 
-    mod_pt_profile_poverty_server("income", r=r)
-    mod_pt_profile_health_server("health", r=r)
+    mod_pt_profile_server("health", r=r,
+                                 vars=c("SF-12 Physical Component Summary (mean)",
+                                        "SF-12 Mental Component Summary (mean)",
+                                        "Subjective wellbeing (GHQ): Likert (mean)",
+                                        "health limits moderate activities",
+                                        "feeling lonely"),
+                                 varNames=c("physical health (SF-12)",
+                                            "mental health (SF-12)",
+                                            "psychological distress (GHQ)",
+                                            "health limits moderate activities",
+                                            "feeling lonely"),
+                                 topic="health and wellbeing")
+    mod_pt_profile_server("income", r=r,
+                          vars=c("total household net income - no deductions (mean)",
+                                 "basic pay hourly rate (mean)",
+                                 "satisfaction with income",
+                                 "universal credit"),
+                          varNames=c("average houshold income",
+                                     "average hourly wage",
+                                     "satisfaction with income",
+                                     "universal credit"),
+                          topic="income and employment")
+    mod_pt_profile_server("lifestyle", r=r,
+                      vars=c("alcohol frequency past 12 months",
+                             "uses electronic cigarettes",
+                             "days each week eat vegetables"),
+                      varNames=c("alcohol consumption",
+                                 "uses electronic cigarettes",
+                                 "frequency of eating vegetables"),
+                      topic="lifestyle and diet")
+    mod_pt_profile_server("housing", r=r,
+                      vars=c("monthly housing cost including mortgage principal payments (mean)",
+                             "keep accommodation warm enough",
+                             "household has central heating",
+                             "cares for sick/disabled/elderly in household"),
+                      varNames=c("average monthly housing cost",
+                                 "able to keep accomodation warm enough",
+                                 "household has central heating",
+                                 "cares for sick/disabled/elderly in household"),
+                      topic="housing and households")
 
 
   })

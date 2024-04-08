@@ -19,7 +19,7 @@ mod_pt_ParCoord_ui <- function(id){
 #' pt_ParCoord Server Functions
 #'
 #' @noRd
-mod_pt_ParCoord_server <- function(id, dat){
+mod_pt_ParCoord_server <- function(id, dat, varNames){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
@@ -48,11 +48,7 @@ mod_pt_ParCoord_server <- function(id, dat){
                         ggplot2::aes(obs, scaled, text = labelled_new, group=area, color=geo, alpha=alpha, linetype = geo)) +
           ggplot2::geom_point() +
           ggplot2::geom_line() +
-          ggplot2::scale_x_discrete(labels = stringr::str_wrap(c("Feeling lonely: Never/hardly ever (%)",
-                                                                 "Health limits moderate activites: No (%)",
-                                                                 "Mental health (SF-12) (mean)",
-                                                                 "Physical health (SF-12) (mean)",
-                                                                 "Psychological distress (GHQ) (mean)"), width = 20)
+          ggplot2::scale_x_discrete(labels = stringr::str_wrap(varNames, width = 20)
                                                                #function(x) stringr::str_wrap(x, width = 20)
                                     ) +
           ggplot2::theme_bw() +
