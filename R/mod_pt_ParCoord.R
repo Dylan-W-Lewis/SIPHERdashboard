@@ -48,8 +48,8 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
                         ggplot2::aes(obs, scaled, text = labelled_new, group=area, color=geo, alpha=alpha, linetype = geo)) +
           ggplot2::geom_point() +
           ggplot2::geom_line() +
-          ggplot2::scale_x_discrete(labels = stringr::str_wrap(varNames, width = 20)
-                                                               #function(x) stringr::str_wrap(x, width = 20)
+          ggplot2::scale_x_discrete(labels = #stringr::str_wrap(varNames, width = 20)
+                                             function(x) stringr::str_wrap(x, width = 20)
                                     ) +
           ggplot2::theme_bw() +
           ggplot2::theme(axis.title.y = ggplot2::element_blank(),

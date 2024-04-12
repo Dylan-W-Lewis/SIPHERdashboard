@@ -116,7 +116,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
                            reactive(get_cats(input$map_choices)[1])
     )
 
-    mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat, varNames)
+    mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat, varNames) # SOMETHING WRONG
 
     mod_pt_DemographicsBar_server("pt_DemographicsBar",
                                   dat=profileDatLA,
