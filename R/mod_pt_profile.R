@@ -72,12 +72,14 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
 
       dat <- list(profileDatWard(),  profileDatLA(),  profileDatGB())
       names(dat) <- c("Wards", area_name(), "GB average")
-
+# SOMETHING WRONG HERE!!!
       dat <- purrr::imap(dat,
-                         ~dplyr::filter(.x, sex=="both", age=="all ages") %>%
+                         ~.x %>%
+                           dplyr::filter(if_any(matches("sex"), ~.x=="both")) %>%
+                           dplyr::filter(if_any(matches("age"), ~.x=="all_ages")) %>%
                            dplyr::mutate(geo = .y) %>%
-                           dplyr::group_by(obs) %>%
-                           dplyr::filter(cat == get_cats(dplyr::first(obs))[1])) %>%
+                           dplyr::group_by(obs)) %>%
+                           #dplyr::filter(cat == get_cats(dplyr::first(obs))[1])) %>%
         purrr::list_rbind() #%>%
       # tidyr::pivot_wider(names_from = obs, values_from = c(cat, value), values_fn = first) %>%
       # dplyr::rename_with(~stringr::str_remove(.x, "value_"), .cols = contains("value"))

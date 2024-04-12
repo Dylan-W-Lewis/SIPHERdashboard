@@ -14,7 +14,7 @@ get_cats <- function(var) {
     cats <- NULL
   }
   else {
-    cats <- dplyr::pull(reference$cats[codebook$obs==var][[1]])
+    cats <- dplyr::pull(reference$cats[reference$obs==var][[1]])
   }
   return(cats)
 }

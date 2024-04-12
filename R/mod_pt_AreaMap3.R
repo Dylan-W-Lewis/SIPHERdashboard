@@ -56,9 +56,9 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
     # update fill
 
     fillDat <- reactive({
-      filtered <- wardDat %>%
-        dplyr::filter(sex=="both",
-                      age=="all ages")
+      filtered <- wardDat #%>%
+        # dplyr::filter(sex=="both",
+        #               age=="all ages")
       output <- mapDat() %>% dplyr::select(ward, ward_name) %>% dplyr::left_join(., filtered, by=c("ward" = "area"))
       return(output) #[match(mapDat()$ward, filtered$area),])
     })
