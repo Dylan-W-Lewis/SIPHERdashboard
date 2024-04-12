@@ -20,12 +20,12 @@ mod_pt_profile_health_ui <- function(id){
       bslib::card_title("Health by area", padding=c(16,16,0)),
       bslib::card_body(radioButtons(ns("health_map_choices"),
                                     "",
-                                    choiceValues=c(#"general health",
-                                      "SF-12 Physical Component Summary (mean)",
-                                      "SF-12 Mental Component Summary (mean)",
-                                      "Subjective wellbeing (GHQ): Likert (mean)",
-                                      "health limits moderate activities",
-                                      "feeling lonely"),
+                                    choiceValues=c(#"scsf1",
+                                      "sf12pcs_dv",
+                                      "sf12mcs_dv",
+                                      "scghq1_dv",
+                                      "scsf2a",
+                                      "sclonely"),
                                     choiceNames = c(#"General health",
                                       "Physical health (SF-12)",
                                       "Mental health (SF-12)",
@@ -40,12 +40,12 @@ mod_pt_profile_health_ui <- function(id){
       bslib::card_title("Health by age and gender", padding=c(16,16,0)),
       bslib::card_body(radioButtons(ns("bar_choices"),
                                     "",
-                                    choiceValues=c(#"general health",
-                                      "SF-12 Physical Component Summary (mean)",
-                                      "SF-12 Mental Component Summary (mean)",
-                                      "Subjective wellbeing (GHQ): Likert (mean)",
-                                      "health limits moderate activities",
-                                      "feeling lonely"),
+                                    choiceValues=c(#"scsf1",
+                                      "sf12pcs_dv",
+                                      "sf12mcs_dv",
+                                      "scghq1_dv",
+                                      "scsf2a",
+                                      "sclonely"),
                                     choiceNames = c(#"General health",
                                       "Physical health (SF-12)",
                                       "Mental health (SF-12)",
@@ -67,19 +67,19 @@ mod_pt_profile_health_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
-    vars <- c(#"general health",
-              "SF-12 Physical Component Summary (mean)",
-              "SF-12 Mental Component Summary (mean)",
-              "Subjective wellbeing (GHQ): Likert (mean)",
-              "health limits moderate activities",
-              "feeling lonely")
+    vars <- c(#"scsf1",
+              "sf12pcs_dv",
+              "sf12mcs_dv",
+              "scghq1_dv",
+              "scsf2a",
+              "sclonely")
 
     niceVars <- c(#"General health",
                   "physical health (SF-12)",
                   "mental health (SF-12)",
                   "psychological distress (GHQ)",
-                  "health limits moderate activities",
-                  "feeling lonely")
+                  "scsf2a",
+                  "sclonely")
 
     profileDatWard <- reactive({
       wardDat %>% dplyr::filter(area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile],
