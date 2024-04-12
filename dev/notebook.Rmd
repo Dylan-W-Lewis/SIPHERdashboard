@@ -25,31 +25,32 @@ Data is currently aggregated at three resolutions: country, local authority, LSO
 
 ```{r load aggregated data}
 #read country data
-ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_export_labels.csv"),
-                     show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
+ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_export_raw.csv"))
+# ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_export_labels.csv"),
+#                      show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
 # ctrRaw <- read_csv(paste0(dataPath, "/ROutput/ctr_code_export.csv"),
 #                     show_col_types = FALSE)
 # ctrDat <- ctrRaw %>% select(!c("ctr_code", "value")) %>% cbind(., ctrLabelled)
  glimpse(ctrDat)
 
 #read local autority data
-ladDat <- read_csv(paste0(dataPath, "/ROutput/lad_export_labels.csv"),
-                    show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
+ladDat <- read_csv(paste0(dataPath, "/ROutput/lad_export_raw.csv"))
 glimpse(ladDat)
 
 # read LSOA (2021) data
-#lsoaDat <- read_csv(paste0(dataPath, "/ROutput/lsoa21_export_labels.csv"),
-#                    show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
-#glimpse(lsoaDat)
+lsoaDat <- read_csv(paste0(dataPath, "/ROutput/lsoa21_export_raw.csv"))
+glimpse(lsoaDat)
+#filter to only include all ages/genders
+lsoaDat <- lsoaDat %>% filter(sex=="both", age=="all_ages")
 
 #read ward data
-wardDat <- read_csv(paste0(dataPath, "/ROutput/ward_export_labels.csv"),
-                    show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
+wardDat <- read_csv(paste0(dataPath, "/ROutput/ward_export_raw.csv"))
 glimpse(wardDat)
+#filter to only include all ages/genders
+wardDat <- wardDat %>% filter(sex=="both", age=="all_ages")
 
 #read GB data
-gbDat <- read_csv(paste0(dataPath, "/ROutput/gb_export_labels.csv"),
-                    show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
+gbDat <- read_csv(paste0(dataPath, "/ROutput/gb_export_raw.csv"))
 glimpse(gbDat)
 ```
 
@@ -119,20 +120,23 @@ wardSF <- wardSF_raw %>%
 
 
 ### Code book
-create codebook to lookup variable names and levels
+load codebook to translate codes to variable/category names, and reference table for variable information
 ```{r codebook}
-codebook <- read.csv(paste0(dataPath,
-                            "/codebook/codebook.csv"))
-codebook <- codebook %>% 
-  nest_by(obs, .key = "cat") %>%
-  mutate(mean = ifelse(nrow(cat)==1, T, F))#%>%
-#   mutate(section = case_match(obs,
-#                               c("employment status",
-#                                 "highest educational qualification",
-#                                 "marital status",
-#                                 "ethnicity",)
-#                               ))
+codebook_raw <- read.csv(paste0(dataPath, "/ROutput/lookup_list.csv"))
+                            #"/codebook/codebook.csv"))
 
+codebook <- unique(data.frame(code = c(codebook_raw[,1], codebook_raw[,3]),
+                       name = c(codebook_raw[,2], codebook_raw[,4])))
+codebook$name[which(is.na(codebook$name))] <- codebook$code[which(is.na(codebook$name))]
+
+reference_raw <- read.csv(paste0(dataPath, "/ROutput/polarity_cat_reference.csv"))
+
+reference <- codebook_raw %>%
+  select(obs, cat) %>%
+  nest(.by = obs, .key = "cats") %>%
+  left_join(., reference_raw, by="obs")
+
+#usethis::use_data(codebook, reference, overwrite = T)
 ```
 
 ### testing maps
@@ -146,25 +150,25 @@ plot(testSF)
 ```{r scaling labelling}
 pivot_scale_label <- function(dat) {
   dat %>%
-  tidyr::pivot_wider(names_from = c(obs, cat), values_from = value) %>%
+  tidyr::pivot_wider(names_from = c(obs, cat), values_from = value, names_sep = "-") %>%
   group_by(age, sex)  %>%
-  rename_with(.cols = contains("_"),  ~paste0(.x, "_value")) %>%
-  mutate(across(starts_with(codebook$obs[codebook$mean]),
-                            ~paste0(round(.x, 1), " (avg.)"),
-                            .names = "{.col}_labelled"),
-         across(starts_with(codebook$obs[!codebook$mean]),
-                            ~paste0(round(.x, 2), "%"),
-                            .names = "{.col}_labelled"),
+  rename_with(.cols = contains("-"),  ~paste0(.x, "-value")) %>%
+  mutate(across(starts_with(reference$obs[!reference$categorical]),
+                            ~paste0(round(.x, 1), " (estimated avg.)"),
+                            .names = "{.col}-labelled"),
+         across(starts_with(reference$obs[reference$categorical]),
+                            ~paste0(round(.x, 2), "% (estimate)"),
+                            .names = "{.col}-labelled"),
          across(where(is.numeric),
                 ~as.vector(scale(.x)),
-                .names = "{.col}_scaled")) %>%
-  rename_with(.cols = matches("(_labelled)|(_scaled)"), ~str_remove(.x, "_value")) %>%
+                .names = "{.col}-scaled")) %>%
+  rename_with(.cols = matches("(-labelled)|(-scaled)"), ~str_remove(.x, "-value")) %>%
   ungroup()
 } 
 
 pivot_back_long <- function(dat) {
   dat %>%
-    pivot_longer(cols = contains("_"), names_to = c("obs", "cat", ".value"), names_sep = "_") #%>%
+    pivot_longer(cols = contains("-"), names_to = c("obs", "cat", ".value"), names_sep = "-") #%>%
     #mutate(across(where(is.numeric), ~replace_na(.x, 0)))
 }
 
@@ -174,14 +178,18 @@ ladDatScaledLong <- ladDatScaled %>% pivot_back_long()
 wardDatScaled <- wardDat %>% pivot_scale_label()
 wardDatScaledLong <- wardDatScaled %>% pivot_back_long()
 
+lsoaDatScaled <- lsoaDat %>% pivot_scale_label()
+lsoaDatScaledLong <- lsoaDatScaled %>% pivot_back_long()
+
 gbDatScaled <- gbDat %>% pivot_scale_label()
 gbDatScaledLong <- gbDatScaled %>% pivot_back_long() %>% mutate(scaled = 0)
 
-#ladDat <- ladDatScaledLong
-#wardDat <- wardDatScaledLong
-#gbDat <- gbDatScaledLong
+ladDat <- ladDatScaledLong
+wardDat <- wardDatScaledLong %>% select(-c(age, sex))
+lsoaDat <- lsoaDatScaledLong %>% select(-c(age, sex))
+gbDat <- gbDatScaledLong
 
-
+#usethis::use_data(ladDat, wardDat, lsoaDat, gbDat, overwrite = T)
 ```
 
 
