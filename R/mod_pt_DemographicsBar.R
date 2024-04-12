@@ -26,14 +26,8 @@ mod_pt_DemographicsBar_server <- function(id, dat, varbl, categ){
       toPlot <- dat() %>%
         dplyr::filter(obs==varbl(),
                cat==categ(),
-               age!="all ages",
+               age!="all_ages",
                sex!="both")
-
-      if(codebook$mean[codebook$obs == varbl()]){
-        toPlot$label <- paste0(round(toPlot$value, 2), " (avg.)")
-      } else {
-        toPlot$label <- paste0(round(toPlot$value, 2), "%")
-      }
 
       return(toPlot)
     })
@@ -42,9 +36,10 @@ mod_pt_DemographicsBar_server <- function(id, dat, varbl, categ){
     output$bar <- plotly::renderPlotly(
       plotly::ggplotly(
         plotDat() %>%
-          ggplot2::ggplot(ggplot2::aes(x=age, y=value, fill=as.factor(sex), text=label)) +
+          ggplot2::ggplot(ggplot2::aes(x=age, y=value, fill=as.factor(sex), text=labelled)) +
           ggplot2::geom_col(position = "dodge") +
           scale_fill_sipher(palette_name = "full", type = "discrete") +
+          ggplot2::scale_x_discrete(labels = function(x) translate_codes(x)) +
           ggplot2::theme_bw()+
           ggplot2::labs(fill = "Gender", #stringr::str_to_sentence(var),
                         y= NULL,

@@ -20,7 +20,7 @@ mod_pt_profile_ui <- function(id, topic, vars, varNames){
                        min_height = 150),
     ),
     bslib::card(
-      bslib::card_title(paste0(topic, " by area"), padding=c(16,16,0)),
+      bslib::card_title(paste0(stringr::str_to_sentence(topic), " by area"), padding=c(16,16,0)),
       bslib::card_body(radioButtons(ns("map_choices"),
                                     "",
                                     choiceValues=vars,
@@ -30,7 +30,7 @@ mod_pt_profile_ui <- function(id, topic, vars, varNames){
       bslib::card_body(mod_pt_AreaMap3_ui(ns("pt_AreaMap3")),
                        min_height = 150)),
     bslib::card(
-      bslib::card_title(paste0(topic, " by age and gender"), padding=c(16,16,0)),
+      bslib::card_title(paste0(stringr::str_to_sentence(topic), " by age and gender"), padding=c(16,16,0)),
       bslib::card_body(radioButtons(ns("bar_choices"),
                                     "",
                                     choiceValues=vars,
@@ -52,7 +52,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
 
     ##### setup
 
-    if(is.null(varNames)){varNames<-vars}
+    if(is.null(varNames)){varNames<-make_var_labels(vars)}
 
     area_name <- reactive(unique(lookup_wd_lad$lad_name[lookup_wd_lad$lad==r$profile]))
 
@@ -69,19 +69,18 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
     })
 
     compareDat <- reactive({
-
       dat <- list(profileDatWard(),  profileDatLA(),  profileDatGB())
       names(dat) <- c("Wards", area_name(), "GB average")
-
       dat <- purrr::imap(dat,
-                         ~dplyr::filter(.x, sex=="both", age=="all ages") %>%
-                           dplyr::mutate(geo = .y) %>%
-                           dplyr::group_by(obs) %>%
-                           dplyr::filter(cat == get_cats(dplyr::first(obs))[1])) %>%
-        purrr::list_rbind() #%>%
+                         ~.x %>%
+                           dplyr::filter(if_any(matches("sex"), ~.x=="both")) %>%
+                           dplyr::filter(if_any(matches("age"), ~.x=="all_ages")) %>%
+                           dplyr::mutate(geo = .y)) %>%
+        purrr::list_rbind() %>%
+        dplyr::left_join(., reference[, c("obs", "cat_reference")], by="obs") %>%
+        dplyr::filter(cat==cat_reference)
       # tidyr::pivot_wider(names_from = obs, values_from = c(cat, value), values_fn = first) %>%
       # dplyr::rename_with(~stringr::str_remove(.x, "value_"), .cols = contains("value"))
-
       return(dat)
     })
 
@@ -113,15 +112,15 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
     mod_pt_AreaMap3_server("pt_AreaMap3",
                            r=r,
                            varbl = reactive(input$map_choices),
-                           reactive(get_cats(input$map_choices)[1])
+                           reactive(get_cats(input$map_choices, ref_only = T))
     )
 
-    mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat, varNames) # SOMETHING WRONG
+    mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat, varNames)
 
     mod_pt_DemographicsBar_server("pt_DemographicsBar",
                                   dat=profileDatLA,
                                   varbl = reactive(input$bar_choices),
-                                  reactive(get_cats(input$bar_choices)[1])
+                                  reactive(get_cats(input$bar_choices, ref_only = T))
     )
 
   })

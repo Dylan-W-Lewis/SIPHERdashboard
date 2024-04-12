@@ -38,7 +38,7 @@ mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
     output$graph <- renderPlot({
       if(!is.null(r$selected_area)) {
         plotDat() %>%
-          ggplot2::ggplot(ggplot2::aes(x=lad_name, y=value, fill=cat)) +
+          ggplot2::ggplot(ggplot2::aes(x=lad_name, y=value, fill=translate_codes(cat))) +
           ggplot2::geom_col() +
           ggplot2::coord_flip() +
           # ggplot2::scale_x_discrete(name = NULL#,
@@ -47,7 +47,7 @@ mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
           scale_fill_sipher(palette_name = "full", type = "discrete") +
           ggplot2::theme_bw() +
           ggplot2::theme(legend.position = "top") +
-          ggplot2::labs(fill = NULL, #stringr::str_to_sentence(var),
+          ggplot2::labs(fill = NULL,
                         y= NULL,
                         x= NULL)
       }

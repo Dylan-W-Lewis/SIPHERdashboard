@@ -128,6 +128,7 @@ codebook_raw <- read.csv(paste0(dataPath, "/ROutput/lookup_list.csv"))
 codebook <- unique(data.frame(code = c(codebook_raw[,1], codebook_raw[,3]),
                        name = c(codebook_raw[,2], codebook_raw[,4])))
 codebook$name[which(is.na(codebook$name))] <- codebook$code[which(is.na(codebook$name))]
+codebook <- na.omit(codebook)
 
 reference_raw <- read.csv(paste0(dataPath, "/ROutput/polarity_cat_reference.csv"))
 
@@ -135,6 +136,7 @@ reference <- codebook_raw %>%
   select(obs, cat) %>%
   nest(.by = obs, .key = "cats") %>%
   left_join(., reference_raw, by="obs")
+reference$cat_reference[which(is.na(reference$cat_reference))] <- reference$obs[which(is.na(reference$cat_reference))]
 
 #usethis::use_data(codebook, reference, overwrite = T)
 ```

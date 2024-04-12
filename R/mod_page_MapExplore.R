@@ -102,7 +102,7 @@ mod_page_MapExplore_server <- function(id, r, parent.session){
 
     comparisonData <- reactive({
       ladDat %>%
-        dplyr::filter(sex=="both", age=="all ages", area %in% r$selected_area) %>%
+        dplyr::filter(sex=="both", age=="all_ages", area %in% r$selected_area) %>%
         dplyr::left_join(., sf::st_drop_geometry(ladSF[, c("lad", "lad_name")]), by=c("area" = "lad"))
       })
 
