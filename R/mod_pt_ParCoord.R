@@ -53,26 +53,30 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
     output$par_coords <- plotly::renderPlotly(
       plotly::ggplotly(
         ggplot2::ggplot(data = plotDat(),
-                        ggplot2::aes(obs, scaled, text = labelled_new, group=area, color=geo, alpha=alpha, shape=geo)) +
+                        ggplot2::aes(y= obs, x=scaled, text = labelled_new, group=area, color=geo, alpha=alpha, shape=geo)) +
           ggplot2::geom_point() +
           #ggplot2::geom_line(#data = . %>% filter(geo=="GB")
           #                   ) +
           ggplot2::scale_shape_manual(values = c(3, 16, 16)) +
-          ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(make_var_labels(x), width = 20)) +
-          ggplot2::theme_bw() +
-          ggplot2::theme(axis.title.y = ggplot2::element_blank(),
-                         axis.text.y = ggplot2::element_blank(),
-                         axis.ticks.y = ggplot2::element_blank(),
-                         #axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          ggplot2::scale_y_discrete(labels = function(y) stringr::str_wrap(make_var_labels(y), width = 35)) +
+          ggplot2::annotate("text", x = 2, y = 0.5, label = "Higher than average", color="grey") +
+          ggplot2::annotate("text", x = -2, y = 0.5, label = "Lower than average", color="grey") +
+          ggplot2::theme_minimal() +
+          ggplot2::theme(panel.grid.major.x = element_blank(),
+                         panel.grid.minor.x = element_blank(),
+                         axis.title.x = ggplot2::element_blank(),
+                         axis.text.x = ggplot2::element_blank(),
+                         axis.ticks.x = ggplot2::element_blank(),
+                         axis.text.y = element_text(vjust = 0.5, hjust = 0),
                          legend.position = "top") +
           ggplot2::labs(color = NULL,
                         alpha = NULL,
                         linetype= NULL,
-                        x = NULL,
+                        y = NULL,
                         shape = NULL),
         tooltip = c("text")
       )  %>%
-        plotly::layout(legend = list(orientation = 'h', x = 0.1, y = 1.12))
+        plotly::layout(legend = list(orientation = 'h', x = 0.5, y = 1.05))
     )
 
   })
