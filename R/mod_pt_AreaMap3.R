@@ -56,9 +56,9 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
     # update fill
 
     fillDat <- reactive({
-      filtered <- wardDat %>%
-        dplyr::filter(sex=="both",
-                      age=="all ages")
+      filtered <- wardDat #%>%
+        # dplyr::filter(sex=="both",
+        #               age=="all ages")
       output <- mapDat() %>% dplyr::select(ward, ward_name) %>% dplyr::left_join(., filtered, by=c("ward" = "area"))
       return(output) #[match(mapDat()$ward, filtered$area),])
     })
@@ -83,11 +83,8 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
         colr <- as.data.frame(colorRamp(c("#A53C0B", "white", "#005CBA"))(scaledValues)) %>%
           purrr::pmap_chr(~ifelse(is.na(..1), rgb(0.5,0.5,0.5), rgb(..1,..2,..3, maxColorValue = 255)))
 
-        if(codebook$mean[codebook$obs==varbl()]==T){
-          labl <- paste0(mapDat()$ward_name, ": ", values$labelled)
-        } else {
-          labl <- paste0(mapDat()$ward_name, ": ", values$labelled)
-        }
+        labl <- paste0(mapDat()$ward_name, ": ", values$labelled)
+
 
         leaflet::leafletProxy("map", data = mapDat()) %>%
           leaflet::clearShapes() %>%

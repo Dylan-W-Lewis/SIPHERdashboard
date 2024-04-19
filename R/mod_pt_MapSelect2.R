@@ -37,6 +37,7 @@ mod_pt_MapSelect2_server <- function(id, r){
           key = ~lad,
           split = ~lad,
           color = I("gray"),
+          span = I(1),
           source = "map",
           showlegend = FALSE,
           text = ~lad_name,

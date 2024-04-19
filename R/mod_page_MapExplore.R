@@ -102,17 +102,17 @@ mod_page_MapExplore_server <- function(id, r, parent.session){
 
     comparisonData <- reactive({
       ladDat %>%
-        dplyr::filter(sex=="both", age=="all ages", area %in% r$selected_area) %>%
+        dplyr::filter(sex=="both", age=="all_ages", area %in% r$selected_area) %>%
         dplyr::left_join(., sf::st_drop_geometry(ladSF[, c("lad", "lad_name")]), by=c("area" = "lad"))
       })
 
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_1", r=r, var="ethnicity", dat=comparisonData)
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_2", r=r, var="marital status", dat=comparisonData)
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_3", r=r, var="general health", dat=comparisonData)
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_4", r=r, var="employment status", dat=comparisonData)
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_5", r=r, var="highest qualification", dat=comparisonData)
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_6", r=r, var="household composition / type", dat=comparisonData)
-    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_7", r=r, var="household tenure", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_1", r=r, var="racel_dv", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_2", r=r, var="marstat", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_3", r=r, var="scsf1", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_4", r=r, var="jbstat", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_5", r=r, var="hiqual_dv", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_6", r=r, var="hhtype_dv", dat=comparisonData)
+    mod_pt_ComparisonGraph_server("pt_ComparisonGraph_7", r=r, var="tenure_dv", dat=comparisonData)
 
     mod_pt_MapSelect2_server("pt_MapSelect_1", r = r)
     mod_pt_AreaSelections_server("pt_AreaSelections_1", r = r)

@@ -23,13 +23,21 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
+
     plotDat <- reactive({
       toPlot <- dat() %>%
         dplyr::left_join(., sf::st_drop_geometry(wardSF[, c("ward", "ward_name")]), by=c("area" = "ward")) %>%
+        group_by(obs) %>%
         dplyr::mutate(
           labelled_new = dplyr::if_else(is.na(ward_name),
                                         stringr::str_c(geo, labelled, sep= ": "),
                                         stringr::str_c(ward_name, labelled, sep= ": ")),
+          #var_label =
+            # dplyr::if_else(reference$categorical[reference$obs==obs],
+            #                          stringr::str_c(codebook$name[codebook$code==obs],
+            #                                         codebook$name[codebook$code==cat],
+            #                                         sep= ": "),
+            #                          codebook$name[codebook$code==obs]),
           alpha = dplyr::if_else(geo=="Wards", 0.7, 1)
         )
 
@@ -44,26 +52,31 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
 
     output$par_coords <- plotly::renderPlotly(
       plotly::ggplotly(
-        ggplot2::ggplot(plotDat(),
-                        ggplot2::aes(obs, scaled, text = labelled_new, group=area, color=geo, alpha=alpha, linetype = geo)) +
+        ggplot2::ggplot(data = plotDat(),
+                        ggplot2::aes(y= obs, x=scaled, text = labelled_new, group=area, color=geo, alpha=alpha, shape=geo)) +
           ggplot2::geom_point() +
-          ggplot2::geom_line() +
-          ggplot2::scale_x_discrete(labels = #stringr::str_wrap(varNames, width = 20)
-                                             function(x) stringr::str_wrap(x, width = 20)
-                                    ) +
-          ggplot2::theme_bw() +
-          ggplot2::theme(axis.title.y = ggplot2::element_blank(),
-                         axis.text.y = ggplot2::element_blank(),
-                         axis.ticks.y = ggplot2::element_blank(),
-                         #axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          #ggplot2::geom_line(#data = . %>% filter(geo=="GB")
+          #                   ) +
+          ggplot2::scale_shape_manual(values = c(3, 16, 16)) +
+          ggplot2::scale_y_discrete(labels = function(y) stringr::str_wrap(make_var_labels(y), width = 35)) +
+          ggplot2::annotate("text", x = 2, y = 0.5, label = "Higher than average", color="grey") +
+          ggplot2::annotate("text", x = -2, y = 0.5, label = "Lower than average", color="grey") +
+          ggplot2::theme_minimal() +
+          ggplot2::theme(panel.grid.major.x = element_blank(),
+                         panel.grid.minor.x = element_blank(),
+                         axis.title.x = ggplot2::element_blank(),
+                         axis.text.x = ggplot2::element_blank(),
+                         axis.ticks.x = ggplot2::element_blank(),
+                         axis.text.y = element_text(vjust = 0.5, hjust = 0),
                          legend.position = "top") +
           ggplot2::labs(color = NULL,
                         alpha = NULL,
                         linetype= NULL,
-                        x = NULL),
+                        y = NULL,
+                        shape = NULL),
         tooltip = c("text")
       )  %>%
-        plotly::layout(legend = list(orientation = 'h', x = 0.1, y = 1.12))
+        plotly::layout(legend = list(orientation = 'h', x = 0.5, y = 1.05))
     )
 
   })

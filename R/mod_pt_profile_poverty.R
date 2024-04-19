@@ -16,7 +16,7 @@ mod_pt_profile_poverty_ui <- function(id){
       bslib::card_body(radioButtons(ns("income_map_choices"),
                                     "",
                                     choiceValues=c("total household net income - no deductions (mean)",
-                                              "basic pay hourly rate (mean)"),
+                                              "basrate"),
                                     choiceNames = c("Average houshold income",
                                                     "Average hourly wage"),
                                     inline = T
