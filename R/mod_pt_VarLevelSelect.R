@@ -11,9 +11,9 @@ mod_pt_VarLevelSelect_ui <- function(id, vars, inline=T){
   ns <- NS(id)
   tagList(
     fluidRow(column(selectInput(ns("var"), label="Variable", setNames(vars, translate_codes(vars)), width = "98%"),
-                    ifelse(inline, 6, 12)),
+                    width = ifelse(inline, 6, 12)),
              column(selectInput(ns("level"), label="Category", choices = NULL, width = "98%"),
-                    ifelse(inline, 6, 12))
+                    width = ifelse(inline, 6, 12))
              )
     )
 }
