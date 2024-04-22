@@ -27,7 +27,7 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
     plotDat <- reactive({
       toPlot <- dat() %>%
         dplyr::left_join(., sf::st_drop_geometry(wardSF[, c("ward", "ward_name")]), by=c("area" = "ward")) %>%
-        group_by(obs) %>%
+        dplyr::group_by(obs) %>%
         dplyr::mutate(
           labelled_new = dplyr::if_else(is.na(ward_name),
                                         stringr::str_c(geo, labelled, sep= ": "),
@@ -59,20 +59,21 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
           #                   ) +
           ggplot2::scale_shape_manual(values = c(3, 16, 16)) +
           ggplot2::scale_y_discrete(labels = function(y) stringr::str_wrap(make_var_labels(y), width = 35)) +
-          ggplot2::annotate("text", x = 2, y = 0.5, label = "Higher than average", color="grey") +
-          ggplot2::annotate("text", x = -2, y = 0.5, label = "Lower than average", color="grey") +
+          #ggplot2::annotate("text", x = max(plotDat()$scaled)-1, y = 0.5, label = "Higher than average", color="grey") +
+          #ggplot2::annotate("text", x = min(plotDat()$scaled)+1, y = 0.5, label = "Lower than average", color="grey") +
           ggplot2::theme_minimal() +
-          ggplot2::theme(panel.grid.major.x = element_blank(),
-                         panel.grid.minor.x = element_blank(),
-                         axis.title.x = ggplot2::element_blank(),
+          ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(),
+                         panel.grid.minor.x = ggplot2::element_blank(),
+                         axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = -200), hjust = 0.5, color="grey"),
                          axis.text.x = ggplot2::element_blank(),
                          axis.ticks.x = ggplot2::element_blank(),
-                         axis.text.y = element_text(vjust = 0.5, hjust = 0),
+                         axis.text.y = ggplot2::element_text(vjust = 0.5, hjust = 0),
                          legend.position = "top") +
           ggplot2::labs(color = NULL,
                         alpha = NULL,
                         linetype= NULL,
                         y = NULL,
+                        x = "Lower than average                    Higher than average",
                         shape = NULL),
         tooltip = c("text")
       )  %>%

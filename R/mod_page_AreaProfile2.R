@@ -23,7 +23,9 @@ mod_page_AreaProfile2_ui <- function(id){
                                        icon("caret-down"),
                                        placement = "bottom",
                                        title = "Change selected area",
-                                       "..."
+                                       selectInput(ns("change_area"),
+                                                   label = NULL,
+                                                   choices = setNames(c("",ladSF$lad), c("Change selected area...",ladSF$lad_name)))
                                      ),
                                 ),
                              #actionButton(ns("switch_area"), label = NULL, icon = icon("repeat"), width="16px"),
@@ -98,6 +100,12 @@ mod_page_AreaProfile2_server <- function(id, r){
     observeEvent(r$profile, ignoreNULL = F, {
       if(is.null(r$profile)){
         r$profile <- "S12000049"
+      }
+    })
+
+    observeEvent(input$change_area, {
+      if(input$change_area != ""){
+        r$profile <- input$change_area
       }
     })
 

@@ -15,30 +15,39 @@ mod_pt_profile_ui <- function(id, topic, vars, varNames){
   tagList(
     p(textOutput(ns("intro_text"))),
     bslib::card(
-      bslib::card_title("Overview", padding=c(16,16,0)),
+      bslib::card_header("Overview"),  #, padding=c(16,16,0)),
       bslib::card_body(mod_pt_ParCoord_ui(ns("pt_ParCoord")),
                        min_height = 150),
     ),
+
+    p(textOutput(ns("para_2")),
+      mod_pt_VarLevelSelect_ui(ns("VarLevelSelect"), vars),
+      style='margin = 0px;'),
+    #bslib::card_body(
+      # radioButtons(ns("map_choices"),
+      #                             "",
+      #                             choiceValues=vars,
+      #                             choiceNames =varNames,
+      #                             inline = T
+      #              ),
+    #),
     bslib::card(
-      bslib::card_title(paste0(stringr::str_to_sentence(topic), " by area"), padding=c(16,16,0)),
-      bslib::card_body(radioButtons(ns("map_choices"),
-                                    "",
-                                    choiceValues=vars,
-                                    choiceNames =varNames,
-                                    inline = T
-      )),
-      bslib::card_body(mod_pt_AreaMap3_ui(ns("pt_AreaMap3")),
+      bslib::card_header(paste0(stringr::str_to_sentence(topic), " by area")),  #, padding=c(16,16,0)),
+
+      bslib::card_body(class = "p-0",
+                       mod_pt_AreaMap3_ui(ns("pt_AreaMap3")),
                        min_height = 150)),
     bslib::card(
-      bslib::card_title(paste0(stringr::str_to_sentence(topic), " by age and gender"), padding=c(16,16,0)),
-      bslib::card_body(radioButtons(ns("bar_choices"),
-                                    "",
-                                    choiceValues=vars,
-                                    choiceNames =varNames,
-                                    inline = T
-      )),
+      bslib::card_header(paste0(stringr::str_to_sentence(topic), " by age and gender")),  #, padding=c(16,16,0)),
       bslib::card_body(mod_pt_DemographicsBar_ui(ns("pt_DemographicsBar")),
-                       min_height = 150))
+                       min_height = 150)#,
+      # bslib::card_body(radioButtons(ns("bar_choices"),
+      #                               "",
+      #                               choiceValues=vars,
+      #                               choiceNames =varNames,
+      #                               inline = T
+      # ))
+      )
 
   )
 }
@@ -97,13 +106,20 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
              ". The SIPHER Synthetic Population aggregated dataset currently includes ",
              length(vars),
              " variables relating to this domain: ",
-             var_names(varNames),
-             ". Below you can explore how these variables differ between the different areas within ",
+             var_names(varNames), collapse = "")
+    })
+
+    para2 <- reactive({
+      paste0("Below you can explore how these variables differ between the different areas within ",
              area_name(),
              ", as well as how they vary by age and gender.", collapse = "")
     })
 
     output$intro_text <- renderText(intro())
+    output$para_2 <- renderText(para2())
+
+    #### selections
+    selections <- mod_pt_VarLevelSelect_server("VarLevelSelect")
 
 
     ##### graphs
@@ -111,17 +127,17 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
 
     mod_pt_AreaMap3_server("pt_AreaMap3",
                            r=r,
-                           varbl = reactive(input$map_choices),
-                           reactive(get_cats(input$map_choices, ref_only = T))
-    )
+                           varbl = reactive(selections()$var),#reactive(input$map_choices),
+                           categ = reactive(selections()$level) #reactive(get_cats(input$map_choices, ref_only = T))
+                           )
 
     mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat, varNames)
 
     mod_pt_DemographicsBar_server("pt_DemographicsBar",
                                   dat=profileDatLA,
-                                  varbl = reactive(input$bar_choices),
-                                  reactive(get_cats(input$bar_choices, ref_only = T))
-    )
+                                  varbl = reactive(selections()$var),
+                                  categ = reactive(selections()$level)
+                                  )
 
   })
 }

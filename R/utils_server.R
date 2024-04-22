@@ -64,7 +64,7 @@ translate_codes <- function(codes){
 #'
 #' @noRd
 make_var_labels <- function(vars){
-  varNames <- map_chr(vars,
+  varNames <- purrr::map_chr(vars,
                       function(.x){
                         if(reference$categorical[reference$obs==.x]){
                           stringr::str_c(codebook$name[codebook$code==.x],

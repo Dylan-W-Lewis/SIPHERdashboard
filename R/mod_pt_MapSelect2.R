@@ -15,7 +15,7 @@ mod_pt_MapSelect2_ui <- function(id){
                    label = "",
                    choices=c("Select areas by clicking the map or type here" = "", setNames(ladSF$lad,ladSF$lad_name)),
                    multiple=TRUE,
-                   width="100%"),
+                   width="98%"),
     div(style = "margin-top:-10vh"),
     shinycssloaders::withSpinner(
       plotly::plotlyOutput(ns("map"), height = "85vh"),

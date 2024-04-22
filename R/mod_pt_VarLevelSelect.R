@@ -7,28 +7,42 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_pt_VarLevelSelect_ui <- function(id){
+mod_pt_VarLevelSelect_ui <- function(id, vars, inline=T){
   ns <- NS(id)
   tagList(
-    fluidRow(column(selectInput(ns("var"), label="", choices=codebook$obs), width=6),
-             column(selectInput(ns("level"), label="", choices = NULL), width=6))
-
-  )
+    fluidRow(column(selectInput(ns("var"), label="Variable", setNames(vars, translate_codes(vars)), width = "98%"),
+                    ifelse(inline, 6, 12)),
+             column(selectInput(ns("level"), label="Category", choices = NULL, width = "98%"),
+                    ifelse(inline, 6, 12))
+             )
+    )
 }
 
 #' pt_VarLevelSelect Server Functions
 #'
 #' @noRd
-mod_pt_VarLevelSelect_server <- function(id, r){
+mod_pt_VarLevelSelect_server <- function(id){
   moduleServer( id, function(input, output, session){
+
+    cats <- reactive({
+      cats <- get_cats(input$var)
+      if(reference$categorical[reference$obs==input$var]) {
+        cats <- setNames(cats, translate_codes(cats))
+      }
+      else {
+        cats <- setNames(cats, "--")
+      }
+      return(cats)
+      })
+
     ns <- session$ns
     observeEvent(input$var,{
-      updateSelectInput(inputId = "level", choices = get_cats(input$var))
+      updateSelectInput(inputId = "level", choices = cats())
     })
 
-    observe({
-      r$var_selection <- list(var = input$var, level = input$level)})
-
+    return(
+      eventReactive(input$level, list(var = input$var, level = input$level))
+      )
 
   })
 }
