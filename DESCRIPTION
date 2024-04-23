@@ -17,6 +17,7 @@ Imports:
     glue,
     golem (>= 0.4.1),
     htmltools,
+    pkgload,
     plotly,
     purrr,
     sf,
