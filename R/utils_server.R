@@ -67,9 +67,11 @@ make_var_labels <- function(vars){
   varNames <- purrr::map_chr(vars,
                       function(.x){
                         if(reference$categorical[reference$obs==.x]){
-                          stringr::str_c(codebook$name[codebook$code==.x],
+                          paste0(stringr::str_c(codebook$name[codebook$code==.x],
                                          codebook$name[codebook$code==get_cats(.x, ref_only = T)],
-                                         sep= ": ")
+                                         sep= ": "),
+                                 " (%)"
+                          )
                         } else {
                           codebook$name[codebook$code==.x]
                         }
