@@ -32,7 +32,7 @@ mod_pt_MapSelect2_server <- function(id, r){
 
     #render map
     output$map <- plotly::renderPlotly({
-      ladSF %>%
+      ladSF |>
         plotly::plot_ly(
           key = ~lad,
           split = ~lad,
@@ -43,7 +43,7 @@ mod_pt_MapSelect2_server <- function(id, r){
           text = ~lad_name,
           hoveron = "fills",
           hoverinfo="text"
-        ) %>%
+        ) |>
         plotly::add_sf()
     })
 
@@ -60,7 +60,7 @@ mod_pt_MapSelect2_server <- function(id, r){
       col = ifelse(ladSF$lad %in% input$selectize_inp, "#005CBA", "gray80")
 
       #restyle plot to assign new colours
-      plotly:: plotlyProxy("map", session) %>%
+      plotly:: plotlyProxy("map", session) |>
         plotly::plotlyProxyInvoke(
           "restyle",
           list(

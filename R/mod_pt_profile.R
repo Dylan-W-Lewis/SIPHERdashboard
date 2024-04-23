@@ -66,29 +66,29 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
     area_name <- reactive(unique(lookup_wd_lad$lad_name[lookup_wd_lad$lad==r$profile]))
 
     profileDatWard <- reactive({
-      wardDat %>% dplyr::filter(area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile],
+      wardDat |> dplyr::filter(area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile],
                                 obs %in% vars)
     })
     profileDatLA <- reactive({
-      ladDat %>% dplyr::filter(area == r$profile,
+      ladDat |> dplyr::filter(area == r$profile,
                                obs %in% vars)
     })
     profileDatGB <- reactive({
-      gbDat %>% dplyr::filter(obs %in% vars)
+      gbDat |> dplyr::filter(obs %in% vars)
     })
 
     compareDat <- reactive({
       dat <- list(profileDatWard(),  profileDatLA(),  profileDatGB())
       names(dat) <- c("Wards", area_name(), "GB average")
       dat <- purrr::imap(dat,
-                         ~.x %>%
-                           dplyr::filter(if_any(matches("sex"), ~.x=="both")) %>%
-                           dplyr::filter(if_any(matches("age"), ~.x=="all_ages")) %>%
-                           dplyr::mutate(geo = .y)) %>%
-        purrr::list_rbind() %>%
-        dplyr::left_join(., reference[, c("obs", "cat_reference")], by="obs") %>%
+                         ~.x |>
+                           dplyr::filter(if_any(matches("sex"), ~.x=="both")) |>
+                           dplyr::filter(if_any(matches("age"), ~.x=="all_ages")) |>
+                           dplyr::mutate(geo = .y)) |>
+        purrr::list_rbind() |>
+        dplyr::left_join(reference[, c("obs", "cat_reference")], by="obs") |>
         dplyr::filter(cat==cat_reference)
-      # tidyr::pivot_wider(names_from = obs, values_from = c(cat, value), values_fn = first) %>%
+      # tidyr::pivot_wider(names_from = obs, values_from = c(cat, value), values_fn = first) |>
       # dplyr::rename_with(~stringr::str_remove(.x, "value_"), .cols = contains("value"))
       return(dat)
     })

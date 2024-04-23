@@ -40,15 +40,15 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
     }
 
     mapDat <- reactive({
-      wardSF %>%
-        dplyr::filter(ward %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) %>%
+      wardSF |>
+        dplyr::filter(ward %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) |>
         sf::st_transform(crs = "WGS84")
     })
 
     output$map <- leaflet::renderLeaflet(
-      leaflet::leaflet(mapDat()) %>%
-        leaflet::addProviderTiles("CartoDB.Positron") %>%
-        leaflet::addPolylines(weight = 2, color= "#CCCCCC") %>%
+      leaflet::leaflet(mapDat()) |>
+        leaflet::addProviderTiles("CartoDB.Positron") |>
+        leaflet::addPolylines(weight = 2, color= "#CCCCCC") |>
         leaflet::fitBounds(min(mapDat()$LONG), min(mapDat()$LAT), max(mapDat()$LONG), max(mapDat()$LAT),
                            options = list(padding = c(50,50)))
     )
@@ -56,15 +56,15 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
     # update fill
 
     fillDat <- reactive({
-      filtered <- wardDat #%>%
+      filtered <- wardDat #|>
         # dplyr::filter(sex=="both",
         #               age=="all ages")
-      output <- mapDat() %>% dplyr::select(ward, ward_name) %>% dplyr::left_join(., filtered, by=c("ward" = "area"))
+      output <- mapDat() |> dplyr::select(ward, ward_name) |> dplyr::left_join(filtered, by=c("ward" = "area"))
       return(output) #[match(mapDat()$ward, filtered$area),])
     })
 
     fillVals <- reactive({
-      fillDat() %>%
+      fillDat() |>
         dplyr::filter(obs == varblR(),
                       cat == categR())
     })
@@ -72,9 +72,9 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
     observeEvent(fillVals(), {
 
       #if(!is.null(varbl)&&!is.null(categ)){
-        # values <- fillDat() %>%
+        # values <- fillDat() |>
         #   dplyr::filter(obs == varblR(),
-        #                 cat == categR()) #%>%
+        #                 cat == categR()) #|>
           #dplyr::pull(scaled)
 
 
@@ -82,14 +82,14 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
         # "#52473B"
         #scaledValues <- (values$scaled-min(values$scaled))/(max(values$scaled)-min(values$scaled))
         scaledValues <- pmax(pmin((fillVals()$scaled/10)+0.5, 1), 0)
-        colr <- as.data.frame(colorRamp(c("#A53C0B", "white", "#005CBA"))(scaledValues)) %>%
+        colr <- as.data.frame(colorRamp(c("#A53C0B", "white", "#005CBA"))(scaledValues)) |>
           purrr::pmap_chr(~ifelse(is.na(..1), rgb(0.5,0.5,0.5), rgb(..1,..2,..3, maxColorValue = 255)))
 
         labl <- paste0(mapDat()$ward_name, ": ", fillVals()$labelled)
 
 
-        leaflet::leafletProxy("map", data = mapDat()) %>%
-          leaflet::clearShapes() %>%
+        leaflet::leafletProxy("map", data = mapDat()) |>
+          leaflet::clearShapes() |>
           leaflet::addPolygons(fillColor = colr, fillOpacity=0.8, weight = 2, color= "#CCCCCC", label = labl)
       #}
     })

@@ -82,15 +82,15 @@ mod_pt_profile_health_server <- function(id, r){
                   "sclonely")
 
     profileDatWard <- reactive({
-      wardDat %>% dplyr::filter(area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile],
+      wardDat |> dplyr::filter(area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile],
                                 obs %in% vars)
       })
     profileDatLA <- reactive({
-      ladDat %>% dplyr::filter(area == r$profile,
+      ladDat |> dplyr::filter(area == r$profile,
                                 obs %in% vars)
     })
     profileDatGB <- reactive({
-      gbDat %>% dplyr::filter(obs %in% vars)
+      gbDat |> dplyr::filter(obs %in% vars)
     })
 
     compareDat <- reactive({
@@ -99,12 +99,12 @@ mod_pt_profile_health_server <- function(id, r){
       names(dat) <- c("Wards", area_name(), "GB average")
 
       dat <- purrr::imap(dat,
-                         ~dplyr::filter(.x, sex=="both", age=="all ages") %>%
-                           dplyr::mutate(geo = .y) %>%
-                           dplyr::group_by(obs) %>%
-                           dplyr::filter(cat == get_cats(dplyr::first(obs))[1])) %>%
-        purrr::list_rbind() #%>%
-      # tidyr::pivot_wider(names_from = obs, values_from = c(cat, value), values_fn = first) %>%
+                         ~dplyr::filter(.x, sex=="both", age=="all ages") |>
+                           dplyr::mutate(geo = .y) |>
+                           dplyr::group_by(obs) |>
+                           dplyr::filter(cat == get_cats(dplyr::first(obs))[1])) |>
+        purrr::list_rbind() #|>
+      # tidyr::pivot_wider(names_from = obs, values_from = c(cat, value), values_fn = first) |>
       # dplyr::rename_with(~stringr::str_remove(.x, "value_"), .cols = contains("value"))
 
       return(dat)

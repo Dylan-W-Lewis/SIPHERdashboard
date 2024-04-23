@@ -101,9 +101,9 @@ mod_page_MapExplore_server <- function(id, r, parent.session){
     })
 
     comparisonData <- reactive({
-      ladDat %>%
-        dplyr::filter(sex=="both", age=="all_ages", area %in% r$selected_area) %>%
-        dplyr::left_join(., sf::st_drop_geometry(ladSF[, c("lad", "lad_name")]), by=c("area" = "lad"))
+      ladDat |>
+        dplyr::filter(sex=="both", age=="all_ages", area %in% r$selected_area) |>
+        dplyr::left_join(sf::st_drop_geometry(ladSF[, c("lad", "lad_name")]), by=c("area" = "lad"))
       })
 
     mod_pt_ComparisonGraph_server("pt_ComparisonGraph_1", r=r, var="racel_dv", dat=comparisonData)

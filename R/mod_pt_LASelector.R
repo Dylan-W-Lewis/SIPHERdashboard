@@ -43,7 +43,7 @@ mod_pt_LASelector_server <- function(id){
 
     #output
     selection <- reactive({
-      countryLAs() %>% filter(ladcd == input$LA)
+      countryLAs() |> filter(ladcd == input$LA)
     })
 
     output$LAchoice <- renderText({

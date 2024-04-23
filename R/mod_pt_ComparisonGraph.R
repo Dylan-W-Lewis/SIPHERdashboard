@@ -26,18 +26,18 @@ mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     plotDat <- reactive({
-      dat() %>%
+      dat() |>
         dplyr::filter(
-             obs==var) %>%
-        dplyr::mutate(cat = factor(cat, levels= get_cats(var))) %>%
-        dplyr::group_by(area) #%>%
+             obs==var) |>
+        dplyr::mutate(cat = factor(cat, levels= get_cats(var))) |>
+        dplyr::group_by(area) #|>
         # dplyr::arrange(match(cat, get_cats(var)),
         #                .by_group = T)
     })
 
     output$graph <- renderPlot({
       if(!is.null(r$selected_area)) {
-        plotDat() %>%
+        plotDat() |>
           ggplot2::ggplot(ggplot2::aes(x=lad_name, y=value, fill=translate_codes(cat))) +
           ggplot2::geom_col() +
           ggplot2::coord_flip() +

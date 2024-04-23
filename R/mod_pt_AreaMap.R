@@ -24,16 +24,16 @@ mod_pt_AreaMap_server <- function(id, r){
     ns <- session$ns
 
     filteredDat <- reactive({
-      wardDat %>%
+      wardDat |>
         dplyr::filter(sex=="both",
                       age=="all ages",
-                      area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) %>%
+                      area %in% lookup_wd_lad$ward[lookup_wd_lad$lad==r$profile]) |>
         tidyr::pivot_wider(names_from = c(obs, cat), values_from = value)
     })
 
     mapDat <- reactive({
-      temp <- filteredDat() #%>% dplyr::filter(obs == r$var_selection[["var"]], cat == r$var_selection[["level"]])
-      output <- wardSF %>% dplyr::right_join(., temp, by=c("ward"="area"))
+      temp <- filteredDat() #|> dplyr::filter(obs == r$var_selection[["var"]], cat == r$var_selection[["level"]])
+      output <- wardSF |> dplyr::right_join(., temp, by=c("ward"="area"))
       return(output)
     })
 
@@ -58,9 +58,9 @@ mod_pt_AreaMap_server <- function(id, r){
         #hoverinfo = "text",
         #hovertemplate = "%{text:.3}%",
         showlegend = FALSE
-      ) %>% plotly::add_sf()
+      ) |> plotly::add_sf()
 
-      fig <- fig %>%
+      fig <- fig |>
         plotly::layout(
           mapbox = list(style = "carto-positron",
                         center = centre(),
@@ -81,20 +81,20 @@ mod_pt_AreaMap_server <- function(id, r){
 
         varCol <- dplyr::pull(filteredDat(), selectedVar())
 
-        colr <- as.data.frame(colorRamp(c("white", "#005CBA"))(varCol/100)) %>%
+        colr <- as.data.frame(colorRamp(c("white", "#005CBA"))(varCol/100)) |>
           purrr::pmap_chr(~paste0("rgba(", ..1, ",", ..2, ",", ..3, ",0.5)"))
 
         labl <- paste0(mapDat()$ward_name, ": ", round(varCol, 1), "%")
 
         message("restyle")
 
-        plotly:: plotlyProxy("map", session) %>%
+        plotly:: plotlyProxy("map", session) |>
           plotly::plotlyProxyInvoke(
             "restyle",
             list(fillcolor = colr,
                  hoverinfo = "text",
                  hovertext = labl)
-          ) %>%
+          ) |>
           plotly::plotlyProxyInvoke(
             "relayout",
             list(center = centre(),

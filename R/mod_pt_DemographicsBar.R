@@ -23,7 +23,7 @@ mod_pt_DemographicsBar_server <- function(id, dat, varbl, categ){
     ns <- session$ns
 
     plotDat <- reactive({
-      toPlot <- dat() %>%
+      toPlot <- dat() |>
         dplyr::filter(obs==varbl(),
                cat==categ(),
                age!="all_ages",
@@ -35,7 +35,7 @@ mod_pt_DemographicsBar_server <- function(id, dat, varbl, categ){
 
     output$bar <- plotly::renderPlotly(
       plotly::ggplotly(
-        plotDat() %>%
+        plotDat() |>
           ggplot2::ggplot(ggplot2::aes(x=age, y=value, fill=as.factor(sex), text=labelled)) +
           ggplot2::geom_col(position = "dodge") +
           scale_fill_sipher(palette_name = "full", type = "discrete") +

@@ -24,11 +24,11 @@ mod_pt_MapSelect_server <- function(id, r){
     ladShared <- crosstalk::SharedData$new(ladSF, ~LAD23NM, group="Local Authority District")
 
     output$map <- plotly::renderPlotly({
-      ladShared %>%
+      ladShared |>
         plotly::plot_ly(
          split = ~LAD23NM,
          color = I("gray90"),
-         showlegend = FALSE) %>%
+         showlegend = FALSE) |>
        plotly::highlight(
          color="rgba(0,117,176,1)",
          selectize = TRUE,

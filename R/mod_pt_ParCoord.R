@@ -25,9 +25,9 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
 
 
     plotDat <- reactive({
-      toPlot <- dat() %>%
-        dplyr::left_join(., sf::st_drop_geometry(wardSF[, c("ward", "ward_name")]), by=c("area" = "ward")) %>%
-        dplyr::group_by(obs) %>%
+      toPlot <- dat() |>
+        dplyr::left_join(sf::st_drop_geometry(wardSF[, c("ward", "ward_name")]), by=c("area" = "ward")) |>
+        dplyr::group_by(obs) |>
         dplyr::mutate(
           labelled_new = dplyr::if_else(is.na(ward_name),
                                         stringr::str_c(geo, labelled, sep= ": "),
@@ -55,7 +55,7 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
         ggplot2::ggplot(data = plotDat(),
                         ggplot2::aes(y= obs, x=scaled, text = labelled_new, group=area, color=geo, alpha=alpha, shape=geo)) +
           ggplot2::geom_point() +
-          #ggplot2::geom_line(#data = . %>% filter(geo=="GB")
+          #ggplot2::geom_line(#data = . |> filter(geo=="GB")
           #                   ) +
           ggplot2::scale_shape_manual(values = c(3, 16, 16)) +
           ggplot2::scale_y_discrete(labels = function(y) stringr::str_wrap(make_var_labels(y), width = 35)) +
@@ -76,7 +76,7 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
                         x = "Lower than average                    Higher than average",
                         shape = NULL),
         tooltip = c("text")
-      )  %>%
+      )  |>
         plotly::layout(legend = list(orientation = 'h', x = 0.5, y = 1.05))
     )
 
