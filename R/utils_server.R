@@ -67,18 +67,33 @@ translate_codes <- function(codes, capitalise = T){
 #' @param vars character vector of codes
 #'
 #' @noRd
-make_var_labels <- function(vars){
-  varNames <- purrr::map_chr(vars,
-                      function(.x){
-                        if(reference$categorical[reference$obs==.x]){
-                          paste0(stringr::str_c(translate_codes(.x),
-                                                translate_codes(get_cats(.x, ref_only = T)),
-                                                sep= ": "),
-                                 " (%)"
-                          )
-                        } else {
-                          translate_codes(.x)
-                        }
-                      })
+make_var_labels <- function(vars, cats=NULL){
+  if(is.null(cats)){
+    varNames <- purrr::map_chr(vars,
+                               function(.x){
+                                 if(reference$categorical[reference$obs==.x]){
+                                   paste0(stringr::str_c(translate_codes(.x),
+                                                         translate_codes(get_cats(.x, ref_only = T)),
+                                                         sep= ": "),
+                                          " (%)"
+                                   )
+                                 } else {
+                                   translate_codes(.x)
+                                 }
+                               })
+  } else {
+    varNames <- purrr::map2_chr(vars, cats,
+                               function(.x, .y){
+                                 if(reference$categorical[reference$obs==.x]){
+                                   paste0(stringr::str_c(translate_codes(.x),
+                                                         translate_codes(.y),
+                                                         sep= ": "),
+                                          " (%)")
+                                 } else {
+                                   translate_codes(.x)
+                                 }
+                               })
+  }
+
   return(varNames)
 }
