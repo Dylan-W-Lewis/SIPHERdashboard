@@ -14,14 +14,22 @@ mod_page_MapExplore_ui <- function(id){
     bslib::page_fillable(
       bslib::layout_sidebar(
         #row_heights = 1,
-        #fill = T,
+        fillable = T,
         #col_widths =  c(6,6),
-        sidebar = bslib::sidebar(
-          padding=0,
+        sidebar=bslib::sidebar(
+          gap = 0,
+          padding=c(0, 20, 0, 0),
           width = "50%",
           open = "always",
-          mod_pt_MapSelect2_ui(ns("pt_MapSelect_1"))
-          ),
+          class = "html-fill-container",
+          div(style = "margin-top:-24px"),
+          div(mod_pt_MapSelect2_ui_box(ns("pt_MapSelect_1")),
+              style = "margin: 15px 0 0px 20px"),
+          div(style = "margin-top:-15px"),
+          mod_pt_MapSelect2_ui_map(ns("pt_MapSelect_1"))
+        ) |> (\(x) {
+          x$tag$children[[1]] <- x$tag$children[[1]] |> bslib::as_fill_carrier()
+          x})(),
         bslib::layout_columns(
           fill = T,
           #row_heights = c("auto", 6),
@@ -36,6 +44,7 @@ mod_page_MapExplore_ui <- function(id){
             bslib::nav_panel_hidden("show",
                                     # selected areas card
                                     bslib::card(
+                                      padding=0,
                                       bslib::accordion(
                                         open = FALSE,
                                         bslib::accordion_panel("View area profiles",

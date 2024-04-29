@@ -12,6 +12,7 @@ mod_page_AreaProfile2_ui <- function(id){
   tagList(
     bslib::page_fillable(
                          bslib::layout_columns(
+                           gap = 0,
                            col_widths = c(-2,8,-2),
                            bslib::layout_columns(
                              col_widths = 12,

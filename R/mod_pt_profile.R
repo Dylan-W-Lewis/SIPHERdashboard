@@ -20,9 +20,11 @@ mod_pt_profile_ui <- function(id, topic, vars, varNames){
                        min_height = 150),
     ),
 
-    p(textOutput(ns("para_2")),
+    #p(
+      textOutput(ns("para_2")),
+      div(style = "margin-top:-24px"),
       mod_pt_VarLevelSelect_ui(ns("VarLevelSelect"), vars),
-      style='margin = 0px;'),
+      #style='margin = 0px;'),
     #bslib::card_body(
       # radioButtons(ns("map_choices"),
       #                             "",
