@@ -12,16 +12,32 @@ app_ui <- function(request) {
     bslib::page_navbar(
       #page setup
       id = "topBar",
-      title= "SIPHER Synthetic Population",
-        # div(tags$img(
-        # src = "www/sipher_logo.png",
-        # style = "width: 135.7px; height: 55px"
-        # ),
-        # style= "padding: 0px 0px; line-height: 55px; vertical-align: middle;",
-        # "Synthetic Population Dashboard"),
-      inverse=TRUE,
+      window_title= "SIPHER Synthetic Population",
+      title=
+        span(tags$img(
+          src = "www/sipher_logo.png",
+          style = "width: 135.7px; height: 55px"
+          )),
+          #style = "background-color: white; line-height: 57px"),
+      inverse=T,
       bg= "#005398",
-      #theme=bslib::bs_theme(version = 5, preset = "bootstrap", "navbar-bg" = "#005398"),
+      theme=bslib::bs_theme(version = 5,
+                            #bootswatch = "default",
+                            primary = "#005398",
+                            secondary = "#005C83",
+                            #"navbar-bg" = "#005398",
+                            base_font = "Arial",
+                            heading_font = "Arial",
+                            #"nav-link-color" = "#005C83 !important",
+                            # "nav-link-font-size" = "45px",
+                            # "nav-link-font-weight" = "bold",
+                            #"nav-link-hover-color" = "#005398 !important",
+                            #"nav-tabs-link-active-color" = "#005398 !important",
+                            #"navbar-padding-y" = "3px",
+                            "navbar-brand-padding-y" = "-1px",
+                            ) |>
+        bslib::bs_add_rules(list(".navbar-static-top {padding: 0px;}",
+                                 ".navbar>.container-fluid {padding-left: 0px}")),
 
       #navbar content
       bslib::nav_panel("Home",
