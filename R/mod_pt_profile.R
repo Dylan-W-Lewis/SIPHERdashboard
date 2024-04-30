@@ -15,38 +15,24 @@ mod_pt_profile_ui <- function(id, topic, vars, varNames){
   tagList(
     p(textOutput(ns("intro_text"))),
     bslib::card(
-      bslib::card_header("Overview"),  #, padding=c(16,16,0)),
+      bslib::card_header("Overview"),
       bslib::card_body(mod_pt_ParCoord_ui(ns("pt_ParCoord")),
                        min_height = 150),
     ),
 
-    p(textOutput(ns("para_2")),
-      mod_pt_VarLevelSelect_ui(ns("VarLevelSelect"), vars),
-      style='margin = 0px;'),
-    #bslib::card_body(
-      # radioButtons(ns("map_choices"),
-      #                             "",
-      #                             choiceValues=vars,
-      #                             choiceNames =varNames,
-      #                             inline = T
-      #              ),
-    #),
-    bslib::card(
-      bslib::card_header(paste0(stringr::str_to_sentence(topic), " by area")),  #, padding=c(16,16,0)),
+    textOutput(ns("para_2")),
+    div(style = "margin-top:-24px"),
+    mod_pt_VarLevelSelect_ui(ns("VarLevelSelect"), vars),
 
+    bslib::card(
+      bslib::card_header(textOutput(ns("labArea"))),
       bslib::card_body(class = "p-0",
                        mod_pt_AreaMap3_ui(ns("pt_AreaMap3")),
                        min_height = 150)),
     bslib::card(
-      bslib::card_header(paste0(stringr::str_to_sentence(topic), " by age and gender")),  #, padding=c(16,16,0)),
+      bslib::card_header(textOutput(ns("labDemo"))),
       bslib::card_body(mod_pt_DemographicsBar_ui(ns("pt_DemographicsBar")),
-                       min_height = 150)#,
-      # bslib::card_body(radioButtons(ns("bar_choices"),
-      #                               "",
-      #                               choiceValues=vars,
-      #                               choiceNames =varNames,
-      #                               inline = T
-      # ))
+                       min_height = 150)
       )
 
   )
@@ -88,8 +74,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
         purrr::list_rbind() |>
         dplyr::left_join(reference[, c("obs", "cat_reference")], by="obs") |>
         dplyr::filter(cat==cat_reference)
-      # tidyr::pivot_wider(names_from = obs, values_from = c(cat, value), values_fn = first) |>
-      # dplyr::rename_with(~stringr::str_remove(.x, "value_"), .cols = contains("value"))
+
       return(dat)
     })
 
@@ -121,14 +106,19 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
     #### selections
     selections <- mod_pt_VarLevelSelect_server("VarLevelSelect")
 
+    selectionName <- reactive(make_var_labels(selections()$var, selections()$level))
+
+    output$labArea <- renderText(paste0(stringr::str_to_sentence(topic), " by area - ", selectionName()))
+    output$labDemo <- renderText(paste0(stringr::str_to_sentence(topic), " by age and gender - ", selectionName()))
+
 
     ##### graphs
 
 
     mod_pt_AreaMap3_server("pt_AreaMap3",
                            r=r,
-                           varbl = reactive(selections()$var),#reactive(input$map_choices),
-                           categ = reactive(selections()$level) #reactive(get_cats(input$map_choices, ref_only = T))
+                           varbl = reactive(selections()$var),
+                           categ = reactive(selections()$level)
                            )
 
     mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat, varNames)

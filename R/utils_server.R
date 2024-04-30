@@ -42,6 +42,7 @@ var_names <- function(vars){
   return(full)
 }
 
+
 #' translate_codes
 #'
 #' @description get human friendly names from variable/category codes
@@ -49,9 +50,12 @@ var_names <- function(vars){
 #' @param codes character vector of codes
 #'
 #' @noRd
-translate_codes <- function(codes){
+translate_codes <- function(codes, capitalise = T){
   purrr::walk(codes, ~if(! .x %in% codebook$code){warning(paste(.x, "not found in codebook"))})
   out <- codebook$name[match(codes, codebook$code)]
+  if(capitalise==T){
+    substr(out, 1, 1) <- toupper(substr(out, 1, 1))
+  }
   return(out)
 }
 
@@ -63,18 +67,33 @@ translate_codes <- function(codes){
 #' @param vars character vector of codes
 #'
 #' @noRd
-make_var_labels <- function(vars){
-  varNames <- purrr::map_chr(vars,
-                      function(.x){
-                        if(reference$categorical[reference$obs==.x]){
-                          paste0(stringr::str_c(codebook$name[codebook$code==.x],
-                                         codebook$name[codebook$code==get_cats(.x, ref_only = T)],
-                                         sep= ": "),
-                                 " (%)"
-                          )
-                        } else {
-                          codebook$name[codebook$code==.x]
-                        }
-                      })
+make_var_labels <- function(vars, cats=NULL){
+  if(is.null(cats)){
+    varNames <- purrr::map_chr(vars,
+                               function(.x){
+                                 if(reference$categorical[reference$obs==.x]){
+                                   paste0(stringr::str_c(translate_codes(.x),
+                                                         translate_codes(get_cats(.x, ref_only = T)),
+                                                         sep= ": "),
+                                          " (%)"
+                                   )
+                                 } else {
+                                   translate_codes(.x)
+                                 }
+                               })
+  } else {
+    varNames <- purrr::map2_chr(vars, cats,
+                               function(.x, .y){
+                                 if(reference$categorical[reference$obs==.x]){
+                                   paste0(stringr::str_c(translate_codes(.x),
+                                                         translate_codes(.y),
+                                                         sep= ": "),
+                                          " (%)")
+                                 } else {
+                                   translate_codes(.x)
+                                 }
+                               })
+  }
+
   return(varNames)
 }
