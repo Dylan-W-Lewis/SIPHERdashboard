@@ -26,14 +26,16 @@ app_ui <- function(request) {
       #navbar content
       bslib::nav_panel("Home",
                        value = "home",
-                       div(style = "margin: auto;",
-                           tags$img(
-                             src = "www/sipher_logo.png",
-                             height = 143,
-                             width = 353
-                             )
-                           ),
-                       p("Home page coming soon")),
+                       # div(style = "margin: auto;",
+                       #     tags$img(
+                       #       src = "www/sipher_logo.png",
+                       #       height = 143,
+                       #       width = 353
+                       #       )
+                       #     ),
+                       #p("Home page coming soon")
+                       mod_page_LandingPage_ui("page_LandingPage"),
+                       ),
 
       bslib::nav_panel("Map Explore",
                value = "map_explore",
