@@ -21,6 +21,13 @@ mod_page_LandingPage_ui <- function(id){
 
                 br(),
 
+                div(
+                  style = "text-align: center",
+                  HTML('<iframe width="514" height="289" src="https://www.youtube.com/embed/CkiORY7GSLc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+                ),
+
+                br(),
+
                 h4(strong(style="color:#005398","Background")),
 
                 p("The conditions in which we are born, grow, live, work, and age are key drivers of health and health
@@ -63,8 +70,9 @@ mod_page_LandingPage_ui <- function(id){
 
                 br(),
 
-                div(style = "margin: auto;",
-                    img(src='www/sipher_logo.png', height = "90px", align = "centre")
+                div(style = "margin: auto; text-align: center",
+                    span(img(src='www/sipher_logo.png', height = "90px", align = "centre"),
+                         img(src='www/UKPRP.png', height = "90px", align = "centre"))
                     ),
 
                 br(),
@@ -85,7 +93,7 @@ mod_page_LandingPage_ui <- function(id){
 
                     h4(style="color:#005398", "Guidance for interpreting the results"),
 
-                    actionButton("gotointerpretation", "Go to 'Interpreting the Results' tab",
+                    actionButton(ns("gotointerpretation"), "Go to 'Interpreting the Results' tab",
                                  style="color: #fff; background-color: #005398;
                                                           border-color: #005398")
                   )
@@ -100,25 +108,25 @@ mod_page_LandingPage_ui <- function(id){
 
                     h4(style="color:#005398", "How to use the dashboard's features and functionlity"),
 
-                    actionButton("gotofeatures", "Go to 'Features and Functionality' tab",
+                    actionButton(ns("gotofeatures"), "Go to 'Features and Functionality' tab",
                                  style="color: #fff; background-color: #005398;
                                                           border-color: #005398")
                   )
                 ),
 
-                bslib::card(
-
-                  bslib::card_body(
-
-                    p(strong("Reproducing our Approach")),
-
-                    h4(style="color:#005398", "Access our reproducibility pack"),
-
-                    actionButton("gotoreproducibility", "Go to 'Reproducibility Pack' tab",
-                                 style="color: #fff; background-color: #005398;
-                                                          border-color: #005398")
-                  )
-                ),
+                # bslib::card(
+                #
+                #   bslib::card_body(
+                #
+                #     p(strong("Reproducing our Approach")),
+                #
+                #     h4(style="color:#005398", "Access our reproducibility pack"),
+                #
+                #     actionButton(ns("gotoreproducibility"), "Go to 'Reproducibility Pack' tab",
+                #                  style="color: #fff; background-color: #005398;
+                #                                           border-color: #005398")
+                #   )
+                # ),
 
                 bslib::card(
 
@@ -128,7 +136,7 @@ mod_page_LandingPage_ui <- function(id){
 
                     h4(style="color:#005398", "How to cite the dashboard and the data"),
 
-                    actionButton("gotocitedashboard", "Go to 'How to Cite' tab",
+                    actionButton(ns("gotocitedashboard"), "Go to 'How to Cite' tab",
                                  style="color: #fff; background-color: #005398;
                                                           border-color: #005398")
                   )
@@ -146,9 +154,34 @@ mod_page_LandingPage_ui <- function(id){
 #' page_LandingPage Server Functions
 #'
 #' @noRd
-mod_page_LandingPage_server <- function(id){
+mod_page_LandingPage_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+
+    # observeEvent(list(input$gotocitedashboard,
+    #                   input$gotoreproducibility,
+    #                   input$gotofeatures,
+    #                   input$gotointerpretation),
+    #              ignoreInit = T, {
+    #   r$active_page <- "info"
+    # })
+
+    observeEvent(input$gotointerpretation,
+                 ignoreInit = T, {
+                   r$active_page <- "info"
+                   r$info_tab <- "SyntheticPopNotes"
+                 })
+
+    observeEvent(input$gotocitedashboard,
+                 ignoreInit = T, {
+                   r$active_page <- "info"
+                   r$info_tab <- "citation"
+                 })
+    observeEvent(input$gotofeatures,
+                 ignoreInit = T, {
+                   r$active_page <- "info"
+                   r$info_tab <- "features"
+                 })
 
   })
 }

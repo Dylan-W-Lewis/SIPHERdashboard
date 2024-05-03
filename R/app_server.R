@@ -19,15 +19,22 @@ app_server <- function(input, output, session) {
 
   observeEvent(r$active_page, {
      if(!identical(r$active_page, input$topBar)){
-       message(paste("change page to", r$active_page, "from", input$topBar))
+       #message(paste("change page to", r$active_page, "from", input$topBar))
        bslib::nav_select(id = "topBar",
                        selected = r$active_page)
      }
   })
+
+  #server home page
+  mod_page_LandingPage_server("page_LandingPage", r=r)
 
   #server page 1
   mod_page_MapExplore_server("page_MapExplore", r=r, parent.session = session)
 
   #server page 2
   mod_page_AreaProfile2_server("page_AreaProfile", r=r)
+
+  #server info page
+  mod_page_Info_server("page_Info", r=r)
+
 }
