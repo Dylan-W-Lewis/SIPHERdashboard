@@ -12,30 +12,51 @@ app_ui <- function(request) {
     bslib::page_navbar(
       #page setup
       id = "topBar",
-      title= "SIPHER Synthetic Population",
-        # div(tags$img(
-        # src = "www/sipher_logo.png",
-        # style = "width: 135.7px; height: 55px"
-        # ),
-        # style= "padding: 0px 0px; line-height: 55px; vertical-align: middle;",
-        # "Synthetic Population Dashboard"),
-      inverse=TRUE,
+      window_title= "SIPHER Synthetic Population",
+      title=
+        span(
+          tags$a(
+            tags$img(
+              src = "www/sipher_logo_expanded.png",
+              style = "width: 135.7px; height: 55px"),
+            href = "https://www.gla.ac.uk/research/az/sipher/",
+            target = "_blank"
+          )),
+      inverse=T,
       bg= "#005398",
-      #theme=bslib::bs_theme(version = 5, preset = "bootstrap", "navbar-bg" = "#005398"),
+      theme=bslib::bs_theme(version = 5,
+                            #bootswatch = "default",
+                            primary = "#005398",
+                            secondary = "#005C83",
+                            #"navbar-bg" = "#005398",
+                            base_font = "Arial",
+                            heading_font = "Arial",
+                            #"nav-link-color" = "#005C83 !important",
+                            # "nav-link-font-size" = "45px",
+                            # "nav-link-font-weight" = "bold",
+                            #"nav-link-hover-color" = "#005398 !important",
+                            #"nav-tabs-link-active-color" = "#005398 !important",
+                            #"navbar-padding-y" = "3px",
+                            "navbar-brand-padding-y" = "-1px",
+                            ) |>
+        bslib::bs_add_rules(list(".navbar-static-top {padding: 0px;}",
+                                 ".navbar>.container-fluid {padding-left: 0px}")),
 
       #navbar content
       bslib::nav_panel("Home",
                        value = "home",
-                       div(style = "margin: auto;",
-                           tags$img(
-                             src = "www/sipher_logo.png",
-                             height = 143,
-                             width = 353
-                             )
-                           ),
-                       p("Home page coming soon")),
+                       # div(style = "margin: auto;",
+                       #     tags$img(
+                       #       src = "www/sipher_logo.png",
+                       #       height = 143,
+                       #       width = 353
+                       #       )
+                       #     ),
+                       #p("Home page coming soon")
+                       mod_page_LandingPage_ui("page_LandingPage"),
+                       ),
 
-      bslib::nav_panel("Map Explore",
+      bslib::nav_panel("Map explore",
                value = "map_explore",
                mod_page_MapExplore_ui("page_MapExplore")),
 
@@ -45,14 +66,30 @@ app_ui <- function(request) {
                ),
 
       bslib::nav_panel("Graph builder",
-                       value = "graph_builder"),
+                       value = "graph_builder",
+                       div(style = "margin: auto;",
+                           h3(span(icon("hammer"), "Under construction")),
+                           p("The graph builder tool will allow user to create custom versions of the graphs seen in this dashboard"))
+                       ),
 
       bslib::nav_panel("Data download",
-                       value = "data_download"),
+                       value = "data_download",
+                       div(style = "margin: auto;",
+                            h3(span(icon("hammer"), "Under construction")),
+                            p("The data download tab will allow users to filter and download tables of aggregated data from the synthetic population")
+                           )
+                       ),
+
+      bslib::nav_panel("About", value = "info",
+                       mod_page_Info_ui("page_Info")),
 
       bslib::nav_spacer(),
 
-      bslib::nav_panel("", value = "options", icon = shiny::icon("gear"))
+      bslib::nav_item(tags$a(
+        shiny::icon("github"),
+        href = "https://github.com/Dylan-W-Lewis/SIPHERdashboard",
+        target = "_blank"
+      ))
       )
     )
 }
