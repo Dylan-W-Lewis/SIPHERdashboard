@@ -74,7 +74,8 @@ mod_pt_ParCoord_server <- function(id, dat, varNames){
           ggplot2::guides(shape = "none"),
         tooltip = c("text")
       )  |>
-        plotly::layout(legend = list(orientation = 'h', x = 0.5, y = 1.05))
+      plotly::layout(legend = list(orientation = 'h', x = 0.5, y = 1.05)) |>
+      plotly::config(displayModeBar = FALSE)
     )
 
   })

@@ -50,7 +50,8 @@ mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
           #ggplot2::theme(legend.position = "top") +
           ggplot2::labs(fill = NULL,
                         y= NULL,
-                        x= NULL),
+                        x= NULL) +
+          ggplot2::ggtitle(translate_codes(var)),
          tooltip = c("text")
       )
     })
@@ -58,10 +59,10 @@ mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
     output$graph <- plotly::renderPlotly({
       if(!is.null(r$selected_area)) {
         graph() |>
-          plotly::layout(legend=list(y=1,
+          plotly::layout(legend=list(y=-0.1,
                                      x=0.5,
                                      xanchor='center',
-                                     yanchor='bottom',
+                                     yanchor='top',
                                      orientation='h')#,
                          # margin=list(t=20,
                          #             autoexpand=F)

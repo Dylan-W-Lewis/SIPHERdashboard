@@ -10,7 +10,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_pt_profile_ui <- function(id, topic, vars, varNames){
+mod_pt_profile_ui <- function(id, vars){
   ns <- NS(id)
   tagList(
     p(textOutput(ns("intro_text"))),
@@ -91,7 +91,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
              ". The SIPHER Synthetic Population aggregated dataset currently includes ",
              length(vars),
              " variables relating to this domain: ",
-             var_names(varNames), collapse = "")
+             var_names(translate_codes(vars)), collapse = "")
     })
 
     para2 <- reactive({
