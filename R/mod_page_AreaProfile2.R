@@ -19,7 +19,7 @@ mod_page_AreaProfile2_ui <- function(id){
                              fill = F,
                              gap=0,
                              em("Area profile"),
-                             h2(textOutput(ns("area_title"), inline = T),
+                             h2(strong(style="color:#005398", textOutput(ns("area_title"), inline = T)),
                                      bslib::popover(
                                        icon("caret-down"),
                                        placement = "bottom",
@@ -27,7 +27,7 @@ mod_page_AreaProfile2_ui <- function(id){
                                        selectInput(ns("change_area"),
                                                    label = NULL,
                                                    choices = setNames(c("",ladSF$lad), c("Change selected area...",ladSF$lad_name)))
-                                     ),
+                                     )
                                 ),
                              #actionButton(ns("switch_area"), label = NULL, icon = icon("repeat"), width="16px"),
                              bslib::navset_bar(title= "Choose a topic:",
@@ -44,8 +44,8 @@ mod_page_AreaProfile2_ui <- function(id){
                                                                                   varNames=c("physical health (SF-12)",
                                                                                              "mental health (SF-12)",
                                                                                              "psychological distress (GHQ)",
-                                                                                             "scsf2a",
-                                                                                             "sclonely"),
+                                                                                             "health limiting activities",
+                                                                                             "loneliness"),
                                                                                   topic="health and wellbeing")
                                                                 ),
                                                bslib::nav_panel("Income & employment",
@@ -56,11 +56,11 @@ mod_page_AreaProfile2_ui <- function(id){
                                                                                           "benbase4"),
                                                                                    varNames=c(#"average household income",
                                                                                               "average hourly wage",
-                                                                                              "sclfsat2",
-                                                                                              "benbase4"),
+                                                                                              "satisfaction with income",
+                                                                                              "hourly pay"),
                                                                                    topic="income and employment")
                                                                 ),
-                                               bslib::nav_panel("Housing & Households",
+                                               bslib::nav_panel("Housing & households",
                                                                 mod_pt_profile_ui(ns("housing"),
                                                                                   vars=c("houscost1_dv",
                                                                                          "hheat",
@@ -72,7 +72,7 @@ mod_page_AreaProfile2_ui <- function(id){
                                                                                              "aidhh"),
                                                                                   topic="housing and households")
                                                                 ),
-                                               bslib::nav_panel("Lifestyle, Diet & Nutrition",
+                                               bslib::nav_panel("Lifestyle, diet & nutrition",
                                                                 mod_pt_profile_ui(ns("lifestyle"),
                                                                                   vars=c("auditc3",
                                                                                          "ecigs1",

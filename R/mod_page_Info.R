@@ -15,15 +15,14 @@ mod_page_Info_ui <- function(id){
       widths = c(3, 9),
       well = FALSE,
 
-      bslib::nav_panel("Synthetic Population Dashboard", value = "SyntheticPopNotes",
+      bslib::nav_panel("Overview", value = "dash",
+                       fluidRow(
 
-                fluidRow(
+                         mainPanel(
 
-                  mainPanel(
+                           h1(strong(style="color:#005398","Overview")),
 
-                    h1(strong(style="color:#005398","About the Dashboard")),
-
-                    p("This dashboard provides an aggregated version of the SIPHER Synthetic
+                           p("This dashboard provides an aggregated version of the SIPHER Synthetic
                         Population for Individuals 2019-2021. By providing a “digital twin” of the adult
                         population in Great Britain, the SIPHER Synthetic Population supports a wide
                         range of applications across different fields of policy and research. These
@@ -36,38 +35,79 @@ mod_page_Info_ui <- function(id){
                         the UK Data Service] - subject to the End User Licence Agreement terms and
                         conditions."),
 
-                    p("Key life domains captured in this dashboard include"),
+                        p("Key life domains captured in this dashboard include"),
 
-                    tags$ul(
+                        tags$ul(
 
-                      tags$li("Constraint dimensions (= sociodemographic information used  when
+                          tags$li("Constraint dimensions (= sociodemographic information used  when
                            creating the SIPHER Synthetic Population)"),
 
-                      tags$li("Health & wellbeing"),
+                          tags$li("Health & wellbeing"),
 
-                      tags$li("Satisfaction with life, occupation"),
+                          tags$li("Satisfaction with life, occupation"),
 
-                      tags$li("Income and finances"),
+                          tags$li("Income and finances"),
 
-                      tags$li("Deprivation"),
+                          tags$li("Deprivation"),
 
-                      tags$li("Housing"),
+                          tags$li("Housing"),
 
-                      tags$li("Lifestyle, diet, and nutrition"),
+                          tags$li("Lifestyle, diet, and nutrition"),
 
-                      tags$li("Caring responsibilities")
+                          tags$li("Caring responsibilities")
 
-                    ),
+                        ),
 
-                    p("You are permitted to use data obtained from this dashboard in your outputs,
-                        including reports or presentations. Please see [LINK INTERNAL: Citation & Acknowledgements]
+                        p("You are permitted to use data obtained from this dashboard in your outputs,
+                        including reports or presentations. Please see Citation & Acknowledgements
                         for information on the suggested citation."),
 
-                    p("Further technical information on the SIPHER Synthetic Population can be found
+                        p("Further technical information on the SIPHER Synthetic Population can be found
                         in the respective User Guide – [LINK EXTERNAL: Available via the UK Data Service]."),
 
-                    p("Please direct questions or feedback marked 'Synthetic Population Dashboard'
+                        p("Please direct questions or feedback marked 'Synthetic Population Dashboard'
                         to sipher@glasgow.ac.uk"),
+
+                         )
+                       )
+                       ),
+
+      bslib::nav_panel("About the Data", value= "background",
+
+                       fluidRow(
+
+                         mainPanel(
+
+                           h1(strong(style="color:#005398","The SIPHER Synthetic Population Dataset")),
+
+                           div(
+                             style = "text-align: center",
+                             HTML('<iframe width="514" height="289" src="https://www.youtube.com/embed/CkiORY7GSLc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+                           ),
+
+                           p("The conditions in which we are born, grow, live, work, and age are key drivers of health and health
+                                       inequalities. To allow for these complex real-world relationships and interdependencies to be explored,
+                                       the SIPHER has developed an innovative systems science approach. This approach offers a powerful toolbox
+                                       which enables researchers and policymakers to explore of diverse policies that shape our health and wellbeing."),
+
+                           p("One key product of this toolbox is the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021.
+                                      As a “digital twin” of the adult population in GB, the SIPHER Synthetic Population supports a wide range of applications
+                                      which relay on high-quality individual-level data at a granular spatial resolution.
+                                      The SIPHER Synthetic Population is available for full independent use [LINK EXTERNAL via the UK Data Service] "),
+
+
+                         ) # main panel
+                       ) #fluidRow
+
+
+      ), # bslib::nav_panel
+
+
+      bslib::nav_panel("Data and Interpretation", value = "SyntheticPopNotes",
+
+                fluidRow(
+
+                  mainPanel(
 
                     h1(strong(style="color:#005398","Interpretation of Results")),
 
@@ -221,19 +261,19 @@ mod_page_Info_ui <- function(id){
 
       ), # bslib::nav_panel bracket
 
-      bslib::nav_panel("Dashboard Functionality and Features", value= "features",
-
-                fluidRow(
-
-                  mainPanel(
-                    "In development"
-
-
-                  ) # main panel
-                ) #fluidRow
-
-
-      ) # bslib::nav_panel
+      # bslib::nav_panel("Dashboard Functionality and Features", value= "features",
+      #
+      #           fluidRow(
+      #
+      #             mainPanel(
+      #               "In development"
+      #
+      #
+      #             ) # main panel
+      #           ) #fluidRow
+      #
+      #
+      # ) # bslib::nav_panel
     )
 
   )
