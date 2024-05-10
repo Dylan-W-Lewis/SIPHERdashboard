@@ -97,3 +97,21 @@ make_var_labels <- function(vars, cats=NULL){
 
   return(varNames)
 }
+
+#' domain_vars
+#'
+#' @description gets vars from domain
+#'
+#' @param domain domain name, one of income, housing, health, lifestyle
+#'
+#' @noRd
+domain_vars <- function(domain = c("income", "housing", "health", "lifestyle"),
+                        categorical_only = F){
+  vars <- reference$obs[reference$domain == domain]
+  vars <- vars[!is.na(vars)]
+  if(categorical_only){
+    vars <- vars[vars %in% reference$obs[reference$categorical]]
+  }
+  return(vars)
+}
+

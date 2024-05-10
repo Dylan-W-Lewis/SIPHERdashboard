@@ -63,28 +63,40 @@ mod_page_MapExplore_ui <- function(id){
                                                   "Variables used to construct the Synthetic Population",
                                                   placement = "left"
                                                 ),
-                                        h5("Ethnicity"),
+                                        #h5("Ethnicity"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_1")),
-                                        h5("Marital status"),
+                                        #h5("Marital status"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_2")),
-                                        h5("General health"),
+                                        #h5("General health"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_3")),
-                                        h5("Employment status"),
+                                        #h5("Employment status"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_4")),
-                                        h5("Highest qualification"),
+                                        #h5("Highest qualification"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_5")),
-                                        h5("Household composition"),
+                                        #h5("Household composition"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_6")),
-                                        h5("Housing tenure"),
+                                        #h5("Housing tenure"),
                                         mod_pt_ComparisonGraph_ui(ns("pt_ComparisonGraph_7"))
                                       ),
                                       bslib::nav_panel(
-                                        "Health & wellbeing"
-
+                                        "Health & wellbeing",
+                                        purrr::map(domain_vars("health", categorical_only = T),
+                                                   ~mod_pt_ComparisonGraph_ui(ns(paste0("ComparisonGraph_", .x))))
                                       ),
                                       bslib::nav_panel(
                                         "Income & employment",
-                                        #mod_pt_ComparisonGraph_ui("pt_ComparisonGraph_1")
+                                        purrr::map(domain_vars("income", categorical_only = T),
+                                                   ~mod_pt_ComparisonGraph_ui(ns(paste0("ComparisonGraph_", .x))))
+                                      ),
+                                      bslib::nav_panel(
+                                        "Housing & households",
+                                        purrr::map(domain_vars("housing", categorical_only = T),
+                                                   ~mod_pt_ComparisonGraph_ui(ns(paste0("ComparisonGraph_", .x))))
+                                      ),
+                                      bslib::nav_panel(
+                                        "Lifestyle, diet & nutrition",
+                                        purrr::map(domain_vars("lifestyle", categorical_only = T),
+                                                   ~mod_pt_ComparisonGraph_ui(ns(paste0("ComparisonGraph_", .x))))
                                       )
                                     )
             )
@@ -122,6 +134,15 @@ mod_page_MapExplore_server <- function(id, r, parent.session){
     mod_pt_ComparisonGraph_server("pt_ComparisonGraph_5", r=r, var="hiqual_dv", dat=comparisonData)
     mod_pt_ComparisonGraph_server("pt_ComparisonGraph_6", r=r, var="hhtype_dv", dat=comparisonData)
     mod_pt_ComparisonGraph_server("pt_ComparisonGraph_7", r=r, var="tenure_dv", dat=comparisonData)
+
+    purrr::map(domain_vars("health", categorical_only = T),
+                ~mod_pt_ComparisonGraph_server(paste0("ComparisonGraph_", .x), r=r, var=.x, dat=comparisonData))
+    purrr::map(domain_vars("income", categorical_only = T),
+               ~mod_pt_ComparisonGraph_server(paste0("ComparisonGraph_", .x), r=r, var=.x, dat=comparisonData))
+    purrr::map(domain_vars("lifestyle", categorical_only = T),
+               ~mod_pt_ComparisonGraph_server(paste0("ComparisonGraph_", .x), r=r, var=.x, dat=comparisonData))
+    purrr::map(domain_vars("housing", categorical_only = T),
+               ~mod_pt_ComparisonGraph_server(paste0("ComparisonGraph_", .x), r=r, var=.x, dat=comparisonData))
 
     mod_pt_MapSelect2_server("pt_MapSelect_1", r = r)
     mod_pt_AreaSelections_server("pt_AreaSelections_1", r = r)
