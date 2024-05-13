@@ -121,7 +121,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
                            categ = reactive(selections()$level)
                            )
 
-    mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat, varNames)
+    mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat)
 
     mod_pt_DemographicsBar_server("pt_DemographicsBar",
                                   dat=profileDatLA,

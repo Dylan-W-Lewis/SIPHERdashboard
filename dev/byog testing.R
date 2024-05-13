@@ -9,22 +9,36 @@ ui <- fluidPage(
         open = "always",
         bslib::navset_card_tab(
           bslib::nav_panel("Select area",
-              selectInput("las", label = NULL, choices = setNames(ladSF$lad,ladSF$lad_name)),
-              actionButton("add_la", "Add area"),
-              actionButton("add_wards", "Add all wards in area")),
+                           fillable = F,
+                           selectInput("las", label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
+                           div(style = "text-align: center;",
+                             actionButton("add_la", "Add area", class= "btn-sm"),
+                             actionButton("add_wards", "Add all wards in area", class= "btn-sm"))
+                           ),
           bslib::nav_panel("Select variables",
-            mod_pt_VarLevelSelect_ui("select", vars = reference$obs[!is.na(reference$categorical)], inline=F),
-            actionButton("add_var", "Add variable"),
-            actionButton("reset", "Reset"))
+                           fillable = F,
+                           mod_pt_VarLevelSelect_ui("select", vars = reference$obs[!is.na(reference$categorical)], inline=F),
+                           div(style = "text-align: center;",
+                            actionButton("add_var", "Add variable", class= "btn-sm"))
+                           )
           ),
         bslib::card(
           htmlOutput("selections"),
-          actionButton("go", "Create graph")
-        )
+          actionButton("go", "Generate graph", class= "btn-sm"),
+          actionButton("open_download", "Download graph...", class= "btn-sm"),
+          div(style = "text-align: center;",
+              actionButton("resetArea", "Clear areas", class= "btn-danger btn-sm"),
+              actionButton("resetVars", "Clear variables", class= "btn-danger btn-sm")
+              )
+        ),
+        # bslib::card(
+        #   mod_pt_DownloadGraph_ui("pt_DownloadGraph_1")
+        # )
       ),
       bslib::card(mod_pt_ParCoord_ui("par"),
-                  full_screen = T)#,
-      #tableOutput("tab")
+                  full_screen = T,
+                  max_height = 600),
+      plotOutput("test")
     )
   )
 )
@@ -44,10 +58,11 @@ server <- function(input, output, session) {
     }
   })
 
-  observeEvent(input$reset, {
+  observeEvent(input$resetVars, {
     filt$vars <- data.frame("obs"=vector("character"), "cat"=vector("character"))
     filt$varLabels <- vector("character")
   })
+
 
   observeEvent(input$add_la, {
     if(! input$las %in% filt$areas$area){
@@ -63,35 +78,62 @@ server <- function(input, output, session) {
     }
   })
 
+  observeEvent(input$resetArea, {
+    filt$areas <- data.frame("area"=vector("character"), "geo"=vector("character"))
+  })
 
-  area_dat <- reactive({
-    lads <- ladDat %>%
+
+  areaDat <- reactive({
+    lads <- ladDat |>
       filter(age == "all_ages",
              sex == "both",
-             area %in% filt$areas$area) %>%
+             area %in% filt$areas$area) |>
       select(-c(age, sex))
-    wards <- wardDat %>%
+    wards <- wardDat |>
       filter(area %in% filt$areas$area)
-    out <- rbind(lads, wards) %>%
-      dplyr::left_join(., filt$areas, by="area")
+    out <- rbind(lads, wards) |>
+      dplyr::left_join(filt$areas, by="area")
     return(out)
   })
 
-  dat <- reactive({
-     area_dat() %>%
-      dplyr::right_join(., filt$vars, by=dplyr::join_by(obs, cat))
+  filteredDat <- reactive({
+     areaDat() |>
+      dplyr::right_join(filt$vars, by=dplyr::join_by(obs, cat))
   })
 
-  observeEvent(input$go, {
-    plotDat <- dat
-    mod_pt_ParCoord_server("par", plotDat, make_var_labels(filt$vars$obs, filt$vars$cat))
+  updateDat <- eventReactive(input$go,{
+    filteredDat()
   })
 
-  #output$tab <- renderTable(dat())
+  observeEvent(updateDat, {
+    mod_pt_ParCoord_server("par", updateDat)
+  })
+
+
   output$selections <- renderUI(
     HTML(paste0(c("<b>Variables:</b>", make_var_labels(filt$vars$obs, filt$vars$cat), "<b>Areas:</b>", unique(filt$areas$geo)),
                 "<br/>"))
     )
+
+  plot <- eventReactive(input$open_download,
+                        mod_pt_ParCoord_server("gg_par", filteredDat, output_type = "ggplot"))
+
+  downloadDialog <- modalDialog(mod_pt_DownloadGraph_ui("pt_DownloadGraph_1"),
+                                size = "s",
+                                easyClose = T,
+                                footer = NULL)
+
+  observeEvent(input$open_download, {
+    showModal(downloadDialog)
+    mod_pt_DownloadGraph_server("pt_DownloadGraph_1",
+                                plot)
+  })
+
+  # ggPar <- eventReactive(input$open_download, mod_pt_ParCoord_server("gg_par", filteredDat, output_type = "ggplot"))
+
+
+
+ # mod_pt_DownloadGraph_server("pt_DownloadGraph_1", ggPar)
 }
 
 
