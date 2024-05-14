@@ -2,11 +2,18 @@ library(shiny)
 library(dplyr)
 
 ui <- fluidPage(
+  tags$head(tags$style('.card{overflow: visible !important;}'),
+            tags$style('.card-body{overflow: visible !important;}')),
   bslib::page_fillable(
     bslib::layout_sidebar(
       sidebar = bslib::sidebar(
         width = "30%",
         open = "always",
+        bslib::card(
+          style = "position:relative; z-index:1000;",
+          fillable = F,
+          selectInput("test", label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
+        ),
         bslib::navset_card_tab(
           bslib::nav_panel("Select area",
                            fillable = F,

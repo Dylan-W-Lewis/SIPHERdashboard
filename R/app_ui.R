@@ -31,16 +31,15 @@ app_ui <- function(request) {
                             #"navbar-bg" = "#005398",
                             base_font = "Arial",
                             heading_font = "Arial",
-                            #"nav-link-color" = "#005C83 !important",
-                            # "nav-link-font-size" = "45px",
-                            # "nav-link-font-weight" = "bold",
-                            #"nav-link-hover-color" = "#005398 !important",
-                            #"nav-tabs-link-active-color" = "#005398 !important",
-                            #"navbar-padding-y" = "3px",
                             "navbar-brand-padding-y" = "-1px",
                             ) |>
         bslib::bs_add_rules(list(".navbar-static-top {padding: 0px;}",
-                                 ".navbar>.container-fluid {padding-left: 0px}")),
+                                 ".navbar>.container-fluid {padding-left: 0px}",
+                                 ".bslib-card {overflow: visible !important;}",
+                                 ".card{overflow: visible !important;}",
+                                 ".card-body{overflow: visible !important;}"
+
+                                 )),
 
       #navbar content
       bslib::nav_panel("Home",
@@ -67,9 +66,10 @@ app_ui <- function(request) {
 
       bslib::nav_panel("Graph builder",
                        value = "graph_builder",
-                       div(style = "margin: auto;",
-                           h3(span(icon("hammer"), "Under construction")),
-                           p("The graph builder tool will allow user to create custom versions of the graphs seen in this dashboard"))
+                       mod_pt_BYOG_parcoords_ui("pt_BYOG_parcoords_1")
+                       # div(style = "margin: auto;",
+                       #     h3(span(icon("hammer"), "Under construction")),
+                       #     p("The graph builder tool will allow user to create custom versions of the graphs seen in this dashboard"))
                        ),
 
       bslib::nav_panel("Data download",
