@@ -37,42 +37,42 @@ app_ui <- function(request) {
                                  ".navbar>.container-fluid {padding-left: 0px}",
                                  ".bslib-card {overflow: visible !important;}",
                                  ".card{overflow: visible !important;}",
-                                 ".card-body{overflow: visible !important;}"
+                                 ".card-body{overflow: visible !important;}",
+                                 ".centred-card {@extend .justify-content-center }"
 
                                  )),
 
       #navbar content
       bslib::nav_panel("Home",
                        value = "home",
-                       # div(style = "margin: auto;",
-                       #     tags$img(
-                       #       src = "www/sipher_logo.png",
-                       #       height = 143,
-                       #       width = 353
-                       #       )
-                       #     ),
-                       #p("Home page coming soon")
                        mod_page_LandingPage_ui("page_LandingPage"),
                        ),
 
-      bslib::nav_panel("Map explore",
+      bslib::nav_panel("Map Explore",
                value = "map_explore",
                mod_page_MapExplore_ui("page_MapExplore")),
 
-      bslib::nav_panel("Area profile",
+      bslib::nav_panel("Area Profile",
                value = "area_profile",
                mod_page_AreaProfile2_ui("page_AreaProfile")
                ),
 
-      bslib::nav_panel("Graph builder",
-                       value = "graph_builder",
-                       mod_pt_BYOG_parcoords_ui("pt_BYOG_parcoords_1")
-                       # div(style = "margin: auto;",
-                       #     h3(span(icon("hammer"), "Under construction")),
-                       #     p("The graph builder tool will allow user to create custom versions of the graphs seen in this dashboard"))
-                       ),
+     bslib::nav_menu("Graph Builder",
+                     bslib::nav_panel("Dot Plot",
+                                      icon = icon("chart-gantt"),
+                                      value = "graph_builder",
+                                      #mod_page_GraphBuilder_ui("page_GraphBuilder_1")
+                                      mod_pt_BYOG_parcoords_ui("pt_BYOG_parcoords_1")
+                     ),
+                     bslib::nav_panel("Stacked Bar",
+                                      icon = icon("bars-progress"),
+                                      h3(span(icon("hammer"), "Under construction"))),
+                     bslib::nav_panel("Column Chart",
+                                      icon = icon("chart-simple"),
+                                      h3(span(icon("hammer"), "Under construction")))
+                     ),
 
-      bslib::nav_panel("Data download",
+      bslib::nav_panel("Data Download",
                        value = "data_download",
                        div(style = "margin: auto;",
                             h3(span(icon("hammer"), "Under construction")),

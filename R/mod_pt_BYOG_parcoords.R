@@ -112,12 +112,12 @@ mod_pt_BYOG_parcoords_server <- function(id){
     # join data from LAD and Ward datasets
     areaDat <- reactive({
       lads <- ladDat |>
-        filter(age == "all_ages",
+        dplyr::filter(age == "all_ages",
                sex == "both",
                area %in% filt$areas$area) |>
-        select(-c(age, sex))
+        dplyr::select(-c(age, sex))
       wards <- wardDat |>
-        filter(area %in% filt$areas$area)
+        dplyr::filter(area %in% filt$areas$area)
       out <- rbind(lads, wards) |>
         dplyr::left_join(filt$areas, by="area")
       return(out)
