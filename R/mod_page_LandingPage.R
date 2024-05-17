@@ -19,9 +19,10 @@ mod_page_LandingPage_ui <- function(id){
 
                 h2(strong(style="color:#005398", "SIPHER Synthetic Population Dashboard")),
 
-                p("Welcome to SIPHER’s Synthetic Population Dashboard. The SIPHER team have developed this dashboard to allow users to quickly explore an aggregated version of the Synthetic Population for Individuals in Great Britain 2019-2021 without the need to write code or prepare any data. The dashboard provides a ‘click and explore’ experience for a select set of domains enabling users to compare areas of interest, create bespoke detailed area profiles, develop custom data visualisations, and download the aggregate data used."),
+                p("Welcome. Our Synthetic Population Dashboard allows you to easily explore an aggregated version of the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021 without any coding or data preparation. The ‘click and explore’ format enables you to compare areas of interest, create bespoke detailed area profiles, develop customised data visualisations, and download the aggregate data used."),
 
-                p("To get started use the tabs along the top of the dashboard to explore the different capabilities of the dashboard. More information can be found in the ‘About’ tab"),
+                p("Getting Started: Use the tabs along the top of the dashboard to explore its various capabilities. For a detailed overview, disclaimers and citations visit the",
+                  actionLink(ns("gotoAbout"), strong("About", style="color:#005398"), style = "text-decoration: none;"), "tab"),
 
                 h5(strong(style="color:#005398", "What can the dashboard do?")),
 
@@ -32,84 +33,33 @@ mod_page_LandingPage_ui <- function(id){
                     width = 4,
                     div(style = "text-align: center",
                         h2(icon("map-location-dot"), style="color:#005398"),
-                        p("Compare local authorities across Great Britain using the ", strong("Map Explore", style="color:#005398"), "tool")
+                        p("Compare local authorities across Great Britain using the ",
+                          actionLink(ns("gotoME"), strong("Map Explore", style="color:#005398"), style = "text-decoration: none;"),
+                          "tool")
                         )
                   ),
                   column(
                     width = 4,
                     div(style = "text-align: center",
                         h2(icon("chart-bar"), style="color:#005398"),
-                        p("View a detailed ", strong("Area Profile", style="color:#005398"), "of any local authority, and explore data for lower-level areas")
+                        p("View a detailed ",
+                          actionLink(ns("gotoAP"), strong("Area Profile", style="color:#005398"), style = "text-decoration: none;"),
+                          "of any local authority, and explore data for lower-level areas")
                         )
                     ),
                     column(
                       width = 4,
                       div(style = "text-align: center",
                           h2(icon("table"), style="color:#005398"),
-                          p("Create custom graphs with the ", strong("Graph Builder", style="color:#005398"), "or tables with the ", strong("Data Download", style="color:#005398"), "tool")
+                          p("Create custom graphs with the ",
+                            actionLink(ns("gotoGB"), strong("Graph Builder", style="color:#005398"), style = "text-decoration: none;"),
+                            "or tables with the ",
+                            actionLink(ns("gotoDD"), strong("Data Download", style="color:#005398"), style = "text-decoration: none;"),
+                            "tool")
                       )
                     )
                 ),
 
-                # div(
-                #   style = "text-align: center",
-                #   HTML('<iframe width="514" height="289" src="https://www.youtube.com/embed/CkiORY7GSLc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
-                # ),
-
-                # br(),
-                #
-                # h4(strong(style="color:#005398","Background")),
-                #
-                # p("The conditions in which we are born, grow, live, work, and age are key drivers of health and health
-                #                       inequalities. To allow for these complex real-world relationships and interdependencies to be explored,
-                #                       the SIPHER has developed an innovative systems science approach. This approach offers a powerful toolbox
-                #                       which enables researchers and policymakers to explore of diverse policies that shape our health and wellbeing."),
-                #
-                # p("One key product of this toolbox is the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021.
-                #                       As a “digital twin” of the adult population in GB, the SIPHER Synthetic Population supports a wide range of applications
-                #                       which relay on high-quality individual-level data at a granular spatial resolution.
-                #                       The SIPHER Synthetic Population is available for full independent use [LINK EXTERNAL via the UK Data Service] "),
-                #
-                # p("This dashboard allows users to explore the SIPHER Synthetic Population without any need for writing code yourself.
-                #                       Key features of the dashboard include [LINK INTERNAL: to explore areas through a spatial visualisation], and the [LINK INTERNAL:
-                #                       comparison of areas across different domains].
-                #                       In addition, this dashboard allows users to [LINK INTERNAL: build their own visualisations for areas and indicators of interest].  "),
-                #
-                # p("Further information about the dashboard can be found in the [LINK INTERNAL: About Section]. Please see [LINK INTERNAL: Citation and Acknowledgements]
-                #                       for information on the suggested citation."),
-                #
-                # br(),
-                #
-                # h4(strong(style="color:#005398","Data Acknowledgement")),
-                #
-                # p("This dashboard was build using the following datasets:"),
-                #
-                # tags$ul(
-                #
-                #   tags$li("University of Essex, institute for social and economic research. (2022). Understanding society: Waves 1-12, 2009-2021 and harmonised BHPS: Waves 1-18, 1991-2009. [Data collection]. 17th edition. UK Data Service. SN: 6614, http://doi.org/10.5255/UKDA-SN-6614-18."),
-                #
-                #   tags$li("[SIPHER Synthetic Population: exact citation tbd]")
-                #
-                # ),
-                #
-                # br(),
-                #
-                # strong("This dashboard was last updated on 10 May 2024."),
-                #
-                # br(),
-                #
-                # br(),
-
-                # div(style = "margin: auto; text-align: center",
-                #     span(img(src='www/sipher_logo.png', height = "90px", align = "centre"),
-                #          img(src='www/UKPRP.png', height = "90px", align = "centre"))
-                #     ),
-
-                # br(),
-                #
-                # br(),
-                #
-                # br()
 
       ),
 
@@ -168,38 +118,6 @@ mod_page_LandingPage_ui <- function(id){
                 ),
 
 
-                # bslib::card(
-                #
-                #   bslib::card_body(
-                #
-                #     p(strong("Features and functionality")),
-                #
-                #     h4(style="color:#005398", #"How to use the dashboard's features and functionlity"),
-                #
-                #     actionLink(ns("gotofeatures"), "How to use the dashboard", #"Go to 'Features and Functionality' tab",
-                #                style = "text-decoration: none;"
-                #                # style="color: #fff; background-color: #005398;
-                #                  #                          border-color: #005398")
-                #                  )
-                #     )
-                #   )
-                # ),
-
-                # bslib::card(
-                #
-                #   bslib::card_body(
-                #
-                #     p(strong("Reproducing our Approach")),
-                #
-                #     h4(style="color:#005398", "Access our reproducibility pack"),
-                #
-                #     actionButton(ns("gotoreproducibility"), "Go to 'Reproducibility Pack' tab",
-                #                  style="color: #fff; background-color: #005398;
-                #                                           border-color: #005398")
-                #   )
-                # ),
-
-
       ), #sidebar bracket
 
       mainPanel(width = 1) # White space
@@ -216,6 +134,7 @@ mod_page_LandingPage_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
+    #LINKS
     observeEvent(input$gotointerpretation,
                  ignoreInit = T, {
                    r$active_page <- "info"
@@ -231,6 +150,27 @@ mod_page_LandingPage_server <- function(id, r){
                  ignoreInit = T, {
                    r$active_page <- "info"
                    r$info_tab <- "background"
+                 })
+
+    observeEvent(input$gotoAbout,
+                 ignoreInit = T, {
+                   r$active_page <- "info"
+                 })
+    observeEvent(input$gotoME,
+                 ignoreInit = T, {
+                   r$active_page <- "map_explore"
+                 })
+    observeEvent(input$gotoAP,
+                 ignoreInit = T, {
+                   r$active_page <- "area_profile"
+                 })
+    observeEvent(input$gotoGB,
+                 ignoreInit = T, {
+                   r$active_page <- "graph_builder"
+                 })
+    observeEvent(input$gotoDD,
+                 ignoreInit = T, {
+                   r$active_page <- "data_download"
                  })
 
   })
