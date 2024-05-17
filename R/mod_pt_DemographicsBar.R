@@ -45,7 +45,8 @@ mod_pt_DemographicsBar_server <- function(id, dat, varbl, categ){
                         y= NULL,
                         x= "Age"),
         tooltip = c("text")
-      )
+      ) |>
+      plotly::config(displayModeBar = FALSE)
     )
 
   })

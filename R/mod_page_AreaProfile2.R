@@ -30,23 +30,23 @@ mod_page_AreaProfile2_ui <- function(id){
                                      )
                                 ),
                              #actionButton(ns("switch_area"), label = NULL, icon = icon("repeat"), width="16px"),
-                             bslib::navset_bar(title= "Choose a topic:",
+                             bslib::navset_bar(title= strong("Choose a topic:", style="color:#005398"),
                                                position = "fixed-bottom",
                                                padding = c("0px","0px","70px"),
                                                bslib::nav_spacer(),
-                                               bslib::nav_panel("Health & wellbeing",
+                                               bslib::nav_panel(strong("Health & wellbeing", style="color:#005398"),
                                                                 mod_pt_profile_ui(ns("health"),
                                                                                   vars=domain_vars("health"))
                                                                 ),
-                                               bslib::nav_panel("Income & employment",
+                                               bslib::nav_panel(strong("Income & employment", style="color:#005398"),
                                                                 mod_pt_profile_ui(ns("income"),
                                                                                    vars=domain_vars("income"))
                                                                 ),
-                                               bslib::nav_panel("Housing & households",
+                                               bslib::nav_panel(strong("Housing & households", style="color:#005398"),
                                                                 mod_pt_profile_ui(ns("housing"),
                                                                                   vars=domain_vars("housing"))
                                                                 ),
-                                               bslib::nav_panel("Lifestyle, diet & nutrition",
+                                               bslib::nav_panel(strong("Lifestyle, diet & nutrition", style="color:#005398"),
                                                                 mod_pt_profile_ui(ns("lifestyle"),
                                                                                   vars=domain_vars("lifestyle"))
                                                                 ),
@@ -80,13 +80,6 @@ mod_page_AreaProfile2_server <- function(id, r){
     })
 
     output$area_title <- renderText(unique(ladSF$lad_name[ladSF$lad==r$profile]))
-
-    output$intro_text <- renderText(shinipsum::random_text(nwords = 50))
-
-    output$more_text <- renderText(shinipsum::random_text(nwords = 30))
-
-    output$plotly <- plotly::renderPlotly(shinipsum::random_ggplotly())
-
 
     mod_pt_profile_server("health", r=r,
                           vars = domain_vars("health"),
