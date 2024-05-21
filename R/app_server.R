@@ -37,6 +37,7 @@ app_server <- function(input, output, session) {
   #server page 3
   #mod_page_GraphBuilder_server("page_GraphBuilder_1")
   mod_pt_BYOG_parcoords_server("pt_BYOG_parcoords_1")
+  mod_pt_BYOG_dembar_server("pt_BYOG_dembar_1")
 
   #server info page
   mod_page_Info_server("page_Info", r=r)

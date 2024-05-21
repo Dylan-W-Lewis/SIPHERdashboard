@@ -69,7 +69,7 @@ app_ui <- function(request) {
                                       h3(span(icon("hammer"), "Under construction"))),
                      bslib::nav_panel("Column Chart",
                                       icon = icon("chart-simple"),
-                                      h3(span(icon("hammer"), "Under construction")))
+                                      mod_pt_BYOG_dembar_ui("pt_BYOG_dembar_1"))
                      ),
 
       bslib::nav_panel("Data Download",

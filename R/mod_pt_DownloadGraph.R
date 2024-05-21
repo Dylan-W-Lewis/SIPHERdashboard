@@ -31,7 +31,13 @@ mod_pt_DownloadGraph_server <- function(id, plot){
       warning("Plot should be provided as a reactive")
     }
 
-    outPlot <- reactive(plot() + ggplot2::labs(caption = "This graph was produced using synthetic data from the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021."))
+    caption <- "This graph was produced using synthetic data from the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021."
+
+    outPlot <- reactive(plot() +
+                          ggplot2::labs(caption = stringr::str_wrap(caption, input$"plot_width" * 18)) +
+                          ggplot2::theme(plot.caption.position = "plot",
+                                         plot.caption = ggplot2::element_text(hjust = 1))
+                        )
 
     output$download <- downloadHandler(
       filename = function() {
