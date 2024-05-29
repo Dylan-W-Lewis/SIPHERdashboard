@@ -31,11 +31,17 @@ mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
              obs==var) |>
         dplyr::mutate(cat = factor(translate_codes(cat), levels= translate_codes(get_cats(var))),
                       new_labs = stringr::str_c(cat, labelled, sep = ": ")) |>
-        dplyr::group_by(area) #|>
-        # dplyr::arrange(match(cat, get_cats(var)),
-        #                .by_group = T)
+        dplyr::group_by(area)
     })
 
+    # function to reverse legend order
+    reverse_legend_labels <- function(plotly_plot) {
+      n_labels <- length(plotly_plot$x$data)
+      plotly_plot$x$data[1:n_labels] <- plotly_plot$x$data[n_labels:1]
+      plotly_plot
+    }
+
+    # create plotly
     graph <- reactive({
       plotly::ggplotly(
         plotDat() |>
@@ -52,8 +58,8 @@ mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
                         y= NULL,
                         x= NULL) +
           ggplot2::ggtitle(translate_codes(var)),
-         tooltip = c("text")
-      )
+         tooltip = c("text")) |>
+        reverse_legend_labels()
     })
 
     output$graph <- plotly::renderPlotly({
@@ -63,7 +69,8 @@ mod_pt_ComparisonGraph_server <- function(id, r, var, dat){
                                      x=0.5,
                                      xanchor='center',
                                      yanchor='top',
-                                     orientation='h')#,
+                                     orientation='h',
+                                     itemclick="toggleothers")#,
                          # margin=list(t=20,
                          #             autoexpand=F)
                          ) |>

@@ -34,11 +34,14 @@ app_ui <- function(request) {
                             "navbar-brand-padding-y" = "-1px",
                             ) |>
         bslib::bs_add_rules(list(".navbar-static-top {padding: 0px;}",
-                                 ".navbar>.container-fluid {padding-left: 0px}",
+                                 ".navbar>.container-fluid {padding-left: 0px;}",
                                  ".bslib-card {overflow: visible !important;}",
                                  ".card{overflow: visible !important;}",
                                  ".card-body{overflow: visible !important;}",
-                                 ".centred-card {@extend .justify-content-center }"
+                                 ".centred-card {@extend .justify-content-center }",
+                                 ".graph-controls .control-label {margin-bottom: .2rem;}",
+                                 ".graph-controls .form-group {margin-bottom: .2rem;}",
+                                 ".graph-controls.bslib-gap-spacing {gap: .5rem;}"
 
                                  )),
 

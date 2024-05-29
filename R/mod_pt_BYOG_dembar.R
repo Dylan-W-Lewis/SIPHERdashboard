@@ -18,32 +18,41 @@ mod_pt_BYOG_dembar_ui <- function(id){
           bslib::navset_card_tab(
             bslib::nav_panel("Select areas",
                              fillable = F,
-                             selectInput(ns("las"), label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
-                             div(style = "text-align: center;",
-                                 actionButton(ns("add_la"), "Add area", class= "btn-sm")
+                             bslib::card_body(
+                               class="graph-controls",
+                               selectInput(ns("las"), label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
+                               div(style = "text-align: center;",
+                                   actionButton(ns("add_la"), "Add area", class= "btn-sm")
+                               )
                              )
+
             ),
             bslib::nav_panel("Select variables",
                              fillable = F,
-                             mod_pt_VarLevelSelect_ui(ns("select"), vars = reference$obs[!is.na(reference$categorical)], inline=F),
-                             div(style = "text-align: center;",
-                                 actionButton(ns("add_var"), "Add variable", class= "btn-sm"))
+                             bslib::card_body(
+                               class="graph-controls",
+                               mod_pt_VarLevelSelect_ui(ns("select"), vars = reference$obs[!is.na(reference$categorical)], inline=F),
+                               div(style = "text-align: center;",
+                                   actionButton(ns("add_var"), "Add variable", class= "btn-sm"))
+                             )
             )
           ),
           bslib::card(
-            htmlOutput(ns("selections")),
-            actionButton(ns("go"), "Generate graph", class= "btn-sm"),
-            actionButton(ns("open_download"), "Download graph...", class= "btn-sm"),
-            div(style = "text-align: center;",
-                actionButton(ns("resetArea"), "Clear areas", class= "btn-danger btn-sm"),
-                actionButton(ns("resetVars"), "Clear variables", class= "btn-danger btn-sm")
+            bslib::card_body(
+              #max_height = "100px",
+              class="graph-controls",
+              htmlOutput(ns("selections")),
+              actionButton(ns("go"), "Generate graph", class= "btn-sm"),
+              actionButton(ns("open_download"), "Download graph...", class= "btn-sm"),
+              div(style = "text-align: center;",
+                  actionButton(ns("resetArea"), "Clear areas", class= "btn-danger btn-sm"),
+                  actionButton(ns("resetVars"), "Clear variables", class= "btn-danger btn-sm"))
+              )
             )
           ),
-        ),
         bslib::card(mod_pt_DemographicsBar_ui(ns("bar")),
                     full_screen = T,
-                    max_height = 600),
-
+                    max_height = 600)
       )
     )
   )
@@ -64,7 +73,7 @@ mod_pt_BYOG_dembar_server <- function(id){
     selection <- mod_pt_VarLevelSelect_server("select")
 
     observeEvent(input$add_var, {
-      new <- data.frame("obs" = selection()$var, "cat" = selection()$level) |> mutate(varLabels = make_var_labels(obs, cat))
+      new <- data.frame("obs" = selection()$var, "cat" = selection()$level) |> dplyr::mutate(varLabels = make_var_labels(obs, cat))
       comb <- rbind(filt$vars, new)
       if(!(anyDuplicated(comb))){
         filt$vars <- comb

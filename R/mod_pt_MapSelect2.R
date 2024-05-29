@@ -54,7 +54,9 @@ mod_pt_MapSelect2_server <- function(id, r){
           hoveron = "fills",
           hoverinfo="text"
         ) |>
-        plotly::add_sf()
+        plotly::add_sf() |>
+        plotly::layout(dragmode = "pan") |>
+        plotly::config(scrollZoom = TRUE, displayModeBar = FALSE)
     })
 
     observeEvent(plotly::event_data("plotly_click", source = "map"), {

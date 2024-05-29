@@ -13,7 +13,10 @@ mod_page_AreaProfile2_ui <- function(id){
     bslib::page_fillable(
                          bslib::layout_columns(
                            gap = 0,
-                           col_widths = c(-2,8,-2),
+                           col_widths = bslib::breakpoints(
+                             lg = c(-1,10,-1),
+                             xl = c(-2, 8, -2),
+                             xxl = c(-3, 6, -3)),
                            bslib::layout_columns(
                              col_widths = 12,
                              fill = F,
