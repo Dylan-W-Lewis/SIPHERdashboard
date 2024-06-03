@@ -1,27 +1,10 @@
 library(shiny)
-library(dplyr)
-
 
 ui <- fluidPage(
 
-  #mod_page_AreaProfile2_ui("page")
-  #mod_pt_VarLevelSelect_ui("select"),
-  radioButtons("choose", "Choose a category",
-                choices=c(#"sf12pcs_dv",
-                          #"sf12mcs_dv",
-                          #"scghq1_dv",
-                          "scsf2a",
-                          "sclonely")),
-    #mod_pt_profile_health_ui("pt_profile_poverty_1")
-  # verbatimTextOutput("txt")
+  mod_pt_BYOG_parcoords_ui("pt_BYOG_StackedBar_1")
 
-  #tags$head(tags$style(HTML( ".selectize-input {border: 1px solid #CCCCCC;}"))),
-  div(style = "margin-top:-24px"),
-  selectizeInput("selectize_inp",
-                 label = "",
-                 choices=c("Select areas by clicking the map or type here" = "", setNames(ladSF$lad,ladSF$lad_name)),
-                 multiple=TRUE,
-                 width="100%")
+
 )
 
 server <- function(input, output, session) {
@@ -39,6 +22,8 @@ server <- function(input, output, session) {
   #                         categ = reactive(get_cats(input$choose)[1]))
   # # #mod_pt_VarLevelSelect_server("select", r=r)
   # #mod_pt_profile_health_server("pt_profile_poverty_1", r=r)
+
+  mod_pt_BYOG_parcoords_server("pt_BYOG_StackedBar_1")
 
 
 }

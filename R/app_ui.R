@@ -66,13 +66,16 @@ app_ui <- function(request) {
                                       value = "graph_builder",
                                       #mod_page_GraphBuilder_ui("page_GraphBuilder_1")
                                       mod_pt_BYOG_parcoords_ui("pt_BYOG_parcoords_1")
-                     ),
+                                      ),
                      bslib::nav_panel("Stacked Bar",
                                       icon = icon("bars-progress"),
-                                      h3(span(icon("hammer"), "Under construction"))),
+                                      #h3(span(icon("hammer"), "Under construction"))
+                                      mod_pt_BYOG_StackedBar_ui("pt_BYOG_StackedBar_1")
+                                      ),
                      bslib::nav_panel("Column Chart",
                                       icon = icon("chart-simple"),
-                                      mod_pt_BYOG_dembar_ui("pt_BYOG_dembar_1"))
+                                      mod_pt_BYOG_dembar_ui("pt_BYOG_dembar_1")
+                                      )
                      ),
 
       bslib::nav_panel("Data Download",

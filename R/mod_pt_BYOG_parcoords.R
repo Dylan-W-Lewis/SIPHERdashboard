@@ -16,38 +16,47 @@ mod_pt_BYOG_parcoords_ui <- function(id){
           width = "30%",
           open = "always",
           bslib::navset_card_tab(
-            bslib::nav_panel("Select areas",
+            bslib::nav_panel("Areas",
                              fillable = F,
-                             selectInput(ns("las"), label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
-                             div(style = "text-align: center;",
-                                 actionButton(ns("add_la"), "Add area", class= "btn-sm"),
-                                 actionButton(ns("add_wards"), "Add all wards in area", class= "btn-sm")
-                                 )
+                             bslib::card_body(
+                               class="graph-controls",
+                               selectInput(ns("las"), label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
+                               div(style = "text-align: center;",
+                                   actionButton(ns("add_la"), "Add LA", class= "btn-sm"),
+                                   actionButton(ns("add_wards"), "Add wards", class= "btn-sm"),
+                                   actionButton(ns("resetArea"), "Clear areas", class= "btn-danger btn-sm")
+                               )
+                             )
+
             ),
-            bslib::nav_panel("Select variables",
+            bslib::nav_panel("Variables",
                              fillable = F,
-                             mod_pt_VarLevelSelect_ui(ns("select"), vars = reference$obs[!is.na(reference$categorical)], inline=F),
-                             div(style = "text-align: center;",
-                                 actionButton(ns("add_var"), "Add variable", class= "btn-sm"))
+                             bslib::card_body(
+                               class="graph-controls",
+                               mod_pt_VarLevelSelect_ui(ns("select"), vars = reference$obs[!is.na(reference$categorical)], inline=F),
+                               div(style = "text-align: center;",
+                                   actionButton(ns("add_var"), "Add variable", class= "btn-sm"),
+                                   actionButton(ns("resetVars"), "Clear variables", class= "btn-danger btn-sm"))
+                             )
             )
           ),
           bslib::card(
-            htmlOutput(ns("selections")),
-            actionButton(ns("go"), "Generate graph", class= "btn-sm"),
-            actionButton(ns("open_download"), "Download graph...", class= "btn-sm"),
-            div(style = "text-align: center;",
-                actionButton(ns("resetArea"), "Clear areas", class= "btn-danger btn-sm"),
-                actionButton(ns("resetVars"), "Clear variables", class= "btn-danger btn-sm")
+            bslib::card_header("Selections"),
+            bslib::card_body(
+              class="graph-controls",
+              htmlOutput(ns("selections"))
             )
-          ),
+          )
         ),
         bslib::card(mod_pt_ParCoord_ui(ns("par")),
                     full_screen = T,
-                    max_height = 600),
+                    max_height = 800),
+        div(style = "text-align: center;",
+            actionButton(ns("open_download"), "Download graph...", class= "btn-sm")
+        )
 
       )
     )
-
   )
 }
 
@@ -59,7 +68,7 @@ mod_pt_BYOG_parcoords_server <- function(id){
     ns <- session$ns
 
     ##### Setup reactiveValues to contain filter selections
-    filt <- reactiveValues(vars = data.frame("obs"=vector("character"), "cat"=vector("character")),
+    filt <- reactiveValues(vars = data.frame("obs"=vector("character"), "cat"=vector("character"), "varLabels"=vector("character")),
                            areas = data.frame("area"=vector("character"), "geo"=vector("character")))
 
     #### variable selection
@@ -67,14 +76,16 @@ mod_pt_BYOG_parcoords_server <- function(id){
     selection <- mod_pt_VarLevelSelect_server("select")
 
     observeEvent(input$add_var, {
-      new <- rbind(filt$vars, data.frame("obs" = selection()$var, "cat" = selection()$level))
+      new <- rbind(filt$vars, data.frame("obs" = selection()$var,
+                                         "cat" = selection()$level,
+                                         "varLabels" = make_var_labels(selection()$var, selection()$level)))
       if(!(anyDuplicated(new))){
         filt$vars <- new
       }
     })
 
     observeEvent(input$resetVars, {
-      filt$vars <- data.frame("obs"=vector("character"), "cat"=vector("character"))
+      filt$vars <- data.frame("obs"=vector("character"), "cat"=vector("character"), varLabels = vector("character"))
     })
 
     ##### area selections
@@ -100,9 +111,9 @@ mod_pt_BYOG_parcoords_server <- function(id){
     ##### view selections
 
     output$selections <- renderUI(
-      HTML(paste0(c("<b>Variables:</b>", make_var_labels(filt$vars$obs, filt$vars$cat), "<b>Areas:</b>", unique(filt$areas$geo)),
-                  "<br/>"))
-    )
+      HTML(paste0(c("<b>Variables:</b>", ifelse(length(filt$vars$varLabels)>0, paste(filt$vars$varLabels, collapse = ", "), "None"),
+                    "<br><b>Areas:</b>", ifelse(length(filt$areas$geo)>0, paste(unique(filt$areas$geo), collapse = ", "), "None")
+      ))))
 
     ##### create dataset
 
@@ -126,15 +137,16 @@ mod_pt_BYOG_parcoords_server <- function(id){
     })
     # data for plotting that only updates with button press
     # (workaround for complicated reactivity with ParCoords module)
-    updateDat <- eventReactive(input$go,{
+    updateDat <- reactive({
+      req(nrow(filteredDat()>0))
       filteredDat()
     })
 
     ##### create graph
 
-    observeEvent(updateDat, {
-      mod_pt_ParCoord_server("par", updateDat)
-    })
+
+    mod_pt_ParCoord_server("par", updateDat)
+
 
     ##### download data
 

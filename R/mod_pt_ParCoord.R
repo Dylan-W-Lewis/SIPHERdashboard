@@ -25,6 +25,7 @@ mod_pt_ParCoord_server <- function(id, dat, output_type = "renderPlotly"){
 
 
     plotDat <- reactive({
+      req(nrow(dat())>0)
       toPlot <- dat() |>
         dplyr::left_join(sf::st_drop_geometry(wardSF[, c("ward", "ward_name")]), by=c("area" = "ward")) |>
         dplyr::group_by(obs) |>
@@ -64,7 +65,8 @@ mod_pt_ParCoord_server <- function(id, dat, output_type = "renderPlotly"){
                        axis.text.x = ggplot2::element_blank(),
                        axis.ticks.x = ggplot2::element_blank(),
                        axis.text.y = ggplot2::element_text(vjust = 0.5, hjust = 0),
-                       legend.position = "top") +
+                       legend.position = "top",
+                       legend.box="vertical") +
         ggplot2::labs(color = NULL,
                       #alpha = NULL,
                       linetype= NULL,

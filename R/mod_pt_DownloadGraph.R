@@ -36,7 +36,7 @@ mod_pt_DownloadGraph_server <- function(id, plot){
     outPlot <- reactive(plot() +
                           ggplot2::labs(caption = stringr::str_wrap(caption, input$"plot_width" * 18)) +
                           ggplot2::theme(plot.caption.position = "plot",
-                                         plot.caption = ggplot2::element_text(hjust = 1))
+                                         plot.caption = ggplot2::element_text(hjust = 1, colour = "grey30"))
                         )
 
     output$download <- downloadHandler(

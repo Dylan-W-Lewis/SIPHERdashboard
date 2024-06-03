@@ -16,43 +16,44 @@ mod_pt_BYOG_dembar_ui <- function(id){
           width = "30%",
           open = "always",
           bslib::navset_card_tab(
-            bslib::nav_panel("Select areas",
+            bslib::nav_panel("Areas",
                              fillable = F,
                              bslib::card_body(
                                class="graph-controls",
                                selectInput(ns("las"), label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
                                div(style = "text-align: center;",
-                                   actionButton(ns("add_la"), "Add area", class= "btn-sm")
+                                   actionButton(ns("add_la"), "Add area", class= "btn-sm"),
+                                   actionButton(ns("resetArea"), "Clear areas", class= "btn-danger btn-sm")
                                )
                              )
 
             ),
-            bslib::nav_panel("Select variables",
+            bslib::nav_panel("Variables",
                              fillable = F,
                              bslib::card_body(
                                class="graph-controls",
                                mod_pt_VarLevelSelect_ui(ns("select"), vars = reference$obs[!is.na(reference$categorical)], inline=F),
                                div(style = "text-align: center;",
-                                   actionButton(ns("add_var"), "Add variable", class= "btn-sm"))
+                                   actionButton(ns("add_var"), "Add variable", class= "btn-sm"),
+                                   actionButton(ns("resetVars"), "Clear variables", class= "btn-danger btn-sm"))
                              )
             )
           ),
           bslib::card(
+            bslib::card_header("Selections"),
             bslib::card_body(
               #max_height = "100px",
               class="graph-controls",
-              htmlOutput(ns("selections")),
-              actionButton(ns("go"), "Generate graph", class= "btn-sm"),
-              actionButton(ns("open_download"), "Download graph...", class= "btn-sm"),
-              div(style = "text-align: center;",
-                  actionButton(ns("resetArea"), "Clear areas", class= "btn-danger btn-sm"),
-                  actionButton(ns("resetVars"), "Clear variables", class= "btn-danger btn-sm"))
+              htmlOutput(ns("selections"))
               )
-            )
+            ),
+
           ),
         bslib::card(mod_pt_DemographicsBar_ui(ns("bar")),
                     full_screen = T,
-                    max_height = 600)
+                    max_height = 800),
+        div(style = "text-align: center;",
+            actionButton(ns("open_download"), "Download graph...", class= "btn-sm"))
       )
     )
   )
@@ -91,14 +92,6 @@ mod_pt_BYOG_dembar_server <- function(id){
       }
     })
 
-    observeEvent(input$add_wards, {
-      wards <- lookup_wd_lad$ward[lookup_wd_lad$lad==input$las]
-      if(! any(wards %in% filt$areas$area)){
-        filt$areas <- rbind(filt$areas,
-                            data.frame("area" = wards, "geo" = paste0(ladSF$lad_name[ladSF$lad == input$las], " (Wards)")))
-      }
-    })
-
     observeEvent(input$resetArea, {
       filt$areas <- data.frame("area"=vector("character"), "geo"=vector("character"))
     })
@@ -116,33 +109,38 @@ mod_pt_BYOG_dembar_server <- function(id){
         dplyr::right_join(filt$vars, by=dplyr::join_by(obs, cat))
     })
 
-    updateDat <- eventReactive(input$go,{
+    updateDat <- reactive({
+      req(nrow(filteredDat())>0)
       filteredDat()
     })
 
-    varbl <- eventReactive(input$go,{
+    varbl <- reactive({
+      #req(length(filt$vars$obs)>0)
       filt$vars$obs
     })
 
-    categ <- eventReactive(input$go,{
+    categ <- reactive({
+      #req(length(filt$vars$cat)>0)
       filt$vars$cat
     })
 
-    observeEvent(updateDat, {
-      mod_pt_DemographicsBar_server("bar", updateDat, varbl, categ)
-    })
+    # observeEvent(updateDat, {
+    #   mod_pt_DemographicsBar_server("bar", updateDat, varbl, categ)
+    # })
+    mod_pt_DemographicsBar_server("bar", updateDat, varbl, categ)
 
 
     output$selections <- renderUI(
-      HTML(paste0(c("<b>Variables:</b>", make_var_labels(filt$vars$obs, filt$vars$cat), "<b>Areas:</b>", unique(filt$areas$geo)),
-                  "<br/>"))
+      HTML(paste0(c("<b>Variables:</b>", ifelse(length(filt$vars$varLabels)>0, paste(filt$vars$varLabels, collapse = ", "), "None"),
+                    "<br><b>Areas:</b>", ifelse(length(filt$areas$geo)>0, paste(filt$areas$geo, collapse = ", "), "None")
+      )))
     )
 
 
     plot <- eventReactive(input$open_download,
                           mod_pt_DemographicsBar_server("bar", updateDat, varbl, categ, output_type = "ggplot"))
 
-    downloadDialog <- modalDialog(mod_pt_DownloadGraph_ui("pt_DownloadGraph_1"),
+    downloadDialog <- modalDialog(mod_pt_DownloadGraph_ui(ns("pt_DownloadGraph_1")),
                                   size = "s",
                                   easyClose = T,
                                   footer = NULL)
