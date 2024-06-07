@@ -83,3 +83,14 @@ if(type == "discrete") {
                                                          type = "continuous"))
  }
 }
+
+#' sort_by_name
+#'
+#' @param named_vector
+#'
+#' @return named_vector, sorted by name
+#'
+#' @examples sort_by_name(set_names(c(1,2,3), c("cat", "bear", "aardvark")))
+sort_by_name <- function(named_vector){
+  named_vector[sort(names(named_vector))]
+}

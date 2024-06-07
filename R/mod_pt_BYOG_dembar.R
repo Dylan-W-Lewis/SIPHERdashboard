@@ -20,7 +20,7 @@ mod_pt_BYOG_dembar_ui <- function(id){
                              fillable = F,
                              bslib::card_body(
                                class="graph-controls",
-                               selectInput(ns("las"), label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
+                               selectInput(ns("las"), label = "Local Authority", sort_by_name(setNames(ladSF$lad,ladSF$lad_name))),
                                div(style = "text-align: center;",
                                    actionButton(ns("add_la"), "Add area", class= "btn-sm"),
                                    actionButton(ns("resetArea"), "Clear areas", class= "btn-danger btn-sm")

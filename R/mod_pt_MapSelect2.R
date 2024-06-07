@@ -15,7 +15,7 @@ mod_pt_MapSelect2_ui_box <- function(id){
   tagList(
     selectizeInput(ns("selectize_inp"),
                    label = "",
-                   choices=c("Select areas by clicking the map or type here" = "", setNames(ladSF$lad,ladSF$lad_name)),
+                   choices=c("Select areas by clicking the map or type here" = "", sort_by_name(setNames(ladSF$lad,ladSF$lad_name))),
                    multiple=TRUE,
                    width="100%")
   )

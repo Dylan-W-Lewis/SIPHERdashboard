@@ -57,10 +57,10 @@ mod_page_MapExplore_ui <- function(id){
                                       #full_screen = T,
                                       #height = "65vh",
                                       bslib::nav_panel(
-                                        "Constraints",
+                                        "Demographics",
                                         icon = bslib::tooltip(
                                                   icon("circle-question"),
-                                                  "Variables used to construct the Synthetic Population",
+                                                  "These variables were used to construct the Synthetic Population",
                                                   placement = "left"
                                                 ),
                                         #h5("Ethnicity"),

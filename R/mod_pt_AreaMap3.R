@@ -54,8 +54,8 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
                            options = list(padding = c(50,50))) |>
         leaflet::addLegend(
           position = "topright",
-          colors = c("#E69F00", "#005CBA"),  # Custom colors
-          labels = c("Lower than GB average", "Higher than GB average"),          # Custom labels
+          colors = rev(c("#E69F00", "#F6DEA8", "#ADCAE8", "#005CBA")),  # Custom colors
+          labels = rev(c("Lower than GB average", "", "", "Higher than GB average")),          # Custom labels
           #title = "Custom Legend"
         )
     })

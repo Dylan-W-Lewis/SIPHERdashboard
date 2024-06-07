@@ -20,7 +20,7 @@ mod_pt_BYOG_StackedBar_ui <- function(id){
                              fillable = F,
                              bslib::card_body(
                                class="graph-controls",
-                               selectInput(ns("las"), label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
+                               selectInput(ns("las"), label = "Local Authority", choices = sort_by_name(setNames(ladSF$lad,ladSF$lad_name))),
                                div(style = "text-align: center;",
                                    actionButton(ns("add_la"), "Add area", class= "btn-sm"),
                                    actionButton(ns("resetArea"), "Clear areas", class= "btn-danger btn-sm"),
@@ -47,9 +47,11 @@ mod_pt_BYOG_StackedBar_ui <- function(id){
                                class="graph-controls",
                                selectInput(ns("age"),
                                            label = "Age",
-                                           choices = setNames(c("all_ages", reference$cats[reference$obs=="age"][[1]][[1]]),
-                                                              c("All ages", translate_codes(reference$cats[reference$obs=="age"][[1]][[1]]))
-                                                              )
+                                           choices = sort_by_name(
+                                             setNames(c("all_ages", reference$cats[reference$obs=="age"][[1]][[1]]),
+                                                      c("All ages", translate_codes(reference$cats[reference$obs=="age"][[1]][[1]]))
+                                                      )
+                                             )
                                            ),
                                selectInput(ns("sex"),
                                            label = "Gender",

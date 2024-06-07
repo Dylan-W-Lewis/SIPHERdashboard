@@ -55,7 +55,7 @@ mod_pt_DemographicsBar_server <- function(id, dat, varbl, categ, output_type = N
 
         plotDat() |>
         #dplyr::group_by(area) |>
-        ggplot2::ggplot(ggplot2::aes(x=age, y=value, fill=as.factor(sex), text=labelled)) +
+        ggplot2::ggplot(ggplot2::aes(x=age, y=value, fill=as.factor(stringr::str_to_title(sex)), text=labelled)) +
           ggplot2::geom_col(position = ggplot2::position_dodge()) +
           scale_fill_sipher(palette_name = "full", type = "discrete") +
           ggplot2::scale_x_discrete(labels = function(x) translate_codes(x)) +

@@ -20,7 +20,7 @@ mod_pt_BYOG_parcoords_ui <- function(id){
                              fillable = F,
                              bslib::card_body(
                                class="graph-controls",
-                               selectInput(ns("las"), label = "Local Authority", choices = setNames(ladSF$lad,ladSF$lad_name)),
+                               selectInput(ns("las"), label = "Local Authority", choices = sort_by_name(setNames(ladSF$lad,ladSF$lad_name))),
                                div(style = "text-align: center;",
                                    actionButton(ns("add_la"), "Add LA", class= "btn-sm"),
                                    actionButton(ns("add_wards"), "Add wards", class= "btn-sm"),
