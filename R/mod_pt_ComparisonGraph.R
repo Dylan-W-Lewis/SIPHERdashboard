@@ -12,7 +12,6 @@
 mod_pt_ComparisonGraph_ui <- function(id, fill=NULL){
   ns <- NS(id)
   tagList(
-    #selectInput(ns("var"), label = "", choices = unique(laDat$obs)),
     plotly::plotlyOutput(ns("graph"), height="auto", fill = isTRUE(fill))
 
   )
@@ -25,16 +24,19 @@ mod_pt_ComparisonGraph_server <- function(id, var, dat, subtitle = NULL, ggoutpu
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
-    if(!is.reactive(var)){
-      var <- reactive(var)
-    }
+    var_reactive <- if (is.reactive(var)) var else reactive({ var })
+    subtitle_reactive <- if (is.reactive(subtitle)) subtitle else reactive({ subtitle })
 
     plotDat <- reactive({
+
       req(nrow(dat())>0)
+
+      variable <- var_reactive()
+
       dat() |>
         dplyr::filter(
-             obs==var()) |>
-        dplyr::mutate(cat = factor(translate_codes(cat), levels= translate_codes(get_cats(var()))),
+             obs==variable) |>
+        dplyr::mutate(cat = factor(translate_codes(cat), levels= translate_codes(get_cats(variable))),
                       new_labs = stringr::str_c(cat, labelled, sep = ": ")) |>
         dplyr::group_by(area)
     })
@@ -65,7 +67,10 @@ mod_pt_ComparisonGraph_server <- function(id, var, dat, subtitle = NULL, ggoutpu
     })
 
     if(!isTRUE(ggoutput)){
+
       output$graph <- plotly::renderPlotly({
+        variable <- var_reactive()
+        sub <- subtitle_reactive()
         plotly::ggplotly(
           graph(),
           tooltip = c("text")) |>
@@ -77,10 +82,10 @@ mod_pt_ComparisonGraph_server <- function(id, var, dat, subtitle = NULL, ggoutpu
                                      orientation='h',
                                      itemclick="toggleothers",
                                      tracegroupgap= 0),
-                         title = list(text = paste0(translate_codes(var()),
+                         title = list(text = paste0(translate_codes(variable),
                                                     '<br>',
                                                     '<sup>',
-                                                    subtitle(),
+                                                    sub,
                                                     '</sup>')),
                          margin=list(t=40)
           ) |>
@@ -89,8 +94,8 @@ mod_pt_ComparisonGraph_server <- function(id, var, dat, subtitle = NULL, ggoutpu
     }
 
     if(isTRUE(ggoutput)){
-      return(isolate(graph()) +
-               ggplot2::ggtitle(translate_codes(var()), subtitle = subtitle()))
+      return(isolate(graph() +
+               ggplot2::ggtitle(translate_codes(var_reactive()), subtitle = subtitle_reactive())))
     }
 
   })
