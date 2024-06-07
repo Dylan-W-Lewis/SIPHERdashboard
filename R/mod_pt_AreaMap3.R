@@ -45,18 +45,24 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
         sf::st_transform(crs = "WGS84")
     })
 
-    output$map <- leaflet::renderLeaflet(
+    leafletMap <- reactive({
       leaflet::leaflet(mapDat()) |>
         leaflet::addProviderTiles("CartoDB.Positron") |>
-        leaflet::addPolylines(weight = 2, color= "#CCCCCC") |>
+        #leaflet::addPolylines(weight = 2, color= "#CCCCCC") |>
+        leaflet::addPolygons(fillColor = isolate(fillVals()$colr), fillOpacity=0.8, weight = 2, color= "#CCCCCC", label = isolate(fillVals()$labl)) |>
         leaflet::fitBounds(min(mapDat()$LONG), min(mapDat()$LAT), max(mapDat()$LONG), max(mapDat()$LAT),
                            options = list(padding = c(50,50))) |>
         leaflet::addLegend(
           position = "topright",
-          colors = c("#E69F00", "#005CBA"),  # Custom colors
-          labels = c("Lower than GB average", "Higher than GB average"),          # Custom labels
+          colors = rev(c("#E69F00", "#F6DEA8", "#ADCAE8", "#005CBA")),  # Custom colors
+          labels = rev(c("Lower than GB average", "", "", "Higher than GB average")),          # Custom labels
           #title = "Custom Legend"
         )
+    })
+
+
+    output$map <- leaflet::renderLeaflet(
+      leafletMap()
     )
 
     # update fill
@@ -70,35 +76,32 @@ mod_pt_AreaMap3_server <- function(id, r, varbl, categ){
     })
 
     fillVals <- reactive({
-      fillDat() |>
-        dplyr::filter(obs == varblR(),
-                      cat == categR())
+      data <-  fillDat() |>
+          dplyr::filter(obs == varblR(),
+                        cat == categR())
+
+      scaledValues <- pmax(pmin((data$scaled/10)+0.5, 1), 0)
+
+
+      colr <- as.data.frame(colorRamp(c("#E69F00", "white", "#005CBA"))(scaledValues)) |>
+        purrr::pmap_chr(~ifelse(is.na(..1), rgb(0.5,0.5,0.5), rgb(..1,..2,..3, maxColorValue = 255)))
+
+      labl <- paste0(mapDat()$ward_name, ": ", data$labelled)
+
+      return(list("colr"=colr, "labl"=labl))
     })
 
-    observeEvent(fillVals(), {
+    # update colour when selections change
 
-      #if(!is.null(varbl)&&!is.null(categ)){
-        # values <- fillDat() |>
-        #   dplyr::filter(obs == varblR(),
-        #                 cat == categR()) #|>
-          #dplyr::pull(scaled)
+    observeEvent(fillVals(),
+                 ignoreInit = T,
+                 {
+                     leaflet::leafletProxy("map", data = mapDat()) |>
+                        leaflet::clearShapes() |>
+                        leaflet::addPolygons(fillColor = fillVals()$colr, fillOpacity=0.8, weight = 2, color= "#CCCCCC", label = fillVals()$labl)
 
-
-
-        # "#52473B"
-        #scaledValues <- (values$scaled-min(values$scaled))/(max(values$scaled)-min(values$scaled))
-        scaledValues <- pmax(pmin((fillVals()$scaled/10)+0.5, 1), 0)
-        colr <- as.data.frame(colorRamp(c("#E69F00", "white", "#005CBA"))(scaledValues)) |>
-          purrr::pmap_chr(~ifelse(is.na(..1), rgb(0.5,0.5,0.5), rgb(..1,..2,..3, maxColorValue = 255)))
-
-        labl <- paste0(mapDat()$ward_name, ": ", fillVals()$labelled)
-
-
-        leaflet::leafletProxy("map", data = mapDat()) |>
-          leaflet::clearShapes() |>
-          leaflet::addPolygons(fillColor = colr, fillOpacity=0.8, weight = 2, color= "#CCCCCC", label = labl)
-      #}
-    })
+                  }
+    )
 
   })
 }

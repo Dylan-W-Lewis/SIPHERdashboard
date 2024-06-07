@@ -51,11 +51,13 @@ mod_page_Info_ui <- function(id){
                         ),
 
                         p("You are permitted to use data obtained from this dashboard in your outputs,
-                        including reports or presentations. Please see Citation & Acknowledgements
-                        for information on the suggested citation."),
+                        including reports or presentations. However, please ensure proper acknowledgment. Refer to Citation & Acknowledgements for details."),
 
-                        p("Further technical information on the SIPHER Synthetic Population can be found
-                        in the respective User Guide – [link coming soon]."),
+                        p("Further information on the ",
+                          a("SIPHER Synthetic Population",
+                            href="https://www.gla.ac.uk/research/az/sipher/products/syntheticpopulation/",
+                            target="_blank"),
+                          ". Related resources include a User Guide [coming soon]."),
 
                         p("Please direct questions or feedback marked 'Synthetic Population dashboard'
                         to sipher@glasgow.ac.uk"),
@@ -70,7 +72,7 @@ mod_page_Info_ui <- function(id){
 
                          mainPanel(
 
-                           h1(strong(style="color:#005398","The SIPHER Synthetic Population for Individuals in Great Britain 2019-2021")),
+                           h1(strong(style="color:#005398","SIPHER Synthetic Population for Individuals in Great Britain 2019-2021")),
 
                            div(
                              style = "text-align: center",
@@ -79,13 +81,18 @@ mod_page_Info_ui <- function(id){
 
                            p("The conditions in which we are born, grow, live, work, and age are key drivers of health and health
                                        inequalities. To allow for these complex real-world relationships and interdependencies to be explored,
-                                       the SIPHER has developed an innovative systems science approach. This approach offers a powerful toolbox
+                                       SIPHER has developed an innovative systems science approach. This approach offers a powerful toolbox
                                        which enables researchers and policymakers to explore of diverse policies that shape our health and wellbeing."),
 
-                           p("One key product of this toolbox is the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021.
-                                      As a “digital twin” of the adult population in GB, the SIPHER Synthetic Population supports a wide range of applications
-                                      which relay on high-quality individual-level data at a granular spatial resolution.
-                                      The SIPHER Synthetic Population is available for full independent use [link coming soon] "),
+                           p("A key product of this toolbox is the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021.
+                                      As a “digital twin” of the adult population in Great Britain, the SIPHER Synthetic Population supports a wide range of applications
+                                      which rely on high-quality individual-level data at a granular spatial resolution.
+                                      The SIPHER Synthetic Population is available for full independent use."),
+                            p("Discover more at: ",
+                             a("SIPHER Synthetic Population",
+                                 href="https://www.gla.ac.uk/research/az/sipher/products/syntheticpopulation/",
+                                 target="_blank")
+                             ),
 
 
                          ) # main panel
@@ -95,7 +102,7 @@ mod_page_Info_ui <- function(id){
       ), # bslib::nav_panel
 
 
-      bslib::nav_panel("Data and Interpretation", value = "SyntheticPopNotes",
+      bslib::nav_panel("Usage and Interpretation", value = "SyntheticPopNotes",
 
                 fluidRow(
 
@@ -103,26 +110,26 @@ mod_page_Info_ui <- function(id){
 
                     h1(strong(style="color:#005398","Interpretation of Results")),
 
-                    p("All data presented in this dashboard have been obtained through the aggregation
-                      of individual-level data of the SIPHER Synthetic Population for Individuals in
+                    p("All data presented here has been obtained through the aggregation
+                      of individual-level data from the SIPHER Synthetic Population for Individuals in
                       Great Britain 2019-2021. The SIPHER Synthetic Population for Individuals in Great Britain
-                      2019-2021 has been created using a spatial microsimulation algorithm (simulated annealing),
+                      2019-2021 was created using a spatial microsimulation algorithm (simulated annealing),
                       and via the ",
                       a("Flexible Modelling Framework.",
                         href = "https://eprints.ncrm.ac.uk/id/eprint/3177/",
                         target = "_blank"),
-                      "We therefore advise users of this dashboard to treat all data obtained from this dashboard as
-                      “model output” obtained from a synthetic dataset."),
+                      "We therefore advise users to treat all data obtained from this dashboard as
+                      “model output” from a synthetic dataset."),
 
-                    p("In the dashboard, we provide point estimates only and do not cover any
+                    p("Here, we provide point estimates only and do not cover any
                         uncertainty estimates (e.g., 95% Confidence Intervals). For applications where
-                        uncertainty estimates are required, we strongly encourage to obtain these
-                        estimates directly from the underlying SIPHER Synthetic Population for Individuals in Great Britain 2019-2021."),
+                        uncertainty estimates are required, we strongly encourage users to obtain these
+                        directly from the underlying SIPHER Synthetic Population for Individuals in Great Britain 2019-2021 dataset."),
 
                     p("While no uncertainty estimates are provided, it can be assumed that the
                         uncertainty of point estimates is likely to be higher across areas with a
                         smaller population size (e.g., electoral wards) compared to areas with a larger
-                        population size (e.g., local authorities). In particular, for areas with small
+                        population size (e.g., local authorities). For areas with small
                         population sizes, the uncertainty surrounding point estimates could be high."),
 
                     h1(strong(style="color:#005398","Disclaimer")),
@@ -137,16 +144,16 @@ mod_page_Info_ui <- function(id){
                         possible, in particular when seeking to understand associations or causal
                         structures, cross-sectionally or over time for the UK population. If no granular area-level resolution is required, we recommend using the Understanding Society survey dataset."),
 
-                    p("The dashboard captures aggregate-level information only. No information
-                        provided in this dashboard would allow the identification of 'real' individuals
-                        – neither directly nor indirectly. No inferences can and should ever be made
+                    p("This dashboard captures aggregate-level information only. No information
+                        provided would allow the identification of 'real' individuals
+                        – either directly or indirectly. No inferences can or should be made
                         about 'real' individuals, including Understanding Society survey respondents,
                         based on the aggregate-level data provided in this dashboard."),
 
 
                     h1(strong(style="color:#005398","Geographic boundary Definitions")),
 
-                    p("We applied the following boundary definitions throughout:"),
+                    p("The following boundary definitions were applied throughout:"),
 
                     tags$ul(
 
@@ -165,10 +172,8 @@ mod_page_Info_ui <- function(id){
 
                     h1(strong(style="color:#005398","Dashboard reproducibility Pack")),
 
-                    p("We have created a reproducibility pack for this dashboard. The
-                        reproducibility pack contains all aggregate-level data provided in this
-                        dashboard, alongside all code which we have developed for this dashboard. The
-                        reproducibility pack is [link coming soon].")
+                    p("A reproducibility pack has been created for this dashboard. The reproducibility pack contains all aggregate-level data provided in this dashboard, alongside all code which was developed to support functionality.
+                      Access reproducibility pack [link coming soon].")
 
                   ),
 
@@ -182,15 +187,15 @@ mod_page_Info_ui <- function(id){
 
                   mainPanel(
 
-                    h1(strong(style="color:#005398","Suggested Citation")),
+                    h1(strong(style="color:#005398","Citation")),
 
-                    p("We suggest the following citation for the dashboard:
-                        Dylan Lewis, Emma Comrie, Andreas Hoehn, David Innes, and Petra Meier (2024):
+                    p("Citation:
+                        Dylan Lewis, Emma Comrie, Andreas Hoehn, David Innes, and Petra Meier, SIPHER Consortium (2024):
                         An R-Shiny dashboard for the SIPHER Synthetic Population for Individuals in
                         Great Britain 2019-2021. DOI: TBD. Data extracted on [DATA, TIME]."),
 
-                    p("In addition, we strongly encourage the citation of the two key datasets which
-                        have been utilised to create this dashboard. These two key datasets are:"),
+                    p("In addition, we strongly encourage the incusion of citations for the two key datasets
+                      utilised in the creation of this dashboard:"),
 
                     tags$ul(
 
@@ -229,8 +234,7 @@ mod_page_Info_ui <- function(id){
                     br(),
 
                     div(style = "margin: auto; text-align: center",
-                        span(img(src='www/sipher_logo.png', height = "90px", align = "centre"),
-                             img(src='www/UKPRP.png', height = "90px", align = "centre"))
+                        img(src='www/UKPRP_SIPHER_Logo.png', height = "90px", align = "centre")
                     ),
 
                     br(),
@@ -241,21 +245,7 @@ mod_page_Info_ui <- function(id){
 
                 ) # fluid row bracket
 
-      ), # bslib::nav_panel bracket
-
-      # bslib::nav_panel("dashboard Functionality and Features", value= "features",
-      #
-      #           fluidRow(
-      #
-      #             mainPanel(
-      #               "In development"
-      #
-      #
-      #             ) # main panel
-      #           ) #fluidRow
-      #
-      #
-      # ) # bslib::nav_panel
+      )
     )
 
   )

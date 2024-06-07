@@ -34,6 +34,12 @@ app_server <- function(input, output, session) {
   #server page 2
   mod_page_AreaProfile2_server("page_AreaProfile", r=r)
 
+  #server page 3
+  #mod_page_GraphBuilder_server("page_GraphBuilder_1")
+  mod_pt_BYOG_parcoords_server("pt_BYOG_parcoords_1")
+  mod_pt_BYOG_dembar_server("pt_BYOG_dembar_1")
+  mod_pt_BYOG_StackedBar_server("pt_BYOG_StackedBar_1")
+
   #server info page
   mod_page_Info_server("page_Info", r=r)
 

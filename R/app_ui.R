@@ -31,48 +31,54 @@ app_ui <- function(request) {
                             #"navbar-bg" = "#005398",
                             base_font = "Arial",
                             heading_font = "Arial",
-                            #"nav-link-color" = "#005C83 !important",
-                            # "nav-link-font-size" = "45px",
-                            # "nav-link-font-weight" = "bold",
-                            #"nav-link-hover-color" = "#005398 !important",
-                            #"nav-tabs-link-active-color" = "#005398 !important",
-                            #"navbar-padding-y" = "3px",
                             "navbar-brand-padding-y" = "-1px",
                             ) |>
         bslib::bs_add_rules(list(".navbar-static-top {padding: 0px;}",
-                                 ".navbar>.container-fluid {padding-left: 0px}")),
+                                 ".navbar>.container-fluid {padding-left: 0px;}",
+                                 ".bslib-card {overflow: visible !important;}",
+                                 ".card{overflow: visible !important;}",
+                                 ".card-body{overflow: visible !important;}",
+                                 ".centred-card {@extend .justify-content-center }",
+                                 ".graph-controls .control-label {margin-bottom: .2rem;}",
+                                 ".graph-controls .form-group {margin-bottom: .2rem;}",
+                                 ".graph-controls.bslib-gap-spacing {gap: .5rem;}"
+
+                                 )),
 
       #navbar content
       bslib::nav_panel("Home",
                        value = "home",
-                       # div(style = "margin: auto;",
-                       #     tags$img(
-                       #       src = "www/sipher_logo.png",
-                       #       height = 143,
-                       #       width = 353
-                       #       )
-                       #     ),
-                       #p("Home page coming soon")
                        mod_page_LandingPage_ui("page_LandingPage"),
                        ),
 
-      bslib::nav_panel("Map explore",
+      bslib::nav_panel("Map Explore",
                value = "map_explore",
                mod_page_MapExplore_ui("page_MapExplore")),
 
-      bslib::nav_panel("Area profile",
+      bslib::nav_panel("Area Profile",
                value = "area_profile",
                mod_page_AreaProfile2_ui("page_AreaProfile")
                ),
 
-      bslib::nav_panel("Graph builder",
-                       value = "graph_builder",
-                       div(style = "margin: auto;",
-                           h3(span(icon("hammer"), "Under construction")),
-                           p("The graph builder tool will allow user to create custom versions of the graphs seen in this dashboard"))
-                       ),
+     bslib::nav_menu("Graph Builder",
+                     bslib::nav_panel("Dot Plot",
+                                      icon = icon("chart-gantt"),
+                                      value = "graph_builder",
+                                      #mod_page_GraphBuilder_ui("page_GraphBuilder_1")
+                                      mod_pt_BYOG_parcoords_ui("pt_BYOG_parcoords_1")
+                                      ),
+                     bslib::nav_panel("Stacked Bar",
+                                      icon = icon("bars-progress"),
+                                      #h3(span(icon("hammer"), "Under construction"))
+                                      mod_pt_BYOG_StackedBar_ui("pt_BYOG_StackedBar_1")
+                                      ),
+                     bslib::nav_panel("Column Chart",
+                                      icon = icon("chart-simple"),
+                                      mod_pt_BYOG_dembar_ui("pt_BYOG_dembar_1")
+                                      )
+                     ),
 
-      bslib::nav_panel("Data download",
+      bslib::nav_panel("Data Download",
                        value = "data_download",
                        div(style = "margin: auto;",
                             h3(span(icon("hammer"), "Under construction")),

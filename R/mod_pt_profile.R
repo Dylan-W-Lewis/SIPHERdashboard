@@ -84,7 +84,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
 
 
     intro <- reactive({
-      paste0("This page provides an overview of the ",
+      paste0("Explore an overview of the ",
              topic,
              " of people living in ",
              area_name(),
@@ -95,7 +95,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
     })
 
     para2 <- reactive({
-      paste0("Below you can explore how these variables differ between the different areas within ",
+      paste0("Discover how these variables differ across different areas within ",
              area_name(),
              ", as well as how they vary by age and gender.", collapse = "")
     })
@@ -121,7 +121,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
                            categ = reactive(selections()$level)
                            )
 
-    mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat, varNames)
+    mod_pt_ParCoord_server("pt_ParCoord", dat=compareDat)
 
     mod_pt_DemographicsBar_server("pt_DemographicsBar",
                                   dat=profileDatLA,
