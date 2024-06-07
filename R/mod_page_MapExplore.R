@@ -12,28 +12,25 @@ mod_page_MapExplore_ui <- function(id){
   ns <- NS(id)
   tagList(
     bslib::page_fillable(
-      bslib::layout_sidebar(
-        #row_heights = 1,
+      bslib::layout_columns(
+        class = "dont-pad-pls",
+
         fillable = T,
-        #col_widths =  c(6,6),
-        sidebar=bslib::sidebar(
-          gap = 0,
-          padding=c(0, 20, 0, 0),
-          width = "50%",
-          open = "always",
-          class = "html-fill-container",
+        col_widths =  c(6,6),
+
+
+        bslib::as_fill_carrier(div(
+          style = "padding: 0px 20px 0px 0px",
           div(style = "margin-top:-24px"),
           div(mod_pt_MapSelect2_ui_box(ns("pt_MapSelect_1")),
               style = "margin: 15px 0 0px 20px"),
           div(style = "margin-top:-15px"),
           mod_pt_MapSelect2_ui_map(ns("pt_MapSelect_1"))
-        ) |> (\(x) {
-          x$tag$children[[1]] <- x$tag$children[[1]] |> bslib::as_fill_carrier()
-          x})(),
-        bslib::layout_columns(
-          fill = T,
-          #row_heights = c("auto", 6),
-          col_widths = 12,
+        )),
+
+        bslib::as_fill_carrier(div(
+
+          style="overflow-y:scroll; padding: 16px",
           bslib::navset_hidden(
             id="graph_card",
             bslib::nav_panel_hidden("hide",
@@ -99,6 +96,7 @@ mod_page_MapExplore_ui <- function(id){
                                                    ~mod_pt_ComparisonGraph_ui(ns(paste0("ComparisonGraph_", .x))))
                                       )
                                     )
+            )
             )
           )
         )

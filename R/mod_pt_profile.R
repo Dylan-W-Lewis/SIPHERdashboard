@@ -13,7 +13,7 @@
 mod_pt_profile_ui <- function(id, vars){
   ns <- NS(id)
   tagList(
-    p(textOutput(ns("intro_text"))),
+    textOutput(ns("intro_text")),
     bslib::card(
       bslib::card_header("Overview"),
       bslib::card_body(mod_pt_ParCoord_ui(ns("pt_ParCoord")),

@@ -10,7 +10,6 @@
 #' @importFrom shiny NS tagList
 
 mod_pt_MapSelect2_ui_box <- function(id){
-  tags$head(tags$style(HTML( ".selectize-input {border: 1px solid #CCCCCC;}")))
   ns <- NS(id)
   tagList(
     selectizeInput(ns("selectize_inp"),
@@ -25,7 +24,7 @@ mod_pt_MapSelect2_ui_map <- function(id){
   ns <- NS(id)
   tagList(
     shinycssloaders::withSpinner(
-      plotly::plotlyOutput(ns("map"),#, height = "85vh"
+      plotly::plotlyOutput(ns("map"),
                            fill = T),
       color = "#005CBA") |> (\(x) {
         x[[4]] <- x[[4]] |> bslib::as_fill_carrier()

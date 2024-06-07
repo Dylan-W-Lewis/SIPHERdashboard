@@ -32,6 +32,7 @@ app_ui <- function(request) {
                             base_font = "Arial",
                             heading_font = "Arial",
                             "navbar-brand-padding-y" = "-1px",
+                            "bslib-spacer" = "1rem",
                             ) |>
         bslib::bs_add_rules(list(".navbar-static-top {padding: 0px;}",
                                  ".navbar>.container-fluid {padding-left: 0px;}",
@@ -41,7 +42,9 @@ app_ui <- function(request) {
                                  ".centred-card {@extend .justify-content-center }",
                                  ".graph-controls .control-label {margin-bottom: .2rem;}",
                                  ".graph-controls .form-group {margin-bottom: .2rem;}",
-                                 ".graph-controls.bslib-gap-spacing {gap: .5rem;}"
+                                 ".graph-controls.bslib-gap-spacing {gap: .5rem;}",
+                                 ".navbar+.container-fluid>.tab-content>.tab-pane.active.html-fill-container:has(>.dont-pad-pls) { padding: 0; }",
+                                 ".selectize-input {border: 1px solid #dee2e6 !important;}"
 
                                  )),
 
