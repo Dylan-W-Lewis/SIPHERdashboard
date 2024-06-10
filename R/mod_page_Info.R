@@ -23,7 +23,7 @@ mod_page_Info_ui <- function(id){
                            h1(strong(style="color:#005398","Overview")),
 
                            p("This dashboard provides an aggregated version of the
-                             SIPHER Synthetic Population for Individuals in Great Britain 2019-2021.
+                             SIPHER Synthetic Population for Individuals in Great Britain, 2019-2021.
                              By providing a “digital twin” of the adult population in Great Britain,
                              the SIPHER Synthetic Population supports a wide range of applications across
                              different fields of policy and research. These applications include, for example,
@@ -37,7 +37,7 @@ mod_page_Info_ui <- function(id){
 
                         tags$ul(
 
-                          tags$li("Sociodemographic information used  when
+                          tags$li("Sociodemographic information used when
                            creating the SIPHER Synthetic Population)"),
 
                           tags$li("Health & wellbeing"),
