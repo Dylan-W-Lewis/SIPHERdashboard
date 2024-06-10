@@ -59,7 +59,7 @@ mod_page_Info_ui <- function(id){
                             target="_blank"),
                           ". Related resources include a User Guide [coming soon]."),
 
-                        p("Please direct questions or feedback marked 'Synthetic Population dashboard'
+                        p("Please direct questions or feedback marked 'SIPHER Synthetic Population - Dashboard'
                         to sipher@glasgow.ac.uk"),
 
                          )
