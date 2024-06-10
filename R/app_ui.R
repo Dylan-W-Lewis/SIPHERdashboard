@@ -76,10 +76,7 @@ app_ui <- function(request) {
 
       bslib::nav_panel("Data Download",
                        value = "data_download",
-                       div(style = "margin: auto;",
-                            h3(span(icon("hammer"), "Under construction")),
-                            p("The data download tab will allow users to filter and download tables of aggregated data from the synthetic population")
-                           )
+                       mod_page_DataDownload_ui("page_DataDownload_1")
                        ),
 
       bslib::nav_panel("About", value = "info",

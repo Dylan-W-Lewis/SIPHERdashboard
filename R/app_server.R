@@ -37,6 +37,9 @@ app_server <- function(input, output, session) {
   #server page 3
   mod_page_BYOG_server("page_BYOG_1", parentSession = session)
 
+  #server page 4
+  mod_page_DataDownload_server("page_DataDownload_1")
+
   #server info page
   mod_page_Info_server("page_Info", r=r)
 
