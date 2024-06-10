@@ -151,7 +151,7 @@ mod_page_Info_ui <- function(id){
                         based on the aggregate-level data provided in this dashboard."),
 
 
-                    h1(strong(style="color:#005398","Geographic boundary Definitions")),
+                    h1(strong(style="color:#005398","Geographic boundary definitions")),
 
                     p("The following boundary definitions were applied throughout:"),
 
