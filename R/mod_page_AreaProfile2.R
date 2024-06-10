@@ -26,7 +26,7 @@ mod_page_AreaProfile2_ui <- function(id){
                                      bslib::popover(
                                        icon("caret-down"),
                                        placement = "bottom",
-                                       title = "Change selected area",
+                                       title = "Selected area",
                                        selectInput(ns("change_area"),
                                                    label = NULL,
                                                    choices = setNames(c("",ladSF$lad), c("Change selected area...",ladSF$lad_name)))

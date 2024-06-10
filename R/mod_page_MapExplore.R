@@ -3,7 +3,8 @@
 #' @description Map explore page for Sipgher dashboard.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
-#' @param r global reactiveValues
+#' @param r Global reactiveValues
+#' @param parent.session Active Shiny session
 #'
 #' @noRd
 #'
