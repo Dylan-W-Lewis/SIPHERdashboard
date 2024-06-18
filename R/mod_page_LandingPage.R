@@ -1,7 +1,9 @@
 #' page_LandingPage UI Function
 #'
+#' @description Home page with links to other tabs.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param r global reactiveValues object
 #'
 #' @noRd
 #'

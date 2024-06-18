@@ -1,8 +1,9 @@
 #' pt_DownloadGraph UI Function
 #'
-#' @description A shiny Module.
+#' @description interface to download provided ggplot
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param plot reactive returning ggplot object
 #'
 #' @noRd
 #'

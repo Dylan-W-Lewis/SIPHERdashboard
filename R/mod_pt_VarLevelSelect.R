@@ -1,8 +1,10 @@
 #' pt_VarLevelSelect UI Function
 #'
-#' @description A shiny Module.
+#' @description select input that automatically updates level choices for selected variable.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param vars which variables to include in first selectInput
+#' @param inline stack selectInputs or arrange side-by-side
 #'
 #' @noRd
 #'

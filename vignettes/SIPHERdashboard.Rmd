@@ -1,0 +1,38 @@
+---
+title: "SIPHERdashboard"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SIPHERdashboard}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(SIPHERdashboard)
+```
+
+This dashboard enables users to explore the SIPHER Synthetic
+             Population for Individuals in Great Britain, 2019-2021. For this
+             purpose, we have linked the SIPHER Synthetic Population dataset with
+             Understanding Society survey data for individuals and households,
+             and created an aggregated version of the resulting linkage. Once
+             linked with Understanding Society survey data, the SIPHER Synthetic
+             Population provids a “digital twin” of the adult population in Great
+             Britain. This enables the dataset to support a wide range of applications
+             across policy and research. These applications can include
+             exploratory analyses of small areas such as census output areas or
+             electoral wards, supplementing traditional administrative sources
+             of data. In addition, the SIPHER Synthetic Population can serve as
+             an input for microsimulation models through the provision of
+             high-quality information on individuals and areas at a granular
+             spatial resolution. Capturing multiple key life domains, this
+             dashboard allows for an intuitive exploration of spatial patterns
+             at different layers of geography. Please note that this dashboard
+             does not contain or present any individual-level data.

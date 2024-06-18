@@ -1,6 +1,6 @@
 #' page_Info UI Function
 #'
-#' @description A shiny Module.
+#' @description About page for SIPHER synthetic population.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
@@ -205,7 +205,7 @@ mod_page_Info_ui <- function(id){
             inferences can or should be made about 'real' survey participants based
             on the aggregate-level data provided in this dashboard."),
 
-            h1(strong(style="color:#005398","Geographic boundary definitions")),  
+            h1(strong(style="color:#005398","Geographic boundary definitions")),
 
             p("The following boundary definitions were applied throughout:"),
 
