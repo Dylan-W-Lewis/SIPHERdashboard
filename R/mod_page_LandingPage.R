@@ -23,9 +23,24 @@ mod_page_LandingPage_ui <- function(id){
 
                 bslib::card(h2(strong(style="color:#005398", "SIPHER Synthetic Population Dashboard")),
 
-                            p("This dashboard allows you to easily explore an aggregated version of the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021 without any coding or data preparation. The ‘click and explore’ format enables you to compare areas of interest, create bespoke detailed area profiles, develop customised data visualisations, and download the aggregate data used."),
+                            p("This dashboard allows users to easily explore an
+                              aggregated version of the SIPHER Synthetic Population
+                              for Individuals in Great Britain 2019-2021 - without
+                              any coding or data preparation. The ‘click and
+                              explore’ format enables users to compare areas of
+                              interest, create bespoke detailed area profiles,
+                              develop customised data visualisations, and download
+                              the aggregate data used."),
 
-                            p("Getting started: Use the tabs along the top of the dashboard to explore its various capabilities. For a detailed overview, disclaimers and citations visit the",
+                             p("Users can navigate the tabs along the top of the
+                               dashboard to explore its various capabilities. Please
+                               note that this dashboard does not contain any
+                               individual-level data. No conclusions can and
+                               should be made about 'real' individuals or Understandig
+                               Society survey respondents. All results obtained from
+                               this dashboard should be understood and treated
+                               as 'model estimates'. For further information about
+                               the dataset and the suggested citation visit the",
                                actionLink(ns("gotoAbout"), "About"), "tab."),
 
 
@@ -37,6 +52,7 @@ mod_page_LandingPage_ui <- function(id){
                                  div(style = "text-align: center",
                                      h2(icon("map-location-dot"), style="color:#005398"),
                                      p("Compare local authorities across Great Britain using the ",
+
                                        actionLink(ns("gotoME"), "Map Explore"),
                                        "tool")
                                  )
@@ -47,7 +63,7 @@ mod_page_LandingPage_ui <- function(id){
                                      h2(icon("chart-bar"), style="color:#005398"),
                                      p("View a detailed ",
                                        actionLink(ns("gotoAP"), "Area Profile"),
-                                       "of any local authority, and explore data for electoral wards")
+                                       "of any local authority, and explore data for its electoral wards.")
 
                                  )
                                ),
@@ -55,7 +71,7 @@ mod_page_LandingPage_ui <- function(id){
                                  width = 4,
                                  div(style = "text-align: center",
                                      h2(icon("table"), style="color:#005398"),
-                                     p("Create custom graphs with the ",
+                                     p("Create custom outputs with the ",
                                        actionLink(ns("gotoGB"), "Graph Builder"),
                                        "or tables with the ",
                                        actionLink(ns("gotoDD"), "Data Download"),
@@ -95,7 +111,8 @@ mod_page_LandingPage_ui <- function(id){
 
                       h4(style="color:#005398", #"Guidance for interpreting the results"),
 
-                      actionLink(ns("gotointerpretation"), "How to interpret results from the SIPHER Synthetic Population",# "Go to 'Interpreting the Results' tab",
+
+                      actionLink(ns("gotointerpretation"), "How do I interpret results obtained from the dataset?",# "Go to 'Interpreting the Results' tab",
 
                                  )
                       )
@@ -106,11 +123,12 @@ mod_page_LandingPage_ui <- function(id){
 
                     bslib::card_body(
 
-                      p(strong("Citation information")),
+                      p(strong("Citation guideance")),
 
-                      h4(style="color:#005398", #"How to cite the dashboard and the data"),
+                      h4(style="color:#005398", #"How do I cite the dashboard and the data"),
 
-                         actionLink(ns("gotocitedashboard"), "How to cite the dashboard and data", #"Go to 'How to Cite' tab",
+
+                         actionLink(ns("gotocitedashboard"), "How do I cite the dashboard and the underlying data?", #"Go to 'How to Cite' tab",
                          )
                       )
                     )
