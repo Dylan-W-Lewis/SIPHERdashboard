@@ -44,7 +44,7 @@ mod_page_Info_ui <- function(id){
              p("The SIPHER Synthetic Population is now available for full
                independant use. The dataset is accompanied by an extensive user
                guide and can be accessed via the ", a("UK Data Service [SN 9277]",
-               href="https://doi.org/10.5255/UKDA-SN-9277-1",
+               href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=9277",
                target="_blank"), " - subject to the End User Licence (EUL) Agreement."),
 
              p("Key life domains captured in this dashboard include:"),
@@ -70,13 +70,13 @@ mod_page_Info_ui <- function(id){
                visualisations, please ensure that the dashboard is cited
                correctly. In addition, we recommend to also cite the underlying
                UK Data Service data collections underpinning this
-               dashboard (",
+               dashboard,",
                  a("SN 9277",
-                   href="https://doi.org/10.5255/UKDA-SN-9277-1",
+                   href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=9277",
                    target="_blank"), "and",
                  a("SN 6614",
-                   href="https://doi.org/10.5255/UKDA-SN-6614-19",
-                   target="_blank"), ").",
+                   href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=6614",
+                   target="_blank"), ".",
                "Please see Citation & acknowledgements
                for further guidance on the recommended citation."),
 
@@ -86,11 +86,11 @@ mod_page_Info_ui <- function(id){
                   href="https://www.gla.ac.uk/research/az/sipher/products/syntheticpopulation/",
                   target="_blank"),"."),
 
-             p("A detailed user guide for the SIPHER Synthetic Population is
-                available via the ",
-               a("UK Data Service [SN 9277]",
-                 href="https://doi.org/10.5255/UKDA-SN-9277-1",
-                 target="_blank"),"."),
+             p("A detailed",
+               a("User Guide",
+                 href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=9277#!/documentation",
+                 target="_blank"),
+               "for the SIPHER Synthetic Population is available via the UK Data Service."),
 
                p("Please direct all questions or feedback marked 'SIPHER Synthetic
                  Population - Dashboard' to sipher@glasgow.ac.uk. Our team is happy
@@ -130,7 +130,7 @@ mod_page_Info_ui <- function(id){
           individual-level data at a granular spatial resolution. The SIPHER
           Synthetic Population is now available for full independent use."),
             p("Discover the dataset via the ", a("UK Data Service [SN 9277].",
-              href="https://doi.org/10.5255/UKDA-SN-9277-1",
+              href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=9277",
               target="_blank")
                              ),
 
@@ -213,7 +213,7 @@ mod_page_Info_ui <- function(id){
 
             tags$li("Electoral Wards in 2022 boundaries"),
 
-            tags$li("Local Authorities in 2021 boundaries")
+            tags$li("Local Authorities (lower tier; district level) in 2021 boundaries")
 
                     ),
 
@@ -228,8 +228,8 @@ mod_page_Info_ui <- function(id){
             pack contains all aggregate-level data provided in this dashboard, alongside
             all code which was developed for this dashboard."),
 
-            p("The reproducibility pack for the dashboard is available ",
-              a("via GitHub:]",
+            p("A reproducibility pack for this dashboard is available",
+              a("via GitHub:",
                 href="https://github.com/Dylan-W-Lewis/SIPHERdashboard",
                 target="_blank"),"."),
 
@@ -251,22 +251,27 @@ mod_page_Info_ui <- function(id){
           Emma Comrie, Andreas Hoehn, Nikolas Lomax, Alison Jane Heppenstall,
           Robin Charles Purshouse, Kashif Zia, Petra Sylvia Meier. (2024). SIPHER
           Synthetic Population for Individuals in Great Britain, 2019-2021 -
-          Interactive R-Shiny Dashboard. Data extracted on [DATA, TIME], DOI."),
+          Interactive R-Shiny Dashboard. Data extracted on [DATA, TIME],
+          DOI: http://dx.doi.org/10.36399/gla.pubs.328260"),
 
           p("In addition, we strongly encourage the incusion of citations for the
           two key datasets utilised for the creation of this dashboard:"),
 
           tags$ul(
 
-          tags$li("Nikolas Lomax, Andreas Hoehn, Alison Jane Heppenstall,
-          Robin Charles Purshouse, Kashif Zia, Petra Sylvia Meier. (2024).
-          SIPHER Synthetic Population for Individuals in Great Britain, 2019-2021.
-          [Data collection]. 1st edition. UK Data Service. SN: 9277, https://doi.org/10.5255/UKDA-SN-9277-1."),
+          tags$li("Lomax, N., Hoehn, A., Heppenstall, A., Purshouse, R., Wu, G.,
+          Zia, K., Meier, P. (2024). SIPHER Synthetic Population for Individuals
+          in Great Britain, 2019-2021. [data collection]. University of Essex,
+          Institute for Social and Economic Research, Office for National
+          Statistics, [original data producer(s)]. University of Essex, Institute
+          for Social and Economic Research. SN: 9277,
+          DOI: http://doi.org/10.5255/UKDA-SN-9277-1"),
 
-          tags$li("University of Essex, institute for social and economic research. (2022).
-          Understanding society: Waves 1-12, 2009-2021 and harmonised BHPS: Waves 1-18,
-          1991-2009. [Data collection]. 17th edition. UK Data Service. SN: 6614,
-          http://doi.org/10.5255/UKDA-SN-6614-18.")
+          tags$li("University of Essex, Institute for Social and Economic
+          Research. (2023). Understanding Society: Waves 1-13, 2009-2022 and
+          Harmonised BHPS: Waves 1-18, 1991-2009. [data collection]. 18th
+          Edition. UK Data Service. SN: 6614,
+          DOI: http://doi.org/10.5255/UKDA-SN-6614-19")
 
                     ),
 
