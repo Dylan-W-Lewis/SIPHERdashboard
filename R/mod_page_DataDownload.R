@@ -51,7 +51,9 @@ mod_page_DataDownload_ui <- function(id){
                                    checkboxInput(ns("include_sex"), "Sex-specific estimates"),
                                  )
                 )),
-            tableOutput(ns("tab"))
+            gap = 0,
+            tableOutput(ns("tab")),
+            textOutput(ns("nrow"))
 
           )
         ),
@@ -155,6 +157,10 @@ mod_page_DataDownload_server <- function(id){
 
 
     output$tab <- renderTable(head(finalFilt()))
+
+    output$nrow <- renderText({
+      req(finalFilt(), cancelOutput = T)
+      paste0("+ ", nrow(finalFilt()) - nrow(head(finalFilt())), " more rows")})
 
     output$download <- downloadHandler(filename = "SIPHER_synthetic_population_extract.csv",
                                        content = function(file){
