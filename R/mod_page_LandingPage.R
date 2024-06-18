@@ -21,7 +21,7 @@ mod_page_LandingPage_ui <- function(id){
           xxl = c(-2, 6, 2, -2)
         ),
 
-                bslib::card(h2(strong(style="color:#005398", "SIPHER Synthetic Population for Individuals in Great Britain, 2019-2021 - Interactive R-Shiny Dashboard")),
+                bslib::card(h2(strong(style="color:#005398", "Explore the SIPHER Synthetic Population")),
 
                             p("Welcome! This dashboard allows you to easily explore an aggregated version of the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021 without any coding or data preparation. The ‘click and explore’ format enables you to compare areas of interest, create bespoke detailed area profiles, develop customised data visualisations, and download the aggregate data used."),
 
@@ -108,7 +108,7 @@ mod_page_LandingPage_ui <- function(id){
 
                     bslib::card_body(
 
-                      p(strong("Citation information")),
+                      p(strong("Citation guideance")),
 
                       h4(style="color:#005398", #"How to cite the dashboard and the data"),
 
