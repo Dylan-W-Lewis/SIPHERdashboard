@@ -1,6 +1,5 @@
 #' page_LandingPage UI Function
 #'
-#' @description A shiny Module.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
@@ -74,10 +73,11 @@ mod_page_LandingPage_ui <- function(id){
                   bslib::card(
 
                     bslib::card_body(
+                      gap = "0.5rem",
 
                       p(strong("About the dataset")),
 
-                      h4(style="color:#005398", #"How to use the dashboard's features and functionlity"),
+                      h5(style="color:#005398", #"How to use the dashboard's features and functionlity"),
 
                          actionLink(ns("gotobackground"), "What is the SIPHER Synthetic Population?", #"Go to 'Features and Functionality' tab",
 
@@ -90,12 +90,13 @@ mod_page_LandingPage_ui <- function(id){
                   bslib::card(
 
                     bslib::card_body(
+                      gap = "0.5rem",
 
                       p(strong("Interpretation of results")),
 
-                      h4(style="color:#005398", #"Guidance for interpreting the results"),
+                      h5(style="color:#005398", #"Guidance for interpreting the results"),
 
-                      actionLink(ns("gotointerpretation"), "How to interpret results from the SIPHER Synthetic Population",# "Go to 'Interpreting the Results' tab",
+                      actionLink(ns("gotointerpretation"), "How to interpret the SIPHER Synthetic Population data",# "Go to 'Interpreting the Results' tab",
 
                                  )
                       )
@@ -105,10 +106,11 @@ mod_page_LandingPage_ui <- function(id){
                   bslib::card(
 
                     bslib::card_body(
+                      gap = "0.5rem",
 
                       p(strong("Citation information")),
 
-                      h4(style="color:#005398", #"How to cite the dashboard and the data"),
+                      h5(style="color:#005398", #"How to cite the dashboard and the data"),
 
                          actionLink(ns("gotocitedashboard"), "How to cite the dashboard and data", #"Go to 'How to Cite' tab",
                          )
