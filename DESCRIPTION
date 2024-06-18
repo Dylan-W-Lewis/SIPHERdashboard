@@ -2,18 +2,18 @@ Package: SIPHERdashboard
 Title: SIPHER Synthetic Population Dashboard
 Version: 0.9.9.9000
 Authors@R: 
-    person(given = "Dylan",
+    c(person(given = "Dylan",
            family = "Lewis",
            role = c("aut", "cre"),
-           email = "d.lewis.1@research.gla.ac.uk")
+           email = "d.lewis.1@research.gla.ac.uk"),
     person(given = "Andreas",
            family = "Hoehn",
-           role = c("aut", "cre"),
-           email = "andreas.hoehn@gla.ac.uk")
+           role = "aut",
+           email = "andreas.hoehn@gla.ac.uk"),
     person(given = "Emma",
            family = "Comrie",
-           role = c("aut", "cre"),
-           email = "emma.comrie@phs.scot")
+           role = "aut",
+           email = "emma.comrie@phs.scot"))
 Description: This dashboard allows you to easily explore an aggregated version of the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021.
 License: CC BY 4.0 DEED
 Imports: 
@@ -46,6 +46,6 @@ Config/testthat/edition: 3
 Language: en-US
 Depends: 
     R (>= 2.10)
-URL: https://github.com/Dylan-W-Lewis/SIPHERdashboard
+URL: https://github.com/Dylan-W-Lewis/SIPHERdashboard, https://www.gla.ac.uk/research/az/sipher/products/syntheticpopulation/
 BugReports: https://github.com/Dylan-W-Lewis/SIPHERdashboard/issues
 VignetteBuilder: knitr
