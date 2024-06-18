@@ -97,7 +97,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
     para2 <- reactive({
       paste0("Discover how these variables differ across different areas within ",
              area_name(),
-             ", as well as how they vary by age and gender.", collapse = "")
+             ", as well as how they vary by age and sex.", collapse = "")
     })
 
     output$intro_text <- renderText(intro())
@@ -109,7 +109,7 @@ mod_pt_profile_server <- function(id, topic, vars, varNames= NULL, r){
     selectionName <- reactive(make_var_labels(selections()$var, selections()$level))
 
     output$labArea <- renderText(paste0(stringr::str_to_sentence(topic), " by area - ", selectionName()))
-    output$labDemo <- renderText(paste0(stringr::str_to_sentence(topic), " by age and gender - ", selectionName()))
+    output$labDemo <- renderText(paste0(stringr::str_to_sentence(topic), " by age and sex - ", selectionName()))
 
 
     ##### graphs

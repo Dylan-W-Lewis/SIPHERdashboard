@@ -41,7 +41,8 @@ mod_page_LandingPage_ui <- function(id){
                                this dashboard should be understood and treated
                                as 'model estimates'. For further information about
                                the dataset and the suggested citation visit the",
-                               actionLink(ns("gotoAbout"), strong("About", style="color:#005398"), style = "text-decoration: none;"), "tab."),
+                               actionLink(ns("gotoAbout"), "About"), "tab."),
+
 
                              h5(strong(style="color:#005398", "What can the dashboard do?")),
 
@@ -51,8 +52,9 @@ mod_page_LandingPage_ui <- function(id){
                                  div(style = "text-align: center",
                                      h2(icon("map-location-dot"), style="color:#005398"),
                                      p("Compare local authorities across Great Britain using the ",
-                                       actionLink(ns("gotoME"), strong("Map Explore", style="color:#005398"), style = "text-decoration: none;"),
-                                       "tool.")
+
+                                       actionLink(ns("gotoME"), "Map Explore"),
+                                       "tool")
                                  )
                                ),
                                column(
@@ -60,8 +62,9 @@ mod_page_LandingPage_ui <- function(id){
                                  div(style = "text-align: center",
                                      h2(icon("chart-bar"), style="color:#005398"),
                                      p("View a detailed ",
-                                       actionLink(ns("gotoAP"), strong("Area Profile", style="color:#005398"), style = "text-decoration: none;"),
+                                       actionLink(ns("gotoAP"), "Area Profile"),
                                        "of any local authority, and explore data for its electoral wards.")
+
                                  )
                                ),
                                column(
@@ -69,10 +72,10 @@ mod_page_LandingPage_ui <- function(id){
                                  div(style = "text-align: center",
                                      h2(icon("table"), style="color:#005398"),
                                      p("Create custom outputs with the ",
-                                       actionLink(ns("gotoGB"), strong("Graph Builder", style="color:#005398"), style = "text-decoration: none;"),
+                                       actionLink(ns("gotoGB"), "Graph Builder"),
                                        "or tables with the ",
-                                       actionLink(ns("gotoDD"), strong("Data Download", style="color:#005398"), style = "text-decoration: none;"),
-                                       "tool.")
+                                       actionLink(ns("gotoDD"), "Data Download"),
+                                       "tool")
                                  )
                                )
 
@@ -93,9 +96,7 @@ mod_page_LandingPage_ui <- function(id){
                       h4(style="color:#005398", #"How to use the dashboard's features and functionlity"),
 
                          actionLink(ns("gotobackground"), "What is the SIPHER Synthetic Population?", #"Go to 'Features and Functionality' tab",
-                                    style = "text-decoration: none;"
-                                    # style="color: #fff; background-color: #005398;
-                                    #                          border-color: #005398")
+
                          )
                       )
                     )
@@ -110,10 +111,9 @@ mod_page_LandingPage_ui <- function(id){
 
                       h4(style="color:#005398", #"Guidance for interpreting the results"),
 
+
                       actionLink(ns("gotointerpretation"), "How do I interpret results obtained from the dataset?",# "Go to 'Interpreting the Results' tab",
-                                 style = "text-decoration: none;"
-                                 # style="color: #fff; background-color: #005398;
-                                   #                          border-color: #005398")
+
                                  )
                       )
                     )
@@ -127,10 +127,8 @@ mod_page_LandingPage_ui <- function(id){
 
                       h4(style="color:#005398", #"How do I cite the dashboard and the data"),
 
+
                          actionLink(ns("gotocitedashboard"), "How do I cite the dashboard and the underlying data?", #"Go to 'How to Cite' tab",
-                                    style = "text-decoration: none;"
-                                    # style="color: #fff; #background-color: #005398;
-                                    #                          border-color: #005398"
                          )
                       )
                     )

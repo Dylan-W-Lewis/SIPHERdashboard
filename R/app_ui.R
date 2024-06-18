@@ -33,6 +33,7 @@ app_ui <- function(request) {
                             heading_font = "Arial",
                             "navbar-brand-padding-y" = "-1px",
                             "bslib-spacer" = "1rem",
+                            "link-decoration" = "none"
                             ) |>
         bslib::bs_add_rules(list(".navbar-static-top {padding: 0px;}",
                                  ".navbar>.container-fluid {padding-left: 0px;}",
@@ -44,7 +45,11 @@ app_ui <- function(request) {
                                  ".graph-controls .form-group {margin-bottom: .2rem;}",
                                  ".graph-controls.bslib-gap-spacing {gap: .5rem;}",
                                  ".navbar+.container-fluid>.tab-content>.tab-pane.active.html-fill-container:has(>.dont-pad-pls) { padding: 0; }",
-                                 ".selectize-input {border: 1px solid #dee2e6 !important;}"
+                                 ".selectize-input {border: 1px solid #dee2e6 !important;}",
+                                 #".tab-content { @extend .html-fill-container !important}",
+                                 ".tab-content { display: flex; flex-direction: column; flex-grow: 1; flex-shrink: 1}",
+                                 ".fill-tab { display: flex; flex-direction: column; flex-grow: 1; flex-shrink: 1}",
+                                 "a.action-button {font-weight: bold !important}"
 
                                  )),
 
@@ -63,30 +68,15 @@ app_ui <- function(request) {
                mod_page_AreaProfile2_ui("page_AreaProfile")
                ),
 
-     bslib::nav_menu("Graph Builder",
-                     bslib::nav_panel("Dot Plot",
-                                      icon = icon("chart-gantt"),
-                                      value = "graph_builder",
-                                      #mod_page_GraphBuilder_ui("page_GraphBuilder_1")
-                                      mod_pt_BYOG_parcoords_ui("pt_BYOG_parcoords_1")
-                                      ),
-                     bslib::nav_panel("Stacked Bar",
-                                      icon = icon("bars-progress"),
-                                      #h3(span(icon("hammer"), "Under construction"))
-                                      mod_pt_BYOG_StackedBar_ui("pt_BYOG_StackedBar_1")
-                                      ),
-                     bslib::nav_panel("Column Chart",
-                                      icon = icon("chart-simple"),
-                                      mod_pt_BYOG_dembar_ui("pt_BYOG_dembar_1")
-                                      )
-                     ),
+      bslib::nav_panel("Graph Builder",
+                      value = "graph_builder",
+                      mod_page_BYOG_ui("page_BYOG_1")
+                      ),
+
 
       bslib::nav_panel("Data Download",
                        value = "data_download",
-                       div(style = "margin: auto;",
-                            h3(span(icon("hammer"), "Under construction")),
-                            p("The data download tab will allow users to filter and download tables of aggregated data from the synthetic population")
-                           )
+                       mod_page_DataDownload_ui("page_DataDownload_1")
                        ),
 
       bslib::nav_panel("About", value = "info",
