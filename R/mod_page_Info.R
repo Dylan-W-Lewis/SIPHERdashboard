@@ -70,13 +70,13 @@ mod_page_Info_ui <- function(id){
                visualisations, please ensure that the dashboard is cited
                correctly. In addition, we recommend to also cite the underlying
                UK Data Service data collections underpinning this
-               dashboard (",
+               dashboard,",
                  a("SN 9277",
                    href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=9277",
                    target="_blank"), "and",
                  a("SN 6614",
                    href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=6614",
-                   target="_blank"), ").",
+                   target="_blank"), ".",
                "Please see Citation & acknowledgements
                for further guidance on the recommended citation."),
 
@@ -86,11 +86,11 @@ mod_page_Info_ui <- function(id){
                   href="https://www.gla.ac.uk/research/az/sipher/products/syntheticpopulation/",
                   target="_blank"),"."),
 
-             p("A detailed user guide for the SIPHER Synthetic Population is
-                available via the ",
-               a("UK Data Service [SN 9277]",
+             p("A detailed",
+               a("User Guide",
                  href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=9277#!/documentation",
-                 target="_blank"),"."),
+                 target="_blank"),
+               "for the SIPHER Synthetic Population is available via the UK Data Service."),
 
                p("Please direct all questions or feedback marked 'SIPHER Synthetic
                  Population - Dashboard' to sipher@glasgow.ac.uk. Our team is happy
@@ -228,8 +228,8 @@ mod_page_Info_ui <- function(id){
             pack contains all aggregate-level data provided in this dashboard, alongside
             all code which was developed for this dashboard."),
 
-            p("The reproducibility pack for the dashboard is available ",
-              a("via GitHub:]",
+            p("A reproducibility pack for this dashboard is available",
+              a("via GitHub:",
                 href="https://github.com/Dylan-W-Lewis/SIPHERdashboard",
                 target="_blank"),"."),
 
