@@ -60,7 +60,7 @@ mod_pt_DemographicsBar_server <- function(id, dat, varbl, categ, output_type = N
           scale_fill_sipher(palette_name = "full", type = "discrete") +
           ggplot2::scale_x_discrete(labels = function(x) translate_codes(x)) +
           ggplot2::theme_bw() +
-          ggplot2::labs(fill = "Gender", #stringr::str_to_sentence(var),
+          ggplot2::labs(fill = "Sex", #stringr::str_to_sentence(var),
                         y= NULL,
                         x= "Age") +
           {if(facet() == "wrap_area")ggplot2::facet_wrap(~geo)} +

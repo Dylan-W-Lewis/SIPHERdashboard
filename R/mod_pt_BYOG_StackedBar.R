@@ -54,7 +54,7 @@ mod_pt_BYOG_StackedBar_ui <- function(id){
                                              )
                                            ),
                                selectInput(ns("sex"),
-                                           label = "Gender",
+                                           label = "Sex",
                                            choices = setNames(c("both", reference$cats[reference$obs=="sex"][[1]][[1]]),
                                                               c("Male or female", translate_codes(reference$cats[reference$obs=="sex"][[1]][[1]]))
                                                               )

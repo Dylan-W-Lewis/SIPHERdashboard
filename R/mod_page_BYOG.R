@@ -33,13 +33,13 @@ mod_page_BYOG_ui <- function(id){
                              div(style = "text-align: center",
                                  h2(icon("bars-progress"), style="color:#005398"),
                                  actionLink( ns("to_bars"), "Stacked Bars"),
-                                 p("Compare local authories across all categories of one variable. You can also filter by age and gender.")
+                                 p("Compare local authories across all categories of one variable. You can also filter by age and sex.")
                              )),
                            bslib::card(
                              div(style = "text-align: center",
                                  h2(icon("chart-simple"), style="color:#005398"),
                                  actionLink( ns("to_cols"), "Demographic Columns"),
-                                 p("Explore the age and gender breakdown of variables in one or more local authority areas.")
+                                 p("Explore the age and sex breakdown of variables in one or more local authority areas.")
                              ))
                          )
                        )),
