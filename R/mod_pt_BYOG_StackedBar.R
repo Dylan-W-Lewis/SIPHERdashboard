@@ -1,6 +1,6 @@
 #' pt_BYOG_StackedBar UI Function
 #'
-#' @description A shiny Module.
+#' @description create custom stacked bar charts.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'

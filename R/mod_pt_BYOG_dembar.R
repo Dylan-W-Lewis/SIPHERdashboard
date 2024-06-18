@@ -1,6 +1,6 @@
 #' pt_BYOG_dembar UI Function
 #'
-#' @description A shiny Module.
+#' @description create custom charts showing demographic breakdown.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'

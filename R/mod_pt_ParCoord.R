@@ -1,8 +1,9 @@
 #' pt_ParCoord UI Function
 #'
-#' @description A shiny Module.
+#' @description Produces a parallel coordinates dot plot.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param output_type what the module should return. "renderPlotly" = render plotly to ui, "plotly" = return plotly object, "ggplot" = return ggplot object
 #'
 #' @noRd
 #'

@@ -1,8 +1,11 @@
 #' pt_DemographicsBar UI Function
 #'
-#' @description A shiny Module.
+#' @description generates bar charts showing age and sex breakdown of variables.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param dat data filtered to area of interest
+#' @param varbl,categ reactives returning variable and level names
+#' @param output_type render plotly to ui (default) or return ggplot object
 #'
 #' @noRd
 #'

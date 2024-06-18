@@ -21,27 +21,22 @@ dataPath <- "C:/Users/2808003l/Documents/Sipher"
 
 ### Aggregated data
 
-Data is currently aggregated at three resolutions: country, local authority, LSOA
+Data is currently aggregated at three resolutions: country, local authority, ward
 
 ```{r load aggregated data}
 #read country data
 ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_export_raw.csv"))
-# ctrDat <- read_csv(paste0(dataPath, "/ROutput/ctr_export_labels.csv"),
-#                      show_col_types = FALSE) %>% rename_with(~str_remove(.x, "_label"))
-# ctrRaw <- read_csv(paste0(dataPath, "/ROutput/ctr_code_export.csv"),
-#                     show_col_types = FALSE)
-# ctrDat <- ctrRaw %>% select(!c("ctr_code", "value")) %>% cbind(., ctrLabelled)
- glimpse(ctrDat)
+glimpse(ctrDat)
 
 #read local autority data
 ladDat <- read_csv(paste0(dataPath, "/ROutput/lad_export_raw.csv"))
 glimpse(ladDat)
 
-# read LSOA (2021) data
-lsoaDat <- read_csv(paste0(dataPath, "/ROutput/lsoa21_export_raw.csv"))
-glimpse(lsoaDat)
-#filter to only include all ages/genders
-lsoaDat <- lsoaDat %>% filter(sex=="both", age=="all_ages")
+# # read LSOA (2021) data
+# lsoaDat <- read_csv(paste0(dataPath, "/ROutput/lsoa21_export_raw.csv"))
+# glimpse(lsoaDat)
+# #filter to only include all ages/genders
+# lsoaDat <- lsoaDat %>% filter(sex=="both", age=="all_ages")
 
 #read ward data
 wardDat <- read_csv(paste0(dataPath, "/ROutput/ward_export_raw.csv"))
@@ -57,35 +52,7 @@ glimpse(gbDat)
 
 ### Geo lookup
 
-```{r load geo link}
-#lookupFiles <- map(list.files(paste0(dataPath, "/geo_lookup/"), full.names = T), read.csv)
-#names(lookupFiles) <- map_chr(list.files(paste0(dataPath, "/geo_lookup/")), ~str_remove_all(.x, "[() ]|(.csv)"))
-#names(lookupFiles)
-lookup <- read_csv(paste0(dataPath, "/geo_lookup/PCD_OA21_LSOA21_MSOA21_LAD_NOV23_UK_LU.csv"),
-                   show_col_types = FALSE)
-```
 
-Create a nested list to identify parent/child areas
-
-```{r lookup list}
-
-lookupCodes <- lookup %>%
-  select(ladcd, ladnm, lsoa21cd) %>%
-  mutate(ctr = str_sub(lsoa21cd, 1, 1),
-         ctrnm = case_match(ctr,
-                           "E" ~ "England",
-                           "W" ~ "Wales",
-                           "S" ~ "Scotland"),
-         .before = ladcd) %>%
-  filter(ctr %in% c("E", "W", "S"))
-
-lookupList <- lookupCodes %>% nest(.by = c(ctr:ladnm), .key="lsoa") %>% nest(.by=c(ctr, ctrnm), .key="lad")
-
-#lookupList.RData is added to /data/ folder
-```
-
-Not sure if a list is a good approach...
-Also this lookup file is for LSOA->LAD->Country, we want Ward->LAD->Country
 
 ```{r lookup 2}
 # lookup file for wards
@@ -93,6 +60,15 @@ lookup_wd_lad <- read_csv(paste0(dataPath, "/geo_lookup/Ward_to_Local_Authority_
                    show_col_types = FALSE)
 
 lookup_wd_lad <- lookup_wd_lad %>% select(ward = WD22CD, ward_name = WD22NM, lad = LAD22CD, lad_name = LAD22NM)
+
+
+# lookup_lsoa_lad <- read_csv(paste0(dataPath, 
+#                                    "/geo_lookup/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales_(Version_2).csv"))
+# 
+# lookup_lsoa_lad <- lookup_lsoa_lad %>% select(lsoa = LSOA21CD, lsoa_name = LSOA21NM, lad = LAD22CD, lad_name = LAD22NM)
+
+usethis::use_data(lookup_wd_lad)
+
 ```
 
 
@@ -102,6 +78,7 @@ Load in shapefiles, filter for LADs available in data
 library(sf)
 ladSF_raw <- sf::read_sf(paste0(dataPath, "/topo/Local_Authority_Districts/LAD_DEC_2021_GB_BUC.shp"))
 wardSF_raw <- sf::read_sf(paste0(dataPath, "/topo/Wards/WD_DEC_22_GB_BSC.shp"))
+#lsoaSF_raw <- sf::read_sf(paste0(dataPath, "/topo/LSOA_21/LSOA_2021_EW_BUC.shp")) # not scotland
 #remove areas not in dataset
 ladSF <- ladSF_raw %>%
   filter(LAD21CD %in% unique(ladDat$lad)) %>%
@@ -114,8 +91,8 @@ wardSF <- wardSF_raw %>%
          ward = WD22CD,
          ward_welsh = WD22NMW)
 #ggplot(data=ladSF) +geom_sf()
-# usethis::use_data(ladSF, overwrite = T)
-# usethis::use_data(wardSF, overwrite = T)
+ usethis::use_data(ladSF, overwrite = T)
+ usethis::use_data(wardSF, overwrite = T)
 ```
 
 
@@ -138,13 +115,13 @@ reference <- codebook_raw %>%
   left_join(., reference_raw, by="obs")
 reference$cat_reference[which(is.na(reference$cat_reference))] <- reference$obs[which(is.na(reference$cat_reference))]
 
-#usethis::use_data(codebook, reference, overwrite = T)
+usethis::use_data(codebook, reference, overwrite = T)
 ```
 
 ### testing maps
 ```{r}
-testSF <- wardSF %>% filter(WD23CD %in% lookup_wd_lad$WD23CD[lookup_wd_lad$LAD23CD=="E06000001"])
-plot(testSF)
+#testSF <- wardSF %>% filter(WD23CD %in% lookup_wd_lad$WD23CD[lookup_wd_lad$LAD23CD=="E06000001"])
+#plot(testSF)
 ```
 
 ### scaling and labelling for graphs
@@ -180,18 +157,18 @@ ladDatScaledLong <- ladDatScaled %>% pivot_back_long()
 wardDatScaled <- wardDat %>% pivot_scale_label()
 wardDatScaledLong <- wardDatScaled %>% pivot_back_long()
 
-lsoaDatScaled <- lsoaDat %>% pivot_scale_label()
-lsoaDatScaledLong <- lsoaDatScaled %>% pivot_back_long()
+#lsoaDatScaled <- lsoaDat %>% pivot_scale_label()
+#lsoaDatScaledLong <- lsoaDatScaled %>% pivot_back_long()
 
 gbDatScaled <- gbDat %>% pivot_scale_label()
 gbDatScaledLong <- gbDatScaled %>% pivot_back_long() %>% mutate(scaled = 0)
 
 ladDat <- ladDatScaledLong
 wardDat <- wardDatScaledLong %>% select(-c(age, sex))
-lsoaDat <- lsoaDatScaledLong %>% select(-c(age, sex))
+#lsoaDat <- lsoaDatScaledLong %>% select(-c(age, sex))
 gbDat <- gbDatScaledLong
 
-#usethis::use_data(ladDat, wardDat, lsoaDat, gbDat, overwrite = T)
+usethis::use_data(ladDat, wardDat, gbDat, overwrite = T)
 ```
 
 

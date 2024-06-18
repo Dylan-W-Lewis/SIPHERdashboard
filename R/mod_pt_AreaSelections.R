@@ -1,8 +1,9 @@
 #' pt_AreaSelections UI Function
 #'
-#' @description A shiny Module.
+#' @description Create ui showing areas selected by map select.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param r global reactiveValues object
 #'
 #' @noRd
 #'
@@ -11,14 +12,6 @@
 mod_pt_AreaSelections_ui <- function(id){
   ns <- NS(id)
   tagList(
-    #h1("Selected areas"),
-    #  fluidRow(
-    #    column(8,
-    #           offset = 1,
-    #           strong(textOutput(ns("selection1")))),
-    #    column(3,
-    #           actionButton(ns("button1"), "View area profile"))
-    #    )
     uiOutput(ns("selections"))
 
   )

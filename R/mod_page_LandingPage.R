@@ -1,8 +1,9 @@
 #' page_LandingPage UI Function
 #'
-#' @description A shiny Module.
+#' @description Home page with links to other tabs.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param r global reactiveValues object
 #'
 #' @noRd
 #'
@@ -90,10 +91,11 @@ mod_page_LandingPage_ui <- function(id){
                   bslib::card(
 
                     bslib::card_body(
+                      gap = "0.5rem",
 
                       p(strong("About the dataset")),
 
-                      h4(style="color:#005398", #"How to use the dashboard's features and functionlity"),
+                      h5(style="color:#005398", #"How to use the dashboard's features and functionlity"),
 
                          actionLink(ns("gotobackground"), "What is the SIPHER Synthetic Population?", #"Go to 'Features and Functionality' tab",
 
@@ -106,10 +108,12 @@ mod_page_LandingPage_ui <- function(id){
                   bslib::card(
 
                     bslib::card_body(
+                      gap = "0.5rem",
 
                       p(strong("Interpretation of results")),
 
-                      h4(style="color:#005398", #"Guidance for interpreting the results"),
+                      h5(style="color:#005398", #"Guidance for interpreting the results"),
+
 
 
                       actionLink(ns("gotointerpretation"), "How do I interpret results obtained from the dataset?",# "Go to 'Interpreting the Results' tab",
@@ -122,11 +126,12 @@ mod_page_LandingPage_ui <- function(id){
                   bslib::card(
 
                     bslib::card_body(
+                      gap = "0.5rem",
 
-                      p(strong("Citation guideance")),
+                      p(strong("Citation guidance")),
 
-                      h4(style="color:#005398", #"How do I cite the dashboard and the data"),
 
+                      h5(style="color:#005398", #"How to cite the dashboard and the data"),
 
                          actionLink(ns("gotocitedashboard"), "How do I cite the dashboard and the underlying data?", #"Go to 'How to Cite' tab",
                          )

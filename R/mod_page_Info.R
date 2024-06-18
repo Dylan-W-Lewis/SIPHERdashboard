@@ -1,6 +1,6 @@
 #' page_Info UI Function
 #'
-#' @description A shiny Module.
+#' @description About page for SIPHER synthetic population.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'

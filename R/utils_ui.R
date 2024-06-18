@@ -90,6 +90,7 @@ if(type == "discrete") {
 #'
 #' @return named_vector, sorted by name
 #'
+#' @noRd
 #' @examples sort_by_name(set_names(c(1,2,3), c("cat", "bear", "aardvark")))
 sort_by_name <- function(named_vector){
   named_vector[sort(names(named_vector))]

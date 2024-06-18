@@ -1,8 +1,9 @@
 #' page_AreaProfile2 UI Function
 #'
-#' @description A shiny Module.
+#' @description Area profile page, mostly ui to host various instances of mod_pt_Profile.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param r global reactiveValues object
 #'
 #' @noRd
 #'

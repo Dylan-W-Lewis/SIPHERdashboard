@@ -1,6 +1,6 @@
 #' pt_BYOG_parcoords UI Function
 #'
-#' @description A shiny Module.
+#' @description create custom parallel dot plots.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
