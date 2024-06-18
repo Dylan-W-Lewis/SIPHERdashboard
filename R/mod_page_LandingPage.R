@@ -23,10 +23,11 @@ mod_page_LandingPage_ui <- function(id){
 
                 bslib::card(h2(strong(style="color:#005398", "SIPHER Synthetic Population Dashboard")),
 
-                            p("Welcome. Our Synthetic Population Dashboard allows you to easily explore an aggregated version of the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021 without any coding or data preparation. The ‘click and explore’ format enables you to compare areas of interest, create bespoke detailed area profiles, develop customised data visualisations, and download the aggregate data used."),
+                            p("This dashboard allows you to easily explore an aggregated version of the SIPHER Synthetic Population for Individuals in Great Britain 2019-2021 without any coding or data preparation. The ‘click and explore’ format enables you to compare areas of interest, create bespoke detailed area profiles, develop customised data visualisations, and download the aggregate data used."),
 
-                             p("Getting Started: Use the tabs along the top of the dashboard to explore its various capabilities. For a detailed overview, disclaimers and citations visit the",
+                            p("Getting started: Use the tabs along the top of the dashboard to explore its various capabilities. For a detailed overview, disclaimers and citations visit the",
                                actionLink(ns("gotoAbout"), "About"), "tab."),
+
 
                              h5(strong(style="color:#005398", "What can the dashboard do?")),
 
@@ -46,7 +47,8 @@ mod_page_LandingPage_ui <- function(id){
                                      h2(icon("chart-bar"), style="color:#005398"),
                                      p("View a detailed ",
                                        actionLink(ns("gotoAP"), "Area Profile"),
-                                       "of any local authority, and explore data for lower-level areas")
+                                       "of any local authority, and explore data for electoral wards")
+
                                  )
                                ),
                                column(
@@ -77,7 +79,8 @@ mod_page_LandingPage_ui <- function(id){
 
                       h4(style="color:#005398", #"How to use the dashboard's features and functionlity"),
 
-                         actionLink(ns("gotobackground"), "What is the Synthetic Population?", #"Go to 'Features and Functionality' tab",
+                         actionLink(ns("gotobackground"), "What is the SIPHER Synthetic Population?", #"Go to 'Features and Functionality' tab",
+
                          )
                       )
                     )
@@ -92,7 +95,8 @@ mod_page_LandingPage_ui <- function(id){
 
                       h4(style="color:#005398", #"Guidance for interpreting the results"),
 
-                      actionLink(ns("gotointerpretation"), "How to interpret synthetic data",# "Go to 'Interpreting the Results' tab",
+                      actionLink(ns("gotointerpretation"), "How to interpret results from the SIPHER Synthetic Population",# "Go to 'Interpreting the Results' tab",
+
                                  )
                       )
                     )

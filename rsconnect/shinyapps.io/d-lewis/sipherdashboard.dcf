@@ -5,6 +5,6 @@ account: d-lewis
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11839642
-bundleId: 8530990
+bundleId: 8572314
 url: https://d-lewis.shinyapps.io/sipherdashboard/
 version: 1
