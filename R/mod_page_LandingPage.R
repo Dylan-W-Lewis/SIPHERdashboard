@@ -24,38 +24,45 @@ mod_page_LandingPage_ui <- function(id){
 
                 bslib::card(h2(strong(style="color:#005398", "SIPHER Synthetic Population Dashboard")),
 
-                            p("This dashboard allows users to easily explore an
-                              aggregated version of the SIPHER Synthetic Population
-                              for Individuals in Great Britain 2019-2021 - without
-                              any coding or data preparation. The ‘click and
-                              explore’ format enables users to compare areas of
-                              interest, create bespoke detailed area profiles,
-                              develop customised data visualisations, and download
-                              the aggregate data used."),
+                h5(strong(style="color:#005398", "Purpose of the Dashboard")),
 
-                             p("Users can navigate the tabs along the top of the
-                               dashboard to explore its various capabilities. Please
-                               note that this dashboard does not contain any
-                               individual-level data. No conclusions can and
-                               should be made about 'real' individuals or Understandig
-                               Society survey respondents. All results obtained from
-                               this dashboard should be understood and treated
-                               as 'model estimates'. For further information about
-                               the dataset and the suggested citation visit the",
-                               actionLink(ns("gotoAbout"), "About"), "tab."),
+                p("This dashboard allows easy exploration of an aggregated version
+                of the SIPHER Synthetic Population without any coding or
+                data preparation."),
+
+                p("With our ‘click and explore’ format users can compare areas
+                of interest, create bespoke detailed area profiles, develop
+                customised data visualisations, and download the aggregated
+                data used."),
+
+                h5(strong(style="color:#005398", "Get Started")),
+
+                p("Use the tabs along the top banner of the dashboard
+                to explore its various capabilities."),
+
+                p("This dashboard does not contain any individual-level data.
+                No conclusions can or  should be made about 'real' individuals.
+                All results obtained should be understood and treated as 'model
+                outputs'. Data and visualisations can be freely downloaded from
+                this dashboard and included in outputs provided that proper
+                acknowledgements are given."),
 
 
-                             h5(strong(style="color:#005398", "What can the dashboard do?")),
+                p("For a detailed overview of the dashboard including guidance,
+                interpretation of ", actionLink(ns("gotoAbout"), "About"), "tab."),
 
-                             fluidRow(
-                               column(
+
+                h5(strong(style="color:#005398", "Dashboard Features")),
+
+                fluidRow(
+                   column(
                                  width = 4,
                                  div(style = "text-align: center",
                                      h2(icon("map-location-dot"), style="color:#005398"),
                                      p("Compare local authorities across Great Britain using the ",
 
                                        actionLink(ns("gotoME"), "Map Explore"),
-                                       "tool")
+                                       "tool.")
                                  )
                                ),
                                column(
@@ -76,11 +83,19 @@ mod_page_LandingPage_ui <- function(id){
                                        actionLink(ns("gotoGB"), "Graph Builder"),
                                        "or tables with the ",
                                        actionLink(ns("gotoDD"), "Data Download"),
-                                       "tool")
+                                       "tool.")
                                  )
                                )
 
-                               )
+                               ),
+
+
+                h5(strong(style="color:#005398", "Contact Us")),
+
+                p("For support with the interpretation of results, to provide
+                feedback and/or to discuss project ideas and applications
+                please direct enquiries marked 'SIPHER Synthetic Population -
+                Dashboard' to sipher@glasgow.ac.uk.")
 
 
                 ),
@@ -95,7 +110,7 @@ mod_page_LandingPage_ui <- function(id){
 
                       p(strong("About the dataset")),
 
-                      h5(style="color:#005398", #"How to use the dashboard's features and functionlity"),
+                      h5(style="color:#005398", #"How to use the dashboard's features and functionality"),
 
                          actionLink(ns("gotobackground"), "What is the SIPHER Synthetic Population?", #"Go to 'Features and Functionality' tab",
 

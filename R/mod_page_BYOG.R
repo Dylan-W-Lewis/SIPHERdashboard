@@ -19,27 +19,30 @@ mod_page_BYOG_ui <- function(id){
                            xl = c(-2, 8, -2),
                            xxl = c(-3, 6, -3)),
                          h2(strong("Graph Builder"), style="color:#005398"),
-                         p("This tool lets you easily design and download tailored versions of the graphs that populate other sections of the dashboard, without needing to write any code. We have three types of graph available, covering a wide range of use-cases:"),
+                         p("This tool allows the design and download of tailored
+                           versions of the graphs from other sections of the dashboard,
+                           without the need to write any code. Three types of graphs
+                           are available catering to a wide range of applications:"),
                          bslib::layout_columns(
                            col_widths = c(4,4,4),
                            bslib::card(
                              div(style = "text-align: center",
                                  h2(icon("chart-gantt"), style="color:#005398"),
                                  actionLink( ns("to_dots"), "Parallel Dots"),
-                                 p("Examine how local authories and wards compare to the national average for multiple variables.")
+                                 p("Compare local authorities and electoral wards to the national average across multiple variables.")
                              )
                            ),
                            bslib::card(
                              div(style = "text-align: center",
                                  h2(icon("bars-progress"), style="color:#005398"),
                                  actionLink( ns("to_bars"), "Stacked Bars"),
-                                 p("Compare local authories across all categories of one variable. You can also filter by age and sex.")
+                                 p("Examine local authorities across all categories of a single variable, with options to filter by age and sex.")
                              )),
                            bslib::card(
                              div(style = "text-align: center",
                                  h2(icon("chart-simple"), style="color:#005398"),
                                  actionLink( ns("to_cols"), "Demographic Columns"),
-                                 p("Explore the age and sex breakdown of variables in one or more local authority areas.")
+                                 p("Explore the age and sex distribution of variables in one or more local authority area.")
                              ))
                          )
                        )),
