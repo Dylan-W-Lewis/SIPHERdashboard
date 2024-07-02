@@ -20,7 +20,7 @@ mod_page_Info_ui <- function(id){
 
              mainPanel(
 
-            h5(strong(style="color:#005398","Dashboard Overview")),
+            h5(strong(style="color:#005398","Dashboard overview")),
 
              p("This dashboard enables independent exploration of a spatially
                aggregated version of the SIPHER Synthetic Population for a
@@ -59,7 +59,7 @@ mod_page_Info_ui <- function(id){
              ),
 
 
-             h5(strong(style="color:#005398","User Guideance")),
+             h5(strong(style="color:#005398","User guidance")),
 
              p("Except where otherwise noted, all SIPHER Synthetic Population
              Dashboard outputs are licensed under ", a("CC BY 4.0 DEED",
@@ -136,7 +136,7 @@ mod_page_Info_ui <- function(id){
 
           ),
 
-          h5(strong(style="color:#005398","Data Acccess")),
+          h5(strong(style="color:#005398","Data acccess")),
 
 
           p("The SIPHER Synthetic Population dataset is available for full
@@ -225,7 +225,7 @@ mod_page_Info_ui <- function(id){
             analysis, correlations, longitudinal analyses) whenever possible."),
 
 
-            h5(strong(style="color:#005398","Dashboard reproducibility Pack")),
+            h5(strong(style="color:#005398","Dashboard reproducibility pack")),
 
             p("A reproducibility pack has been created for this dashboard. The
             reproducibility pack contains all aggregate-level data provided in
@@ -321,25 +321,18 @@ mod_page_Info_ui <- function(id){
           Council, Health and Social Care Research and Development Division
           (Welsh Government), Medical Research Council, National Institute for
           Health Research, Natural Environment Research Council, Public Health
-          Agency (Northern Ireland), The Health Foundation and Wellcome."),
-
-          br(),
-
-          br(),
-
-          div(style = "margin: auto; text-align: center",
-                        img(src='www/UKPRP_SIPHER_Logo.png', height = "90px", align = "centre")
-                ),
-
-          br(),
-
-          br()
+          Agency (Northern Ireland), The Health Foundation and Wellcome.")
 
               ),
 
-                ) # fluid row bracket
+        ) # fluid row bracket
 
       )
+    ),
+
+
+    div(style = "margin: auto; text-align: center",
+        img(src='www/UKPRP_SIPHER_Logo.png', height = "200rem", align = "centre")
     )
 
   )

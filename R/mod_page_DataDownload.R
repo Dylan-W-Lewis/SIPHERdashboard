@@ -18,7 +18,7 @@ mod_page_DataDownload_ui <- function(id){
           xxl = c(-2, 8, -2)),
         fill = F,
         gap=0,
-        h2(strong("Data download"), style="color:#005398"),
+        h2(strong("Data Download"), style="color:#005398"),
         #p("You can download data from..."),
         br(),
 

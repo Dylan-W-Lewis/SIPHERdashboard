@@ -49,7 +49,9 @@ app_ui <- function(request) {
                                  #".tab-content { @extend .html-fill-container !important}",
                                  ".tab-content { display: flex; flex-direction: column; flex-grow: 1; flex-shrink: 1}",
                                  ".fill-tab { display: flex; flex-direction: column; flex-grow: 1; flex-shrink: 1}",
-                                 "a.action-button {font-weight: bold !important}"
+                                 "a.action-button {font-weight: bold !important}",
+                                 ".navbar-static-top .nav-link {font-weight: 500; font-size: 1rem; color: #ffffff}",
+                                 ".navbar-static-top .nav-link.active {font-weight: 700 !important}"
 
                                  )),
 

@@ -69,7 +69,7 @@ mod_page_BYOG_server <- function(id, parentSession){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
-    mod_pt_BYOG_StackedBar_server("pt_BYOG_StackedBar_1")
+    mod_pt_BYOG_StackedBar_server("stacked_bar")
     mod_pt_BYOG_parcoords_server("par_coord")
     mod_pt_BYOG_dembar_server("dem_bar")
 
@@ -86,12 +86,18 @@ mod_page_BYOG_server <- function(id, parentSession){
       bslib::nav_select(id = "pages", selected = "col", session = parentSession)
     })
 
-    observeEvent({
-      input$back1
-      input$back2
-      input$back3
-      },
-      bslib::nav_select(id = "pages", selected = "home", session = parentSession))
+    observeEvent(input$back1, {
+      bslib::nav_select(id = "pages", selected = "home", session = parentSession)
+    })
+
+    observeEvent(input$back2, {
+      bslib::nav_select(id = "pages", selected = "home", session = parentSession)
+    })
+
+    observeEvent(input$back3, {
+      bslib::nav_select(id = "pages", selected = "home", session = parentSession)
+    })
+
 
   })
 }
