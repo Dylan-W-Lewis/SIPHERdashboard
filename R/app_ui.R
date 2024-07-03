@@ -8,6 +8,8 @@ app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
+    # Set up Google Analytics
+    tags$head(includeHTML("inst/app/www/analytics.html")),
     # Your application UI logic
     bslib::page_navbar(
       #page setup
@@ -23,7 +25,7 @@ app_ui <- function(request) {
             target = "_blank"
           )),
       inverse=T,
-      bg= "#005398",
+      bg = "#005398",
       theme=bslib::bs_theme(version = 5,
                             #bootswatch = "default",
                             primary = "#005398",
