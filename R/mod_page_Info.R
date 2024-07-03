@@ -62,9 +62,9 @@ mod_page_Info_ui <- function(id){
              h5(strong(style="color:#005398","User guidance")),
 
              p("Except where otherwise noted, all SIPHER Synthetic Population
-             Dashboard outputs are licensed under ", a("CC BY 4.0 DEED",
+             Dashboard outputs are licensed under ", a("CC BY 4.0 DEED.",
              href="https://creativecommons.org/licenses/by-sa/4.0/",
-             target="_blank"), "."),
+             target="_blank")),
 
              p("Data and visualisations obtained from this dashboard may be
              included in outputs, such as reports or presentations provided
@@ -76,9 +76,9 @@ mod_page_Info_ui <- function(id){
 
              p("Explore the SIPHER Synthetic Population underlying dataset
              and access further resources available for independent use via ",
-               a("the UK Data Service",
+               a("the UK Data Service.",
                  href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=9277",
-                 target="_blank"), "."),
+                 target="_blank")),
 
             h5(strong(style="color:#005398","Contact us")),
 
@@ -140,9 +140,9 @@ mod_page_Info_ui <- function(id){
 
 
           p("The SIPHER Synthetic Population dataset is available for full
-          independant use an can be accessed through the ", a("UK Data Service",
+          independant use an can be accessed through the ", a("UK Data Service.",
               href="https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=9277",
-              target="_blank"), "."),
+              target="_blank")),
 
 
 
@@ -207,8 +207,8 @@ mod_page_Info_ui <- function(id){
             SIPHER Consortium on an 'as is' basis, and without any warranty or
             liability. Except where otherwise noted, all SIPHER Synthetic
             Population Dashboard outputs are licensed under ",
-              a("CC BY 4.0 DEED", href="https://creativecommons.org/licenses/by-sa/4.0/",
-                target="_blank"), "."),
+              a("CC BY 4.0 DEED.", href="https://creativecommons.org/licenses/by-sa/4.0/",
+                target="_blank")),
 
             p("This dashboard presents aggregate-level information only, and
             does not capture any existing individuals and their true place of
@@ -231,9 +231,9 @@ mod_page_Info_ui <- function(id){
             reproducibility pack contains all aggregate-level data provided in
             this dashboard, alongside all code which was developed to support
             dashboard functionality. The reproducibility pack is available
-            via", a("Zenodo:",
+            via", a("Zenodo.",
                 href="https://github.com/Dylan-W-Lewis/SIPHERdashboard",
-                target="_blank"),"."),
+                target="_blank")),
 
                   ),
 
