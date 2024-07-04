@@ -283,7 +283,7 @@ mod_page_Info_ui <- function(id){
               p("D. Lewis, E. Comrie, A. Hoehn, N. Lomax, A. Heppenstall, R. Purshouse,
               K. Zia, P. Meier. (2024). SIPHER Synthetic Population for Individuals
               in Great Britain, 2019-2021 - Interactive R-Shiny Dashboard. Data
-              extracted on [DATA, TIME],",
+              extracted on [DATA, TIME], DOI:",
                 a(" https://doi.org/10.5281/zenodo.12655001",
                   href = "https://doi.org/10.5281/zenodo.12655001",
                   target = "_blank")),

@@ -114,7 +114,7 @@ golem_add_external_resources <- function() {
   )
 
   tags$head(
-    favicon(),
+    favicon(NULL),
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "SIPHER Synthetic Population dashboard"
