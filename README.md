@@ -1,5 +1,7 @@
 ## Project overview
-[![DOI](https://zenodo.org/badge/772546883.svg)](https://zenodo.org/doi/10.5281/zenodo.12655000) 
+![GitHub Release](https://img.shields.io/github/v/release/Dylan-W-Lewis/SIPHERdashboard)
+[![DOI][doi-shield]][doi]
+[![CC BY 4.0][cc-by-shield]][cc-by]
 
 The Systems Science in Public Health and Health Economics Research (SIPHER) Consortium brings together a range of academic and policy partners to focus on developing novel approaches to support improving health and reducing health inequalities. As part of the SIPHER Consortium, a synthetic population was developed, a digital twin, for the adult (16+) population in Great Britain. An interactive dashboard has been developed to support exploration of an aggregated version of the SIPHER Synthetic Population 
 
@@ -16,7 +18,7 @@ The file structure follows the `golem` framework. Folders of note include:
 
 ## Running the Code  
 
-To run the dashboard locally, use `remotes::install.github("Dylan-W-Lewis/SIPHERdashboard")`, followed by `SIPHERdashboard::run_app()` 
+To run the dashboard locally, use `remotes::install_github("Dylan-W-Lewis/SIPHERdashboard")`, followed by `SIPHERdashboard::run_app()` 
 
 ## Reporting Issues 
 
@@ -35,5 +37,8 @@ This work is licensed under a
 
 [![CC BY 4.0][cc-by-image]][cc-by]
 
+[doi-shield]: https://zenodo.org/badge/772546883.svg
+[doi]: https://zenodo.org/doi/10.5281/zenodo.12655000
 [cc-by]: http://creativecommons.org/licenses/by/4.0/
 [cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
