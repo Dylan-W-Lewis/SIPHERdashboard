@@ -31,7 +31,7 @@ mod_page_LandingPage_ui <- function(id){
 
               h2(strong(style="color:#005398", "SIPHER Synthetic Population Dashboard")),
 
-              h5(strong(style="color:#005398", "Purpose of the Dashboard")),
+              #h5(strong(style="color:#005398", "Purpose of the Dashboard")),
 
               p("This dashboard allows easy exploration of an aggregated version
             of the SIPHER Synthetic Population without any coding or
@@ -55,8 +55,8 @@ mod_page_LandingPage_ui <- function(id){
             acknowledgements are given."),
 
 
-              p("For a detailed overview of the dashboard including guidance,
-            interpretation of ", actionLink(ns("gotoAbout"), "About"), "tab."),
+              p("For a detailed overview of the dashboard including guidance, interpretation of results, disclaimers and requested acknowledgements visit the",
+                actionLink(ns("gotoAbout"), "About"), "tab."),
 
 
               h5(strong(style="color:#005398", "Dashboard Features")),
@@ -102,7 +102,7 @@ mod_page_LandingPage_ui <- function(id){
               p("For support with the interpretation of results, to provide
             feedback and/or to discuss project ideas and applications
             please direct enquiries marked 'SIPHER Synthetic Population -
-            Dashboard' to sipher@glasgow.ac.uk.")
+            Dashboard' to ", a("sipher@glasgow.ac.uk", href="mailto:sipher@glasgow.ac.uk"))
 
 
             ),

@@ -35,7 +35,8 @@ app_ui <- function(request) {
                             heading_font = "Arial",
                             "navbar-brand-padding-y" = "-1px",
                             "bslib-spacer" = "1rem",
-                            "link-decoration" = "none"
+                            "link-decoration" = "none",
+                            "nav-underline-border-width" = "0.3rem"
                             ) |>
         bslib::bs_add_rules(list(".navbar-static-top {padding: 0px;}",
                                  ".navbar>.container-fluid {padding-left: 0px;}",
@@ -52,7 +53,8 @@ app_ui <- function(request) {
                                  ".tab-content { display: flex; flex-direction: column; flex-grow: 1; flex-shrink: 1}",
                                  ".fill-tab { display: flex; flex-direction: column; flex-grow: 1; flex-shrink: 1}",
                                  "a.action-button {font-weight: bold !important}",
-                                 ".navbar-static-top .nav-link {font-weight: 500; font-size: 1rem; color: #ffffff}",
+                                 ".navbar .nav-link {color: #ffffff !important}",
+                                 ".navbar-static-top .nav-link {font-weight: 500; font-size: 1rem;}",
                                  ".navbar-static-top .nav-link.active {font-weight: 700 !important}"
 
                                  )),

@@ -24,37 +24,43 @@ mod_page_AreaProfile2_ui <- function(id){
                              gap=0,
                              em("Area profile"),
                              h2(strong(style="color:#005398", textOutput(ns("area_title"), inline = T)),
-                                     bslib::popover(
-                                       icon("caret-down"),
-                                       placement = "bottom",
-                                       title = "Selected area",
-                                       selectInput(ns("change_area"),
-                                                   label = NULL,
-                                                   choices = setNames(c("",ladSF$lad), c("Change selected area...",ladSF$lad_name)))
-                                     )
+                               bslib::popover(
+                                 icon("caret-down"),
+                                 placement = "bottom",
+                                 title = "Selected area",
+                                 selectInput(ns("change_area"),
+                                             label = NULL,
+                                             choices = c("Change selected area..." = "",
+                                                         sort_by_name(setNames(ladSF$lad,ladSF$lad_name)))
+                                             )
+                               )
                                 ),
                              #actionButton(ns("switch_area"), label = NULL, icon = icon("repeat"), width="16px"),
-                             bslib::navset_bar(title= strong("Choose a topic:", style="color:#005398"),
-                                               position = "fixed-bottom",
-                                               padding = c("0px","0px","70px"),
-                                               bslib::nav_spacer(),
-                                               bslib::nav_panel(strong("Health & wellbeing", style="color:#005398"),
-                                                                mod_pt_profile_ui(ns("health"),
-                                                                                  vars=domain_vars("health"))
-                                                                ),
-                                               bslib::nav_panel(strong("Income & employment", style="color:#005398"),
-                                                                mod_pt_profile_ui(ns("income"),
-                                                                                   vars=domain_vars("income"))
-                                                                ),
-                                               bslib::nav_panel(strong("Housing & households", style="color:#005398"),
-                                                                mod_pt_profile_ui(ns("housing"),
-                                                                                  vars=domain_vars("housing"))
-                                                                ),
-                                               bslib::nav_panel(strong("Lifestyle, diet & nutrition", style="color:#005398"),
-                                                                mod_pt_profile_ui(ns("lifestyle"),
-                                                                                  vars=domain_vars("lifestyle"))
-                                                                ),
-                                               bslib::nav_spacer()
+                             bslib::navset_bar(
+                               inverse = T,
+                               bg = "#005398",
+                               #title= strong("Choose a topic:"),
+                               position = "fixed-bottom",
+                               padding = c("0px","0px","70px"),
+                               bslib::nav_item(strong("Select a topic:")),
+                               bslib::nav_spacer(),
+                               bslib::nav_panel(strong("Health & wellbeing"),
+                                                mod_pt_profile_ui(ns("health"),
+                                                                  vars=domain_vars("health"))
+                                                ),
+                               bslib::nav_panel(strong("Income & employment"),
+                                                mod_pt_profile_ui(ns("income"),
+                                                                   vars=domain_vars("income"))
+                                                ),
+                               bslib::nav_panel(strong("Housing & households"),
+                                                mod_pt_profile_ui(ns("housing"),
+                                                                  vars=domain_vars("housing"))
+                                                ),
+                               bslib::nav_panel(strong("Lifestyle, diet & nutrition"),
+                                                mod_pt_profile_ui(ns("lifestyle"),
+                                                                  vars=domain_vars("lifestyle"))
+                                                ),
+                               bslib::nav_spacer()
                              )
                            )
 
