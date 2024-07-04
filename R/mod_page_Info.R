@@ -280,11 +280,11 @@ mod_page_Info_ui <- function(id){
 
               p("For all formal output, please utilse the following citation:"),
 
-              p("'D. Lewis, E. Comrie, A. Hoehn, N. Lomax, A. Heppenstall, R. Purshouse,
+              p("D. Lewis, E. Comrie, A. Hoehn, N. Lomax, A. Heppenstall, R. Purshouse,
               K. Zia, P. Meier. (2024). SIPHER Synthetic Population for Individuals
               in Great Britain, 2019-2021 - Interactive R-Shiny Dashboard. Data
               extracted on [DATA, TIME],",
-                a(" https://doi.org/10.5281/zenodo.12655001'",
+                a(" https://doi.org/10.5281/zenodo.12655001",
                   href = "https://doi.org/10.5281/zenodo.12655001",
                   target = "_blank")),
 
