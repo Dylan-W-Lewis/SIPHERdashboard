@@ -30,16 +30,19 @@ mod_page_AreaProfile2_ui <- function(id){
                                  title = "Selected area",
                                  selectInput(ns("change_area"),
                                              label = NULL,
-                                             choices = setNames(c("",ladSF$lad), c("Change selected area...",ladSF$lad_name)))
+                                             choices = c("Change selected area..." = "",
+                                                         sort_by_name(setNames(ladSF$lad,ladSF$lad_name)))
+                                             )
                                )
                                 ),
                              #actionButton(ns("switch_area"), label = NULL, icon = icon("repeat"), width="16px"),
                              bslib::navset_bar(
                                inverse = T,
                                bg = "#005398",
-                               title= strong("Choose a topic:"),
+                               #title= strong("Choose a topic:"),
                                position = "fixed-bottom",
                                padding = c("0px","0px","70px"),
+                               bslib::nav_item(strong("Select a topic:")),
                                bslib::nav_spacer(),
                                bslib::nav_panel(strong("Health & wellbeing"),
                                                 mod_pt_profile_ui(ns("health"),

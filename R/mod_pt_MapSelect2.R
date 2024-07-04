@@ -14,7 +14,8 @@ mod_pt_MapSelect2_ui_box <- function(id){
   tagList(
     selectizeInput(ns("selectize_inp"),
                    label = "",
-                   choices=c("Select areas by clicking the map or type here" = "", sort_by_name(setNames(ladSF$lad,ladSF$lad_name))),
+                   choices = c("Select areas by clicking the map or type here" = "",
+                               sort_by_name(setNames(ladSF$lad,ladSF$lad_name))),
                    multiple=TRUE,
                    width="100%")
   )
@@ -55,16 +56,19 @@ mod_pt_MapSelect2_server <- function(id, r){
         ) |>
         plotly::add_sf() |>
         plotly::layout(dragmode = "pan") |>
-        plotly::config(scrollZoom = TRUE, displayModeBar = FALSE)
+        plotly::config(scrollZoom = TRUE,
+                       displaylogo = FALSE,
+                       modeBarButtons = list(list("zoomIn2d", "zoomOut2d")))
     })
+
 
     observeEvent(plotly::event_data("plotly_click", source = "map"), {
       #identify area code from map click
       cd <- plotly::event_data("plotly_click", source = "map")$key[[1]]
       #add to input
       updateSelectizeInput("selectize_inp", session = session, selected = unique(c(input$selectize_inp, cd)))
-
     })
+
 
     observeEvent(input$selectize_inp, {
       #pick colour based on selection
