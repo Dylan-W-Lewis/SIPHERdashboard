@@ -27,9 +27,8 @@ mod_pt_MapSelect2_ui_map <- function(id){
     shinycssloaders::withSpinner(
       plotly::plotlyOutput(ns("map"),
                            fill = T),
-      color = "#005CBA") |> (\(x) {
-        x[[4]] <- x[[4]] |> bslib::as_fill_carrier()
-        x})()
+      color = "#005CBA") |>
+      bslib::as_fill_carrier()
   )
 }
 
