@@ -9,7 +9,7 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Set up Google Analytics
-    tags$head(includeHTML("inst/app/www/analytics.html")),
+    # tags$head(includeHTML("inst/app/www/analytics.html")),
     # Your application UI logic
     bslib::page_navbar(
       #page setup
