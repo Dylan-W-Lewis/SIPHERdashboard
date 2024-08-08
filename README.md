@@ -21,7 +21,7 @@ The file structure follows the `golem` framework. Folders of note include:
 To run the dashboard locally, open a new R-studio session and run the following commands in order:
 
 * `install.packages("remotes")`: Install the package required for downloading files from GitHub
-* library(remotes)`: Load the remotes package we have previously downloaded
+* `library(remotes)`: Load the remotes package we have previously downloaded
 * `remotes::install_github("Dylan-W-Lewis/SIPHERdashboard")`: Download the SIPHERdashboard package from GitHub
 * `library(SIPHERdashboard)`: Load the SIPHERdashboard package we have just downloaded
 * `SIPHERdashboard::run_app()`: Start the dashboard app
