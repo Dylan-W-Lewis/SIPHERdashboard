@@ -16,7 +16,7 @@ The file structure follows the `golem` framework. Folders of note include:
 
 `/data` - prepared data files used in the dashboard
 
-## Running the Dashboard Locally: Download from GitHub and Running the App 
+## Download from GitHub and Running the App 
 
 To run the dashboard locally, open a new R-studio session and run the following commands in order:
 
